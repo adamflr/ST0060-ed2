@@ -468,10 +468,9 @@ ggplot(dat_small, aes(lifeExp, continent)) +
 
 ## AI-uppgift I
 
-```{r, fig.height=10, echo=F}
-library(gapminder)
-library(tidyverse)
+Nedan har vi en graf gjord med `ggplot2` med flera olika *geom* och ändringar från standardtemat.
 
+```{r, fig.height=7, echo=F}
 counts <- c("Sweden", "Norway")
 col <- "lightblue"
 ggplot(gapminder %>% filter(continent == "Europe", year == 2007), aes(gdpPercap, lifeExp)) +
@@ -490,3 +489,10 @@ ggplot(gapminder %>% filter(continent == "Europe", year == 2007), aes(gdpPercap,
   scale_color_manual(values = c("red", "darkblue"), labels = c("Norge", "Sverige"))
 ```
 
+::: {.exercise name="Dekonstruera grafen"}
+Vilka geografiska former (punkter, linjer ytor) visas i grafen och hur är de kopplade till datans variabler? Vilka ändringar har gjorts från standardtemat (bakgrundsfärg, typsnitt, teckenstorlek)?
+:::
+
+::: {.exercise name="Rekonstrera grafen"}
+Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att rekonstrera grafen. Börja med att beskriva grafen i ord och be om R-kod. Med vissa chatverktyg kan man också dela bilden och be om den bakomliggande koden.
+:::

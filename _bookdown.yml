@@ -21,6 +21,8 @@ language:
     thm: 'Sats '
     exr: 'Uppgift '
     hyp: 'Lösningsförslag '
+    
   ui:
-    chapter_name: ""
+    edit: Edit
+    chapter_name: 'Kapitel '
 always_allow_html: true

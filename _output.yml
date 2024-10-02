@@ -7,7 +7,7 @@ bookdown::gitbook:
         <li><a href="./">R-anvisningar</a></li>
     download: ["pdf"]
     fontsettings:
-      theme: sepia
+      theme: white
       family: serif
     sharing:
       facebook: false
