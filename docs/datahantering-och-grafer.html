@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Datahantering och grafer | R-anvisningar till Grundläggande statistik</title>
+  <meta name="description" content="1 Datahantering och grafer | R-anvisningar till Grundläggande statistik" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Datahantering och grafer | R-anvisningar till Grundläggande statistik" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Datahantering och grafer | R-anvisningar till Grundläggande statistik" />
+  
+  
+  
+
+
+
+<meta name="date" content="2024-10-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="installation-av-r-och-rstudio.html"/>
+<link rel="next" href="ai-uppgift-i.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R-anvisningar</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduktion</a></li>
+<li class="chapter" data-level="" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html"><i class="fa fa-check"></i>Installation av R och RStudio</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html#inledning"><i class="fa fa-check"></i><b>0.1</b> Inledning</a></li>
+<li class="chapter" data-level="0.2" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html#installation-av-r"><i class="fa fa-check"></i><b>0.2</b> Installation av R</a></li>
+<li class="chapter" data-level="0.3" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html#installation-av-rstudio"><i class="fa fa-check"></i><b>0.3</b> Installation av RStudio</a></li>
+<li class="chapter" data-level="0.4" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html#gränssnittet-i-rstudio"><i class="fa fa-check"></i><b>0.4</b> Gränssnittet i RStudio</a></li>
+<li class="chapter" data-level="0.5" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html#paket-i-r"><i class="fa fa-check"></i><b>0.5</b> Paket i R</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html"><i class="fa fa-check"></i><b>1</b> Datahantering och grafer</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#uppstart-och-orientering"><i class="fa fa-check"></i><b>1.1</b> Uppstart och orientering</a></li>
+<li class="chapter" data-level="1.2" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#packages-från-cran"><i class="fa fa-check"></i><b>1.2</b> <em>Packages</em> från CRAN</a></li>
+<li class="chapter" data-level="1.3" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#objekt-och-funktioner"><i class="fa fa-check"></i><b>1.3</b> Objekt och funktioner</a></li>
+<li class="chapter" data-level="1.4" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#sekvenser-av-funktioner"><i class="fa fa-check"></i><b>1.4</b> Sekvenser av funktioner</a></li>
+<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning-och-dataimport-från-web"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning och dataimport från web</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#inskrivning-av-data"><i class="fa fa-check"></i><b>1.5.1</b> Inskrivning av data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter"><i class="fa fa-check"></i><b>1.6</b> Urval ur en tabell med <code>select</code> och <code>filter</code></a></li>
+<li class="chapter" data-level="1.7" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#grafer-med-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Grafer med <code>ggplot2</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ai-uppgift-i.html"><a href="ai-uppgift-i.html"><i class="fa fa-check"></i><b>2</b> AI-uppgift I</a></li>
+<li class="chapter" data-level="3" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html"><i class="fa fa-check"></i><b>3</b> Beskrivande statistik</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#repetition-från-datorövning-1"><i class="fa fa-check"></i><b>3.1</b> Repetition från datorövning 1</a></li>
+<li class="chapter" data-level="3.2" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#import-av-data-från-en-excelfil"><i class="fa fa-check"></i><b>3.2</b> Import av data från en Excelfil</a></li>
+<li class="chapter" data-level="3.3" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ändra-och-skapa-nya-kolumner-med-mutate"><i class="fa fa-check"></i><b>3.3</b> Ändra och skapa nya kolumner med <code>mutate</code></a></li>
+<li class="chapter" data-level="3.4" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#sammanfattande-lägesmått"><i class="fa fa-check"></i><b>3.4</b> Sammanfattande lägesmått</a></li>
+<li class="chapter" data-level="3.5" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#sammanfattande-spridningsmått"><i class="fa fa-check"></i><b>3.5</b> Sammanfattande spridningsmått</a></li>
+<li class="chapter" data-level="3.6" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ordna-upp-beskrivande-statistik-och-exportera"><i class="fa fa-check"></i><b>3.6</b> Ordna upp beskrivande statistik och exportera</a></li>
+<li class="chapter" data-level="3.7" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#kumulativt-medelvärde"><i class="fa fa-check"></i><b>3.7</b> Kumulativt medelvärde</a></li>
+<li class="chapter" data-level="3.8" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#darwin-exempel"><i class="fa fa-check"></i><b>3.8</b> Darwin-exempel</a></li>
+<li class="chapter" data-level="3.9" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#bonus.-tredimensionella-grafer-med-plotly"><i class="fa fa-check"></i><b>3.9</b> Bonus. Tredimensionella grafer med <code>plotly</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="slumpvariabler.html"><a href="slumpvariabler.html"><i class="fa fa-check"></i><b>4</b> Slumpvariabler</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="slumpvariabler.html"><a href="slumpvariabler.html#repetition-från-datorövning-2"><i class="fa fa-check"></i><b>4.1</b> Repetition från datorövning 2</a></li>
+<li class="chapter" data-level="4.2" data-path="slumpvariabler.html"><a href="slumpvariabler.html#särskilda-diskreta-fördelningar-binomialfördelning"><i class="fa fa-check"></i><b>4.2</b> Särskilda diskreta fördelningar: binomialfördelning</a></li>
+<li class="chapter" data-level="4.3" data-path="slumpvariabler.html"><a href="slumpvariabler.html#särskilda-diskreta-fördelningar-poissonfördelning"><i class="fa fa-check"></i><b>4.3</b> Särskilda diskreta fördelningar: poissonfördelning</a></li>
+<li class="chapter" data-level="4.4" data-path="slumpvariabler.html"><a href="slumpvariabler.html#kontinuerliga-fördelningar-i-allmänhet"><i class="fa fa-check"></i><b>4.4</b> Kontinuerliga fördelningar i allmänhet</a></li>
+<li class="chapter" data-level="4.5" data-path="slumpvariabler.html"><a href="slumpvariabler.html#särskilda-kontinuerliga-fördelningar-normalfördelningen"><i class="fa fa-check"></i><b>4.5</b> Särskilda kontinuerliga fördelningar: normalfördelningen</a></li>
+<li class="chapter" data-level="4.6" data-path="slumpvariabler.html"><a href="slumpvariabler.html#bonus.-summan-av-två-slumpvariabler-med-slumptal"><i class="fa fa-check"></i><b>4.6</b> Bonus. Summan av två slumpvariabler med slumptal</a></li>
+<li class="chapter" data-level="4.7" data-path="slumpvariabler.html"><a href="slumpvariabler.html#bonus.-cirkelns-area-från-slumptal"><i class="fa fa-check"></i><b>4.7</b> Bonus. Cirkelns area från slumptal</a></li>
+<li class="chapter" data-level="4.8" data-path="slumpvariabler.html"><a href="slumpvariabler.html#bonus.-slump-och-ordning---sierpinski-triangeln"><i class="fa fa-check"></i><b>4.8</b> Bonus. Slump och ordning - Sierpinski-triangeln</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html"><i class="fa fa-check"></i><b>5</b> Ett stickprov av normalfördelad data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#repetition-av-datorövning-3"><i class="fa fa-check"></i><b>5.1</b> Repetition av datorövning 3</a></li>
+<li class="chapter" data-level="5.2" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#test-av-medelvärde-för-normalfördelad-data"><i class="fa fa-check"></i><b>5.2</b> Test av medelvärde för normalfördelad data</a></li>
+<li class="chapter" data-level="5.3" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#konfidensintervall-för-normalfördelad-data"><i class="fa fa-check"></i><b>5.3</b> Konfidensintervall för normalfördelad data</a></li>
+<li class="chapter" data-level="5.4" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#normalfördelad-data-och-centrala-gränsvärdesatsen"><i class="fa fa-check"></i><b>5.4</b> Normalfördelad data och centrala gränsvärdesatsen</a></li>
+<li class="chapter" data-level="5.5" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#centrala-gränsvärdesatsen"><i class="fa fa-check"></i><b>5.5</b> Centrala gränsvärdesatsen</a></li>
+<li class="chapter" data-level="5.6" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#bonus.-simuleringar-för-t-test-och-konfidensintervall"><i class="fa fa-check"></i><b>5.6</b> Bonus. Simuleringar för t-test och konfidensintervall</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html"><i class="fa fa-check"></i><b>6</b> Ett stickprov av icke-normalfördelad data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#repetition-av-datorövning-4"><i class="fa fa-check"></i><b>6.1</b> Repetition av datorövning 4</a></li>
+<li class="chapter" data-level="6.2" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#proportioner-från-binär-data"><i class="fa fa-check"></i><b>6.2</b> Proportioner från binär data</a></li>
+<li class="chapter" data-level="6.3" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#konfidensintervall-för-proportioner"><i class="fa fa-check"></i><b>6.3</b> Konfidensintervall för proportioner</a></li>
+<li class="chapter" data-level="6.4" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#chi-två-test-för-goodness-of-fit"><i class="fa fa-check"></i><b>6.4</b> Chi-två-test för goodness-of-fit</a></li>
+<li class="chapter" data-level="6.5" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#chi-två-test-när-någon-parameter-skattas-från-datan"><i class="fa fa-check"></i><b>6.5</b> Chi-två-test när någon parameter skattas från datan</a></li>
+<li class="chapter" data-level="6.6" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#bonus.-interaktiva-kartor-med-leaflet"><i class="fa fa-check"></i><b>6.6</b> Bonus. Interaktiva kartor med leaflet</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html"><i class="fa fa-check"></i><b>7</b> Test för två stickprov</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#repetition-av-datorövning-5"><i class="fa fa-check"></i><b>7.1</b> Repetition av datorövning 5</a></li>
+<li class="chapter" data-level="7.2" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#två-stickprov-och-normalfördelad-data"><i class="fa fa-check"></i><b>7.2</b> Två stickprov och normalfördelad data</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#t-test-för-två-matchade-stickprov"><i class="fa fa-check"></i><b>7.2.1</b> t-test för två matchade stickprov</a></li>
+<li class="chapter" data-level="7.2.2" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#t-test-för-två-oberoende-stickprov"><i class="fa fa-check"></i><b>7.2.2</b> t-test för två oberoende stickprov</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#z-test-och-konfidensintervall-för-två-proportioner"><i class="fa fa-check"></i><b>7.3</b> z-test och konfidensintervall för två proportioner</a></li>
+<li class="chapter" data-level="7.4" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#chi-två-test-för-korstabeller"><i class="fa fa-check"></i><b>7.4</b> Chi-två-test för korstabeller</a></li>
+<li class="chapter" data-level="7.5" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#bonus.-bilder-i-r"><i class="fa fa-check"></i><b>7.5</b> Bonus. Bilder i R</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="variansanalys.html"><a href="variansanalys.html"><i class="fa fa-check"></i><b>8</b> Variansanalys</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="variansanalys.html"><a href="variansanalys.html#repetition-av-datorövning-6"><i class="fa fa-check"></i><b>8.1</b> Repetition av datorövning 6</a></li>
+<li class="chapter" data-level="8.2" data-path="variansanalys.html"><a href="variansanalys.html#allmänt"><i class="fa fa-check"></i><b>8.2</b> Allmänt</a></li>
+<li class="chapter" data-level="8.3" data-path="variansanalys.html"><a href="variansanalys.html#variansanalys.-en-faktor"><i class="fa fa-check"></i><b>8.3</b> Variansanalys. En faktor</a></li>
+<li class="chapter" data-level="8.4" data-path="variansanalys.html"><a href="variansanalys.html#variansanalys.-en-faktor-med-block"><i class="fa fa-check"></i><b>8.4</b> Variansanalys. En faktor med block</a></li>
+<li class="chapter" data-level="8.5" data-path="variansanalys.html"><a href="variansanalys.html#variansanalys.-två-faktorer-med-block"><i class="fa fa-check"></i><b>8.5</b> Variansanalys. Två faktorer med block</a></li>
+<li class="chapter" data-level="8.6" data-path="variansanalys.html"><a href="variansanalys.html#modellantaganden-och-residualer"><i class="fa fa-check"></i><b>8.6</b> Modellantaganden och residualer</a></li>
+<li class="chapter" data-level="8.7" data-path="variansanalys.html"><a href="variansanalys.html#bonus.-statistik-för-ekologi"><i class="fa fa-check"></i><b>8.7</b> Bonus. Statistik för ekologi</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html"><i class="fa fa-check"></i><b>9</b> Regression och korrelation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#repetition-av-datorövning-7"><i class="fa fa-check"></i><b>9.1</b> Repetition av datorövning 7</a></li>
+<li class="chapter" data-level="9.2" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#regression"><i class="fa fa-check"></i><b>9.2</b> Regression</a></li>
+<li class="chapter" data-level="9.3" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#korrelation"><i class="fa fa-check"></i><b>9.3</b> Korrelation</a></li>
+<li class="chapter" data-level="9.4" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#bonus.-skrapa-data-från-webbsidor"><i class="fa fa-check"></i><b>9.4</b> Bonus. Skrapa data från webbsidor</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R-anvisningar till <em>Grundläggande statistik</em></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="datahantering-och-grafer" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Datahantering och grafer<a href="datahantering-och-grafer.html#datahantering-och-grafer" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Datorövning 1 handlar om grunderna till R. Efter övningen ska vi kunna</p>
+<ul>
+<li>Starta RStudio och orientera oss i gränssnittet,</li>
+<li>Installera och ladda tilläggspaket (<em>Packages</em>),</li>
+<li>Definera objekt och tillämpa funktioner i R,</li>
+<li>Transformera en tabell med data genom att välja kolumner och filtrera rader,</li>
+<li>Skapa grafer med <code>ggplot2</code>.</li>
+</ul>
+<div id="uppstart-och-orientering" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Uppstart och orientering<a href="datahantering-och-grafer.html#uppstart-och-orientering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>För att arbeta i R måste vi installera språket R och ett gränssnitt för att arbeta i R, vanligen <em>RStudio</em>. Både R och RStudio kan laddas ner gratis, från <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a> respektive <a href="https://posit.co/" class="uri">https://posit.co/</a>.</p>
+<p>Starta RStudio, till exempel genom att gå till Startmenyn och söka på RStudio eller genom att dubbelklicka på en fil som öppnas i RStudio.
+Gränssnittet i RStudio är uppdelat i fyra delar och varje del består av en eller flera flikar. De viktigaste är i nuläget</p>
+<ul>
+<li><em>Console</em> där kod körs och resultat skrivs ut,</li>
+<li><em>Environment</em> där man ser skapade objekt,</li>
+<li><em>History</em> där man ser tidigare körd kod,</li>
+<li><em>Plots</em> där man ser skapade grafer, och</li>
+<li><em>Help</em> där man ser hjälpsidor för funktioner.</li>
+</ul>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-1" class="exercise"><strong>Uppgift 1.1  (Help-fliken) </strong></span>Hitta fliken <em>Help</em>, klicka på husikonen under fliken. Finns det en länk med <em>RStudio Cheat Sheets</em>? Följ den länken för att hitta guider till R som kan bli nyttiga längre fram. För nu, gå tillbaka till RStudio.</p>
+</div>
+<p>Ofta skriver man inte sin kod direkt i konsollen, utan i ett separat <em>skript</em> - en vanlig textfil som innehåller den kod man vill köra. I RStudio kan man öppna ett nytt skript genom att gå till <em>File &gt; New File &gt; R Script</em> eller genom att klicka <em>Ctrl + Shift + N</em>.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-2" class="exercise"><strong>Uppgift 1.2  (Ett första skript) </strong></span>Öppna ett nytt skript genom File-menyn eller genom <em>Ctrl + Shift + N</em>.
+Skriv</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="datahantering-och-grafer.html#cb4-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">5</span></span></code></pre></div>
+<p>i skriptet och tryck <em>Ctrl + Enter</em>. Titta i flikarna <em>Console</em> och <em>Environment</em>. Har något hänt? Du bör se att koden i skriptet körts i konsollen och att ett nytt objekt <code>a</code> ligger i <em>Environment</em>.</p>
+</div>
+</div>
+<div id="packages-från-cran" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> <em>Packages</em> från CRAN<a href="datahantering-och-grafer.html#packages-från-cran" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En av de stora styrkorna med R är att språket kan byggas ut av dess användare. De här tilläggen kan sedan samlas i paket (<em>packages</em>) och delas med andra. Rs officiella bibliotek för paket kallas för <em>CRAN</em> (<em>Comprehensive R Archive Network</em>).</p>
+<p>För att använda ett specifikt paket måste det först installeras. Om man vet namnet på paketet man vill installera kan man köra</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="datahantering-och-grafer.html#cb5-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<p>I det här fallet installeras paketet <code>tidyverse</code>, vilket innehåller funktioner för hantering av data.</p>
+<p>I RStudio kan man också installera paket från <em>Packages</em>-fliken.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-3" class="exercise"><strong>Uppgift 1.3  (Installera tidyverse-paketet) </strong></span>Kör raden ovan för att installera <code>tidyverse</code>. Du kan antingen köra raden genom att skriva den i <em>Console</em> eller genom att skriva i ett skript och köra därifrån genom <em>Ctrl + Enter</em>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-4" class="exercise"><strong>Uppgift 1.4  (Installera gapminder-paketet) </strong></span>Paketet <code>gapminder</code> innehåller lite intressant data vi kommer använda senare. Installera paketet <code>gapminder</code> genom att fylla i den saknade biten och köra raden nedan.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="datahantering-och-grafer.html#cb6-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;___&quot;</span>)</span></code></pre></div>
+</div>
+<p>Paket måste också laddas för varje ny session. Innan man kan använda innehållet i ett paket måste man därför köra</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="datahantering-och-grafer.html#cb7-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-5" class="exercise"><strong>Uppgift 1.5  (Ladda gapminder-paketet) </strong></span>Ladda paketet <code>gapminder</code> genom att fylla i och köra raden nedan.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="datahantering-och-grafer.html#cb8-1" tabindex="-1"></a><span class="fu">library</span>(___)</span></code></pre></div>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-6" class="exercise"><strong>Uppgift 1.6  (Paket som inte finns) </strong></span>Vad händer om man försöker installera ett paket som inte finns på <em>CRAN</em>? Testa till exempel</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="datahantering-och-grafer.html#cb9-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ThisIsNotTheNameOfAnyPackage&quot;</span>)</span></code></pre></div>
+<p>och</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="datahantering-och-grafer.html#cb10-1" tabindex="-1"></a><span class="fu">library</span>(ThisIsNotTheNameOfAnyPackage)</span></code></pre></div>
+</div>
+</div>
+<div id="objekt-och-funktioner" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Objekt och funktioner<a href="datahantering-och-grafer.html#objekt-och-funktioner" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ett <em>objekt</em> i R är en namngiven informationsmängd. Objekt kan se ut på många olika sätt - under kursens gång används objekt som består av insamlad data (konstruerade som vektorer eller tabeller), objekt som är statistiska modeller, och flera andra former. I R skapar man objekt med <em>assign</em>-pilen <code>&lt;-</code> (mindre än och bindestreck).</p>
+<p>I ett tidigare exempel fanns raden</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="datahantering-och-grafer.html#cb11-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">5</span></span></code></pre></div>
+<p>Här skapas ett objekt med namnet <code>a</code> som innehåller informationen <code>5</code>. <em>Assign</em>-pilen pekar alltså på det namn man vill ge objektet och pekar från objektets innehåll.</p>
+<p>Ett lite mer komplicerat exempel på ett objekt ges av</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="datahantering-och-grafer.html#cb12-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>)</span></code></pre></div>
+<p>Här skapas ett objekt <code>b</code> som innehåller en <em>serie</em> numeriska värden (en <em>vektor</em>). Värdena i en vektor är ordnade och man kan plocka ut ett specifikt värde med hakparenteser.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="datahantering-och-grafer.html#cb13-1" tabindex="-1"></a>b[<span class="dv">3</span>]               <span class="co"># Det tredje värdet i vektorn b</span></span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="datahantering-och-grafer.html#cb15-1" tabindex="-1"></a>b[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>)]          <span class="co"># Det tredje och femte värdet i b</span></span></code></pre></div>
+<pre><code>## [1] 4 5</code></pre>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-7" class="exercise"><strong>Uppgift 1.7  (Skapa en vektor) </strong></span>Skapa ett objekt med namnet <code>new_vector</code> som innehåller värden 5, 7 och 10 genom att fylla i följande rad.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="datahantering-och-grafer.html#cb17-1" tabindex="-1"></a>new_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(_, _, _)</span></code></pre></div>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-8" class="exercise"><strong>Uppgift 1.8  (Ta ut andra värdet) </strong></span>Använd hakparenteser för att plocka ut det andra värdet ur vektorn <code>new_vector</code>.</p>
+</div>
+<p>Objekt kan manipuleras genom att tillämpa <em>funktioner</em>. En funktion tar någon ingående data och ger något utgående resultat. Funktioner anges genom att skriva funktionens namn följt av ingående data inom parenteser, och resultatet kan antingen skrivas ut i konsollen eller sparas som ett nytt objekt. En grundinstallation av R innehåller en mängd färdiga funktioner, t.ex.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="datahantering-och-grafer.html#cb18-1" tabindex="-1"></a><span class="fu">sum</span>(b)</span></code></pre></div>
+<pre><code>## [1] 23</code></pre>
+<p>vilket ger summan av värdena i vektorn <code>b</code>,</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="datahantering-och-grafer.html#cb20-1" tabindex="-1"></a><span class="fu">plot</span>(b)</span></code></pre></div>
+<p>som ger en simpel graf, och</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="datahantering-och-grafer.html#cb21-1" tabindex="-1"></a><span class="fu">sqrt</span>(b)</span></code></pre></div>
+<pre><code>## [1] 1.732051 1.000000 2.000000 1.000000 2.236068 3.000000</code></pre>
+<p>som beräknar kvadratroten för varje element i vektorn.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-9" class="exercise"><strong>Uppgift 1.9  (Summera vektorn) </strong></span>Fyll i och kör följande rad för att beräkna summan av vektorn <code>new_vector</code></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="datahantering-och-grafer.html#cb23-1" tabindex="-1"></a><span class="fu">sum</span>(___)</span></code></pre></div>
+</div>
+<p>Vid konstruktionen av vektorn användes också en grundläggande funktion - funktionen <code>c()</code>, som tar en serie värden och skapar en sammanhängande vektor av värden.</p>
+<p>Alla R-funktioner har en tillhörande hjälpfil som kan plockas fram genom att skriva frågetecken följt av funktionsnamnet, t.ex. <code>?sum</code>. Från hjälpfilen får man att <code>sum()</code> tar numeriska vektorer som ingående värde och beräknar summan. Man kan styra funktionens beteende genom att sätta ett argument <code>na.rm</code> (vilket här styr hur funktionen hanterar saknade värden). Som illustration kan man titta på</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="datahantering-och-grafer.html#cb24-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="cn">NA</span>)  <span class="co"># Lägger till ett saknat värde</span></span>
+<span id="cb24-2"><a href="datahantering-och-grafer.html#cb24-2" tabindex="-1"></a><span class="fu">sum</span>(b)                        <span class="co"># na.rm = FALSE är grundinställning</span></span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="datahantering-och-grafer.html#cb26-1" tabindex="-1"></a><span class="fu">sum</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)          <span class="co"># na.rm sätts till TRUE</span></span></code></pre></div>
+<pre><code>## [1] 23</code></pre>
+<p>Det första försöket <code>sum(b)</code> ger utfallet <code>NA</code>, men om man sätter <code>na.rm = TRUE</code> beräknas summan efter att det saknade värdet plockats bort. Notera också att skript kan kommenteras med <code>#</code>.</p>
+</div>
+<div id="sekvenser-av-funktioner" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Sekvenser av funktioner<a href="datahantering-och-grafer.html#sekvenser-av-funktioner" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ofta vill man genomföra flera operationer på ett objekt. Man behöver då genomföra en sekvens av funktioner. Säg till exempel att man har värdena <span class="math display">\[(-4, -2, -1, 1, 2, 4)\]</span> och vill ta absolutvärde (vilket gör negativa tal till motsvarande positiva tal) och sedan summera.
+Den typen av sekvenser kan genomföras på ett par olika sätt. Ett första sätt är att spara resultatet i varje steg och sedan använda utfallet i nästa steg:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="datahantering-och-grafer.html#cb28-1" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)   <span class="co"># Skapa en vektor av värden</span></span>
+<span id="cb28-2"><a href="datahantering-och-grafer.html#cb28-2" tabindex="-1"></a>c_absolute <span class="ot">&lt;-</span> <span class="fu">abs</span>(c)          <span class="co"># Ta absolutvärden. Spara som c_absolut</span></span>
+<span id="cb28-3"><a href="datahantering-och-grafer.html#cb28-3" tabindex="-1"></a><span class="fu">sum</span>(c_absolute)               <span class="co"># Summera värden i c_absolut</span></span></code></pre></div>
+<pre><code>## [1] 14</code></pre>
+<p>Här skapas ett objekt <code>c</code> som innehåller en vektor där några tal är negativa. I nästa rad används <code>abs</code> för att skapa absolutvärden. Slutligen summeras absolutvärdena med <code>sum</code>.
+Notera att det är möjligt att skapa ett objekt med namnet <code>c</code> trots att det redan är namnet på en funktion - R förstår ur sammanhanget om objektet eller funktionen ska användas. Det kan dock bli lite oklart för en läsare, så försök som regel att undvika att skapa objekt med vanliga funktionsnamn som <code>sum</code> och <code>mean</code>.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-10" class="exercise"><strong>Uppgift 1.10  (Kvadrat, summa och roten ur) </strong></span>Fyll i och kör följande rader för att ta varje värde i <code>new_vector</code> i kvadrat, <em>sedan</em> summera, och sedan ta roten ur.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="datahantering-och-grafer.html#cb30-1" tabindex="-1"></a>new_vector_squared <span class="ot">&lt;-</span> new_vector<span class="sc">^</span><span class="dv">2</span>     <span class="co"># Ta kvadraten av varje värde</span></span>
+<span id="cb30-2"><a href="datahantering-och-grafer.html#cb30-2" tabindex="-1"></a>new_vector_squared_sum <span class="ot">&lt;-</span> <span class="fu">sum</span>(___)     <span class="co"># Summera vektorn med kvadrater</span></span>
+<span id="cb30-3"><a href="datahantering-och-grafer.html#cb30-3" tabindex="-1"></a><span class="fu">sqrt</span>(___)                              <span class="co"># Ta kvadratroten ur summan</span></span></code></pre></div>
+</div>
+<p>Ett alternativ till att spara utfallet i varje steg är att skriva en senare funktion <em>runt</em> en tidigare funktion. Det fungerar för att R utvärderar funktioner inifrån-ut. Med samma exempel som tidigare får man</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="datahantering-och-grafer.html#cb31-1" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">abs</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)))  <span class="co"># Ta summan av absolutvärden av vektorn</span></span></code></pre></div>
+<p>medan beräkningen i övningen blir</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="datahantering-och-grafer.html#cb32-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(new_vector<span class="sc">^</span><span class="dv">2</span>))           <span class="co"># Ta roten ur summan av vektorn i kvadrat</span></span></code></pre></div>
+<p>Den här typen av skrivning kan spara plats men blir snabbt svårläst.</p>
+<p>Ett sista alternativ är att använda en så kallad <em>pipe</em> (namnet kommer från att en sekvens funktioner kallas en <em>pipeline</em>). En pipe skrivs <code>%&gt;%</code> och kan i RStudio tas fram med kortkommandon <em>Ctrl + Shift + M</em>. Pipen tar utfallet av en funktion till vänster och sänder till en funktion till höger. Den kan utläsas i dagligt tal som <em>och sen</em>. Med samma exempel som tidigare kan vi skriva</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="datahantering-och-grafer.html#cb33-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)                <span class="co"># Ladda tidyverse, ej nödvändigt om redan gjort</span></span>
+<span id="cb33-2"><a href="datahantering-och-grafer.html#cb33-2" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="datahantering-och-grafer.html#cb33-3" tabindex="-1"></a><span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>) <span class="sc">%&gt;%</span>        <span class="co"># Skapa en datamängd och sen</span></span>
+<span id="cb33-4"><a href="datahantering-och-grafer.html#cb33-4" tabindex="-1"></a>  <span class="fu">abs</span>() <span class="sc">%&gt;%</span>                       <span class="co"># ta absolutvärden, och sen</span></span>
+<span id="cb33-5"><a href="datahantering-och-grafer.html#cb33-5" tabindex="-1"></a>  <span class="fu">sum</span>()                           <span class="co"># beräkna summan.</span></span></code></pre></div>
+<pre><code>## [1] 14</code></pre>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-11" class="exercise"><strong>Uppgift 1.11  (Kvadrat, summa och rot med pipe) </strong></span>Fyll i de saknade funktionerna och kör följande rader för att ta varje värde i <code>new_vector</code> i kvadrat, <em>sedan</em> summera, och sedan ta roten ur, denna gång genom att länka funktionerna med en pipe <code>%&gt;%</code>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="datahantering-och-grafer.html#cb35-1" tabindex="-1"></a>new_vector<span class="sc">^</span><span class="dv">2</span> <span class="sc">%&gt;%</span>                  <span class="co"># Ta kvadraterna av new_vector, och sen</span></span>
+<span id="cb35-2"><a href="datahantering-och-grafer.html#cb35-2" tabindex="-1"></a>  <span class="fu">___</span>() <span class="sc">%&gt;%</span>                       <span class="co"># beräkna summan, och sen</span></span>
+<span id="cb35-3"><a href="datahantering-och-grafer.html#cb35-3" tabindex="-1"></a>  <span class="fu">____</span>()                          <span class="co"># Ta kvadratroten med sqrt()</span></span></code></pre></div>
+</div>
+</div>
+<div id="datainskrivning-och-dataimport-från-web" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Datainskrivning och dataimport från web<a href="datahantering-och-grafer.html#datainskrivning-och-dataimport-från-web" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="inskrivning-av-data" class="section level3 hasAnchor" number="1.5.1">
+<h3><span class="header-section-number">1.5.1</span> Inskrivning av data<a href="datahantering-och-grafer.html#inskrivning-av-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Det första praktiska steget i en statistisk analys är att importera data. I R kan det göras genom att direkt skriva in sin data och spara som ett nytt objekt, men ett bättre och vanligare sätt är att importera sin data från en extern fil eller databas.</p>
+<p>I ett tidigare exempel användes funktionen <code>c()</code> för att skapa en vektor av data. Ofta ordnas flera vektorer i en tabell där varje kolumn är en vektor och varje rad en observation av någon enhet. En datatabell (en <code>data.frame</code> i R) skapas genom funktionen <code>data.frame()</code> följt av namngivna vektorer. Exempeldata kan skrivas in genom föjande.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="datahantering-och-grafer.html#cb36-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Vecka =</span> <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">11</span>,<span class="dv">11</span>,<span class="dv">11</span>,<span class="dv">11</span>,<span class="dv">11</span>,<span class="dv">11</span>),</span>
+<span id="cb36-2"><a href="datahantering-och-grafer.html#cb36-2" tabindex="-1"></a>                  <span class="at">Behandling =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;A&quot;</span>,<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;A&quot;</span>,<span class="st">&quot;A&quot;</span>,<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;B&quot;</span>),</span>
+<span id="cb36-3"><a href="datahantering-och-grafer.html#cb36-3" tabindex="-1"></a>                  <span class="at">Vikt =</span> <span class="fu">c</span>(<span class="dv">232</span>,<span class="dv">161</span>,<span class="dv">148</span>,<span class="dv">368</span>,<span class="dv">218</span>,<span class="dv">257</span>,<span class="dv">1633</span>,<span class="dv">2213</span>,<span class="dv">972</span>,<span class="dv">2560</span>,<span class="dv">2430</span>,<span class="dv">855</span>),</span>
+<span id="cb36-4"><a href="datahantering-och-grafer.html#cb36-4" tabindex="-1"></a>                  <span class="at">N =</span> <span class="fu">c</span>(<span class="fl">2.63</span>,<span class="fl">2.90</span>,<span class="fl">2.99</span>,<span class="fl">3.54</span>,<span class="fl">3.30</span>,<span class="fl">2.85</span>,<span class="fl">1.53</span>,<span class="fl">1.90</span>,<span class="cn">NA</span>,<span class="fl">2.58</span>,<span class="cn">NA</span>,<span class="cn">NA</span>))</span>
+<span id="cb36-5"><a href="datahantering-och-grafer.html#cb36-5" tabindex="-1"></a>dat</span></code></pre></div>
+<p>Radbrytningar och blanksteg är oviktiga i R, och används bara för läsbarhet här. Saknade värden skrivs in som <code>NA</code> för <em>not available</em>. Notera att alla kolumner inte behöver vara av samma datatyp men att värden inom en kolumn måste vara det. Här är <em>Behandling</em> text medan övriga kolumner är numeriska.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-12" class="exercise"><strong>Uppgift 1.12  (Alea iacta est) </strong></span>Kasta din tärning tio gånger och skriv in resultatet i en datatabell i R med hjälp av grundkoden nedan. Om du saknar en tärning, fråga lämplig person om du kan få en. Behåll tärningen, den behövs till nästa datorövning (och närhelst man står inför ett avgörande livsbeslut).</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="datahantering-och-grafer.html#cb37-1" tabindex="-1"></a>dat_dice <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Kast =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>),</span>
+<span id="cb37-2"><a href="datahantering-och-grafer.html#cb37-2" tabindex="-1"></a>                       <span class="at">Utfall =</span> <span class="fu">c</span>(_,_,_,_,_,_,_,_,_,_))</span>
+<span id="cb37-3"><a href="datahantering-och-grafer.html#cb37-3" tabindex="-1"></a>dat_dice</span></code></pre></div>
+</div>
+<p>Objektet <code>dat</code> är av typen <code>data.frame</code> - en tabell med rader och kolumner. Man kan ange en specifik kolumn i en data.frame med dollartecken följt av kolumnens namn.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="datahantering-och-grafer.html#cb38-1" tabindex="-1"></a>dat<span class="sc">$</span>Vikt</span></code></pre></div>
+<pre><code>##  [1]  232  161  148  368  218  257 1633 2213  972 2560 2430  855</code></pre>
+<p>Man kan också plocka ut rader och kolumner med hakparenteser och ordningstal.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="datahantering-och-grafer.html#cb40-1" tabindex="-1"></a>dat[<span class="dv">2</span>,<span class="dv">3</span>]          <span class="co"># Andra raden och tredje kolumnen</span></span>
+<span id="cb40-2"><a href="datahantering-och-grafer.html#cb40-2" tabindex="-1"></a>dat[<span class="dv">2</span>, ]          <span class="co"># Tomt värde ger alla värden. Här alla värden i rad 2</span></span>
+<span id="cb40-3"><a href="datahantering-och-grafer.html#cb40-3" tabindex="-1"></a>dat[ ,<span class="dv">3</span>]          <span class="co"># Alla värden i kolumn 3</span></span></code></pre></div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-13" class="exercise"><strong>Uppgift 1.13  (Plocka ut en specifik kolumn) </strong></span>I den tidigare övningen skapade du ett objekt <code>dat_dice</code>. Använd dollartecken för att plocka ut kolumnen <em>Utfall</em> från det objektet.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="datahantering-och-grafer.html#cb41-1" tabindex="-1"></a>dat_dice<span class="sc">$</span>___</span></code></pre></div>
+</div>
+<p>Genom att plocka ut en kolumn från en data.frame kan man beräkna vanlig beskrivande statistik med funktioner som <code>mean()</code> (medelvärde) och <code>sd()</code> (standardavvikelsen).</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="datahantering-och-grafer.html#cb42-1" tabindex="-1"></a><span class="fu">mean</span>(dat<span class="sc">$</span>Vikt)</span></code></pre></div>
+<pre><code>## [1] 1003.917</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="datahantering-och-grafer.html#cb44-1" tabindex="-1"></a><span class="fu">sd</span>(dat<span class="sc">$</span>Vikt)</span></code></pre></div>
+<pre><code>## [1] 951.3067</code></pre>
+<p>Funktionen <code>plot()</code> ger en enkel graf.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="datahantering-och-grafer.html#cb46-1" tabindex="-1"></a><span class="fu">plot</span>(dat<span class="sc">$</span>Vecka, dat<span class="sc">$</span>Vikt)</span></code></pre></div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-14" class="exercise"><strong>Uppgift 1.14  (Alea iacta est) </strong></span>Använd datan i objektet <code>dat_dice</code> och skapa ett diagram med kolumnen kast på x-axeln och kolumnen Utfall på y-axeln.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="datahantering-och-grafer.html#cb47-1" tabindex="-1"></a><span class="fu">plot</span>(dat_dice<span class="sc">$</span>___, dat_dice<span class="sc">$</span>___)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="urval-ur-en-tabell-med-select-och-filter" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Urval ur en tabell med <code>select</code> och <code>filter</code><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En vanlig operation på en tabell är att göra ett urval - antingen ett urval av rader (t.ex. en viss artist), vilket kallas <em>filtrering</em> eller ett urval av variabler (t.ex. artist och albumnamn), vilket kallas <em>selektion</em>. Här tittar vi på hur det kan göras med funktionerna <code>filter()</code> och <code>select()</code> från paketet <code>tidyverse</code>. Vi använder gapminder-datan som kan laddas med <code>library(gapminder)</code>.</p>
+<p>För att filtrera på ett givet land kan man använda pipe-funktionen från datan till en filter-funktion, t.ex.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="datahantering-och-grafer.html#cb48-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span>                     <span class="co"># Ta gapminder-datan och sen</span></span>
+<span id="cb48-2"><a href="datahantering-och-grafer.html#cb48-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Sweden&quot;</span>)     <span class="co"># filtrera för ett land</span></span></code></pre></div>
+<p>Inom filterfunktionen anges ett logisk villkor <code>country == "Sweden"</code> och utfallet är de rader där villkoret är sant. Notera de dubbla likhetstecknen - de måste användas för ett logisk villkor eftersom enkelt likhetstecken används för att skapa objekt och sätta funktionsargument.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-15" class="exercise"><strong>Uppgift 1.15  (Filtrera för land) </strong></span>Vad måste ändras i koden för att istället plocka ut rader där landet är Finland? Hur många rader har det urvalet i datan?</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="datahantering-och-grafer.html#cb49-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span>                     <span class="co"># Ta gapminder-datan och sen</span></span>
+<span id="cb49-2"><a href="datahantering-och-grafer.html#cb49-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Sweden&quot;</span>)     <span class="co"># filtrera för ett land</span></span></code></pre></div>
+</div>
+<p>Om man vill välja flera artister kan man använda funktionen <code>%in%</code> på ett liknande sätt.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="datahantering-och-grafer.html#cb50-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb50-2"><a href="datahantering-och-grafer.html#cb50-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Sweden&quot;</span>, <span class="st">&quot;Finland&quot;</span>))</span></code></pre></div>
+<p>och om man vill ha mer än ett villkor kan man rada dem i filter-funktionen:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="datahantering-och-grafer.html#cb51-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span>                                   <span class="co"># Ta datan, och sen</span></span>
+<span id="cb51-2"><a href="datahantering-och-grafer.html#cb51-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Sweden&quot;</span>, <span class="st">&quot;Finland&quot;</span>),   <span class="co"># filtrera för länder</span></span>
+<span id="cb51-3"><a href="datahantering-och-grafer.html#cb51-3" tabindex="-1"></a>         year <span class="sc">==</span> <span class="dv">2002</span>)                          <span class="co"># och för år</span></span></code></pre></div>
+<p>För att se fler eller färre rader kan man använda en pipe <code>%&gt;%</code> till funktionen <code>print()</code>. Följande skriver ut fem rader</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="datahantering-och-grafer.html#cb52-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span>                                     <span class="co"># Ta datan, och sen</span></span>
+<span id="cb52-2"><a href="datahantering-och-grafer.html#cb52-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Sweden&quot;</span>, <span class="st">&quot;Finland&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co"># filtrera för specifika länder</span></span>
+<span id="cb52-3"><a href="datahantering-och-grafer.html#cb52-3" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>Om man istället vill göra ett urval av kolumner kan man använda <code>select()</code>. Som argument anges de kolumner man vill välja, t.ex.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="datahantering-och-grafer.html#cb53-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span>                   <span class="co"># Ta datan, och sen</span></span>
+<span id="cb53-2"><a href="datahantering-och-grafer.html#cb53-2" tabindex="-1"></a>  <span class="fu">select</span>(country, lifeExp)      <span class="co"># välj kolumnerna country och lifeExp</span></span></code></pre></div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-16" class="exercise"><strong>Uppgift 1.16  (Befolkade länder) </strong></span>Funktionen <code>arrange()</code> sorterar data efter en angiven kolumn. Följande stycke ger oss Europas länder efter befolkning.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="datahantering-och-grafer.html#cb54-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span>                                    </span>
+<span id="cb54-2"><a href="datahantering-och-grafer.html#cb54-2" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>, year <span class="sc">==</span> <span class="dv">1962</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb54-3"><a href="datahantering-och-grafer.html#cb54-3" tabindex="-1"></a>  <span class="fu">select</span>(country, lifeExp, pop) <span class="sc">%&gt;%</span></span>
+<span id="cb54-4"><a href="datahantering-och-grafer.html#cb54-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>pop)                                   </span></code></pre></div>
+<p>Gör lämpliga ändringar för att få Asiens länder från 2002 ordnade efter förväntad medellivslängd.</p>
+</div>
+</div>
+<div id="grafer-med-ggplot2" class="section level2 hasAnchor" number="1.7">
+<h2><span class="header-section-number">1.7</span> Grafer med <code>ggplot2</code><a href="datahantering-och-grafer.html#grafer-med-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Vi kan nu börja titta på grafer. R har en mängd grundläggande funktioner för grafer. Vi såg tidigare ett exempel på funktionen <code>plot()</code>.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="datahantering-och-grafer.html#cb55-1" tabindex="-1"></a>gm_2002 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2002</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="datahantering-och-grafer.html#cb56-1" tabindex="-1"></a><span class="fu">plot</span>(gm_2002<span class="sc">$</span>lifeExp, gm_2002<span class="sc">$</span>gdpPercap)</span></code></pre></div>
+<p>Ett object <code>gm_2002</code>skapas efter att ha filtrerat för året 2002. Tecknet <code>$</code> används för att välja kolumnerna lifeExp och gdpPercap ur objektet <code>gm_2002</code>.</p>
+<p>För mer avancerade grafer används dock ofta funktioner ur Rs paketbibliotek. Här illustreras det mest populära - <code>ggplot2</code>. I <code>ggplot2</code> byggs grafer upp med tre grundläggande byggstenar:</p>
+<ul>
+<li><em>data</em>, informationen man vill visualisera,</li>
+<li><em>aestethics</em>, en koppling mellan data och visuella element såsom grafens axlar, objekts storlek och färg,</li>
+<li><em>geometries</em>, de geometriska former som visas i grafen.</li>
+</ul>
+<p>En graf skrivs med en startfunktion <code>ggplot</code> som anger namnet på datan och grafens <em>aestethics</em>, och därefter sätts geometriska element genom funktioner som börjar med <code>geom_</code>. Ett spridningsdiagram kan t.ex. skapas med <code>geom_point</code>.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="datahantering-och-grafer.html#cb57-1" tabindex="-1"></a><span class="fu">ggplot</span>(gm_2002, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">y =</span> gdpPercap)) <span class="sc">+</span> </span>
+<span id="cb57-2"><a href="datahantering-och-grafer.html#cb57-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p>Grafen kan byggas ut genom att sätta <em>aestethics</em> för färg och storlek. Man kan också dela en graf i småfönster med <code>facet_wrap</code> och styra grafens utseende genom att sätta ett tema såsom <code>theme_bw</code>.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="datahantering-och-grafer.html#cb58-1" tabindex="-1"></a><span class="fu">ggplot</span>(gm_2002, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">y =</span> gdpPercap, <span class="at">color =</span> continent, <span class="at">size =</span> pop)) <span class="sc">+</span></span>
+<span id="cb58-2"><a href="datahantering-och-grafer.html#cb58-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb58-3"><a href="datahantering-och-grafer.html#cb58-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent)</span></code></pre></div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-17" class="exercise"><strong>Uppgift 1.17  (Livslängd över tid) </strong></span>Vad ska ändras i stycket nedan för att skapa en graf med år på x-axeln, medellivslängd på y-axeln och skilda småfönster för olika kontinenter?</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="datahantering-och-grafer.html#cb59-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_small, <span class="fu">aes</span>(<span class="at">x =</span> ____, <span class="at">y =</span> ____)) <span class="sc">+</span> </span>
+<span id="cb59-2"><a href="datahantering-och-grafer.html#cb59-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb59-3"><a href="datahantering-och-grafer.html#cb59-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent)</span></code></pre></div>
+</div>
+<p>Andra graftyper kan skapas med andra <code>geom_</code>-funktioner. Stapeldiagram ges av <code>geom_col</code> (<code>col</code> för <em>column</em>). Man kan också använda <code>geom_bar</code> om man bara vill räkna antal rader per någon kategori.
+Följande väljer ut en kontinent och år och plottar ländernas befolkning stapeldiagram.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="datahantering-och-grafer.html#cb60-1" tabindex="-1"></a>dat_small <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="datahantering-och-grafer.html#cb60-2" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>, year <span class="sc">==</span> <span class="st">&quot;2002&quot;</span>)</span>
+<span id="cb60-3"><a href="datahantering-och-grafer.html#cb60-3" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="datahantering-och-grafer.html#cb60-4" tabindex="-1"></a><span class="fu">ggplot</span>(dat_small, <span class="fu">aes</span>(pop, country, <span class="at">fill =</span> gdpPercap)) <span class="sc">+</span></span>
+<span id="cb60-5"><a href="datahantering-och-grafer.html#cb60-5" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p>Argumentet <code>fill</code> styr färgen för ytor (här staplarnas ytor) medan <code>color</code> i <code>geom_col()</code> styr kanten runt varje stapel.</p>
+<p>Man kan styra grafiken i en <code>ggplot</code> genom funktionen <code>theme()</code>. Det är ett ganska komplicerat ämne, men låt oss titta på några grunder. Vi börjar med att skapa en enkel graf: en boxplot över medellivslängd per kontinent.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="datahantering-och-grafer.html#cb61-1" tabindex="-1"></a>dat_small <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="datahantering-och-grafer.html#cb61-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2002</span>)</span>
+<span id="cb61-3"><a href="datahantering-och-grafer.html#cb61-3" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="datahantering-och-grafer.html#cb61-4" tabindex="-1"></a><span class="fu">ggplot</span>(dat_small, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">y =</span> continent)) <span class="sc">+</span> </span>
+<span id="cb61-5"><a href="datahantering-och-grafer.html#cb61-5" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p>Vi kan ändra utseendet på grafen genom argument inom geometrier och med funktionen <code>theme()</code>. I <code>theme()</code> sätter man de specifika egenskaper man vill ändra genom att tillskriva dem ett <em>element</em>. Valet av element beror på typen av grafiskt objekt - text sätts t.ex. med <code>element_text()</code> och ytor med <code>element_rect()</code> (för <em>rectangle</em>). Vi ger ett exempel med ändrad bakgrund, rutmönster, och teckenstorlek.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="datahantering-och-grafer.html#cb62-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_small, <span class="fu">aes</span>(lifeExp, continent)) <span class="sc">+</span></span>
+<span id="cb62-2"><a href="datahantering-och-grafer.html#cb62-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb62-3"><a href="datahantering-och-grafer.html#cb62-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;red3&quot;</span>),</span>
+<span id="cb62-4"><a href="datahantering-och-grafer.html#cb62-4" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">family =</span> <span class="st">&quot;serif&quot;</span>),</span>
+<span id="cb62-5"><a href="datahantering-och-grafer.html#cb62-5" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>),</span>
+<span id="cb62-6"><a href="datahantering-och-grafer.html#cb62-6" tabindex="-1"></a>        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;grey30&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb62-7"><a href="datahantering-och-grafer.html#cb62-7" tabindex="-1"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-18" class="exercise"><strong>Uppgift 1.18  (Temaval 1) </strong></span>Ändra färgvalen i grafen ovan för att skapa snyggast möjliga graf. Funktionen <code>colors()</code> ger de färger som finns tillängliga i R. Man kan också använda hex-koden för färger, t.ex. <code>fill = "#ffdd00"</code>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-19" class="exercise"><strong>Uppgift 1.19  (Temaval 2) </strong></span>Ändra färgvalen i grafen ovan för att skapa fulast möjliga graf. Visa de två graferna för någon annan och se om de kan säga vilken som är vilken.</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="installation-av-r-och-rstudio.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ai-uppgift-i.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "sepia",
+"family": "serif",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["R-anvisningar.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
