@@ -318,7 +318,7 @@ plot(dat_dice$___, dat_dice$___)
 
 ## Urval ur en tabell med `select` och `filter`
 
-En vanlig operation på en tabell är att göra ett urval - antingen ett urval av rader (t.ex. en viss artist), vilket kallas *filtrering* eller ett urval av variabler (t.ex. artist och albumnamn), vilket kallas *selektion*. Här tittar vi på hur det kan göras med funktionerna `filter()` och `select()` från paketet `tidyverse`. Vi använder gapminder-datan som kan laddas med `library(gapminder)`.
+En vanlig operation på en tabell är att göra ett urval - antingen ett urval av rader (t.ex. ett visst land), vilket kallas *filtrering* eller ett urval av variabler (t.ex. land och befolkning), vilket kallas *selektion*. Här tittar vi på hur det kan göras med funktionerna `filter()` och `select()` från paketet `tidyverse`. Vi använder gapminder-datan som kan laddas med `library(gapminder)`.
 
 För att filtrera på ett givet land kan man använda pipe-funktionen från datan till en filter-funktion, t.ex.
 
@@ -338,7 +338,7 @@ gapminder %>%                     # Ta gapminder-datan och sen
 ```
 :::
 
-Om man vill välja flera artister kan man använda funktionen `%in%` på ett liknande sätt.
+Om man vill välja flera länder kan man använda funktionen `%in%` på ett liknande sätt.
 
 ```{r, eval=F}
 gapminder %>%

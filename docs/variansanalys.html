@@ -475,26 +475,26 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb338-4"><a href="variansanalys.html#cb338-4" tabindex="-1"></a><span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> group, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <pre><code>## $emmeans
 ##  group emmean    SE df lower.CL upper.CL
-##  a     -0.105 0.282 45   -0.674    0.463
-##  b      0.140 0.282 45   -0.429    0.708
-##  c     -0.209 0.282 45   -0.777    0.360
-##  d     -0.361 0.282 45   -0.929    0.208
-##  e      0.424 0.282 45   -0.144    0.993
+##  a     -0.277 0.345 45   -0.972    0.418
+##  b      0.347 0.345 45   -0.348    1.042
+##  c      0.188 0.345 45   -0.507    0.883
+##  d      0.436 0.345 45   -0.259    1.131
+##  e     -0.279 0.345 45   -0.974    0.416
 ## 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ##  contrast estimate    SE df t.ratio p.value
-##  a - b      -0.245 0.399 45  -0.614  0.5420
-##  a - c       0.103 0.399 45   0.259  0.7967
-##  a - d       0.256 0.399 45   0.640  0.5254
-##  a - e      -0.530 0.399 45  -1.327  0.1913
-##  b - c       0.349 0.399 45   0.874  0.3870
-##  b - d       0.501 0.399 45   1.255  0.2161
-##  b - e      -0.284 0.399 45  -0.712  0.4800
-##  c - d       0.152 0.399 45   0.381  0.7050
-##  c - e      -0.633 0.399 45  -1.586  0.1198
-##  d - e      -0.785 0.399 45  -1.967  0.0554</code></pre>
+##  a - b    -0.62426 0.488 45  -1.279  0.2073
+##  a - c    -0.46524 0.488 45  -0.953  0.3455
+##  a - d    -0.71337 0.488 45  -1.462  0.1507
+##  a - e     0.00216 0.488 45   0.004  0.9965
+##  b - c     0.15902 0.488 45   0.326  0.7460
+##  b - d    -0.08911 0.488 45  -0.183  0.8559
+##  b - e     0.62642 0.488 45   1.284  0.2058
+##  c - d    -0.24813 0.488 45  -0.509  0.6136
+##  c - e     0.46740 0.488 45   0.958  0.3432
+##  d - e     0.71553 0.488 45   1.466  0.1495</code></pre>
 <p>Kör koden tio gånger. Hur många gånger av de tio ger de parvisa jämförelserna <em>någon</em> signifikant skillnad (det vill säga något p-värde under 0.05)?</p>
 <p>En passande xkcd-serie: <a href="https://xkcd.com/882/" class="uri">https://xkcd.com/882/</a></p>
 </div>

@@ -423,7 +423,7 @@ Notera att det är möjligt att skapa ett objekt med namnet <code>c</code> trots
 </div>
 <div id="urval-ur-en-tabell-med-select-och-filter" class="section level2 hasAnchor" number="1.6">
 <h2><span class="header-section-number">1.6</span> Urval ur en tabell med <code>select</code> och <code>filter</code><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>En vanlig operation på en tabell är att göra ett urval - antingen ett urval av rader (t.ex. en viss artist), vilket kallas <em>filtrering</em> eller ett urval av variabler (t.ex. artist och albumnamn), vilket kallas <em>selektion</em>. Här tittar vi på hur det kan göras med funktionerna <code>filter()</code> och <code>select()</code> från paketet <code>tidyverse</code>. Vi använder gapminder-datan som kan laddas med <code>library(gapminder)</code>.</p>
+<p>En vanlig operation på en tabell är att göra ett urval - antingen ett urval av rader (t.ex. ett visst land), vilket kallas <em>filtrering</em> eller ett urval av variabler (t.ex. land och befolkning), vilket kallas <em>selektion</em>. Här tittar vi på hur det kan göras med funktionerna <code>filter()</code> och <code>select()</code> från paketet <code>tidyverse</code>. Vi använder gapminder-datan som kan laddas med <code>library(gapminder)</code>.</p>
 <p>För att filtrera på ett givet land kan man använda pipe-funktionen från datan till en filter-funktion, t.ex.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="datahantering-och-grafer.html#cb48-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span>                     <span class="co"># Ta gapminder-datan och sen</span></span>
 <span id="cb48-2"><a href="datahantering-och-grafer.html#cb48-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Sweden&quot;</span>)     <span class="co"># filtrera för ett land</span></span></code></pre></div>
@@ -433,7 +433,7 @@ Notera att det är möjligt att skapa ett objekt med namnet <code>c</code> trots
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="datahantering-och-grafer.html#cb49-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span>                     <span class="co"># Ta gapminder-datan och sen</span></span>
 <span id="cb49-2"><a href="datahantering-och-grafer.html#cb49-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Sweden&quot;</span>)     <span class="co"># filtrera för ett land</span></span></code></pre></div>
 </div>
-<p>Om man vill välja flera artister kan man använda funktionen <code>%in%</code> på ett liknande sätt.</p>
+<p>Om man vill välja flera länder kan man använda funktionen <code>%in%</code> på ett liknande sätt.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="datahantering-och-grafer.html#cb50-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
 <span id="cb50-2"><a href="datahantering-och-grafer.html#cb50-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Sweden&quot;</span>, <span class="st">&quot;Finland&quot;</span>))</span></code></pre></div>
 <p>och om man vill ha mer än ett villkor kan man rada dem i filter-funktionen:</p>

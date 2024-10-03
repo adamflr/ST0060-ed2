@@ -720,7 +720,7 @@ Använd datan i objektet \texttt{dat\_dice} och skapa ett diagram med kolumnen k
 
 \section{\texorpdfstring{Urval ur en tabell med \texttt{select} och \texttt{filter}}{Urval ur en tabell med select och filter}}\label{urval-ur-en-tabell-med-select-och-filter}
 
-En vanlig operation på en tabell är att göra ett urval - antingen ett urval av rader (t.ex. en viss artist), vilket kallas \emph{filtrering} eller ett urval av variabler (t.ex. artist och albumnamn), vilket kallas \emph{selektion}. Här tittar vi på hur det kan göras med funktionerna \texttt{filter()} och \texttt{select()} från paketet \texttt{tidyverse}. Vi använder gapminder-datan som kan laddas med \texttt{library(gapminder)}.
+En vanlig operation på en tabell är att göra ett urval - antingen ett urval av rader (t.ex. ett visst land), vilket kallas \emph{filtrering} eller ett urval av variabler (t.ex. land och befolkning), vilket kallas \emph{selektion}. Här tittar vi på hur det kan göras med funktionerna \texttt{filter()} och \texttt{select()} från paketet \texttt{tidyverse}. Vi använder gapminder-datan som kan laddas med \texttt{library(gapminder)}.
 
 För att filtrera på ett givet land kan man använda pipe-funktionen från datan till en filter-funktion, t.ex.
 
@@ -746,7 +746,7 @@ Vad måste ändras i koden för att istället plocka ut rader där landet är Fi
 
 \end{exercise}
 
-Om man vill välja flera artister kan man använda funktionen \texttt{\%in\%} på ett liknande sätt.
+Om man vill välja flera länder kan man använda funktionen \texttt{\%in\%} på ett liknande sätt.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2180,13 +2180,13 @@ Följande kod simulerar ett dataset om tio observationer från en normalfördeln
 ##  One Sample t-test
 ## 
 ## data:  dat_sim$x
-## t = 1.5263, df = 9, p-value = 0.1613
+## t = 0.14745, df = 9, p-value = 0.886
 ## alternative hypothesis: true mean is not equal to 7
 ## 95 percent confidence interval:
-##   6.091221 11.678852
+##   3.484551 11.005682
 ## sample estimates:
 ## mean of x 
-##  8.885036
+##  7.245117
 \end{verbatim}
 
 \begin{exercise}[Upprepad simulering]
@@ -2231,7 +2231,7 @@ Vidare ska p-värdet vara under fem procent fem procent av gångerna.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.045
+## [1] 0.073
 \end{verbatim}
 
 Även det stämmer någorlunda väl. Det här innebär alltså att om man har en signifikansnivå på fem procent kommer man förkasta nollhypotesen fem procent av gångerna även om nollhypotesen stämmer. Det kallas ett \emph{falskt positivt} utfall.
@@ -4511,26 +4511,26 @@ Anledning till att vi justerar p-värden är att man vid varje test har en sanno
 \begin{verbatim}
 ## $emmeans
 ##  group  emmean    SE df lower.CL upper.CL
-##  a      0.0857 0.316 45   -0.551    0.722
-##  b     -0.7415 0.316 45   -1.378   -0.105
-##  c      0.1142 0.316 45   -0.522    0.751
-##  d      0.0922 0.316 45   -0.544    0.729
-##  e     -0.2515 0.316 45   -0.888    0.385
+##  a     -0.4867 0.296 45   -1.082   0.1090
+##  b     -0.0661 0.296 45   -0.662   0.5296
+##  c     -0.0741 0.296 45   -0.670   0.5216
+##  d     -0.2872 0.296 45   -0.883   0.3085
+##  e     -0.5184 0.296 45   -1.114   0.0773
 ## 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ##  contrast estimate    SE df t.ratio p.value
-##  a - b     0.82723 0.447 45   1.851  0.0708
-##  a - c    -0.02850 0.447 45  -0.064  0.9494
-##  a - d    -0.00646 0.447 45  -0.014  0.9885
-##  a - e     0.33729 0.447 45   0.755  0.4544
-##  b - c    -0.85572 0.447 45  -1.915  0.0619
-##  b - d    -0.83369 0.447 45  -1.865  0.0687
-##  b - e    -0.48994 0.447 45  -1.096  0.2788
-##  c - d     0.02204 0.447 45   0.049  0.9609
-##  c - e     0.36579 0.447 45   0.818  0.4174
-##  d - e     0.34375 0.447 45   0.769  0.4458
+##  a - b    -0.42059 0.418 45  -1.006  0.3200
+##  a - c    -0.41258 0.418 45  -0.986  0.3292
+##  a - d    -0.19950 0.418 45  -0.477  0.6357
+##  a - e     0.03168 0.418 45   0.076  0.9400
+##  b - c     0.00801 0.418 45   0.019  0.9848
+##  b - d     0.22109 0.418 45   0.529  0.5997
+##  b - e     0.45227 0.418 45   1.081  0.2853
+##  c - d     0.21308 0.418 45   0.509  0.6129
+##  c - e     0.44425 0.418 45   1.062  0.2938
+##  d - e     0.23117 0.418 45   0.553  0.5832
 \end{verbatim}
 
 Kör koden tio gånger. Hur många gånger av de tio ger de parvisa jämförelserna \emph{någon} signifikant skillnad (det vill säga något p-värde under 0.05)?
