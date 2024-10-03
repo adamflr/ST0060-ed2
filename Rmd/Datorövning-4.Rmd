@@ -3,17 +3,21 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
-# Ett stickprov av normalfördelad data
+# Ett stickprov av icke-normalfördelad data
 
-Datorövning 4 handlar om hypotestest och konfidensintervall för ett stickprov av normalfördelad data. Efter övningen ska vi kunna
+Datorövning 4 handlar om hypotestest och konfidensintervall för ett stickprov av icke-normalfördelad data. Efter övningen ska vi kunna
 
-- genomföra och tolka ett t-test för normalfördelad data,
+- genomföra och tolka ett z-test för proportioner,
 
-- beräkna och tolka ett konfidensintervall för normalfördelad data,
+- genomföra och tolka ett chi-två-test för nominal data
 
-- använda simulerad data för att förstå t-testets egenskaper.
+- beräkna och tolka ett konfidensintervall för proportioner,
 
-## Repetition av datorövning 3
+- använda simulerad data för att förstå testens egenskaper.
+
+Om det finns tid för en bonussektion kommer vi också titta på interaktiva kartor med `leaflet`.
+
+## Repetition av datorövning 4
 
 När man startar en ny R-session bör man ladda de paket man vet kommer behövas med `library()`. Om paket inte finns installerade måste man först köra `install.packages()`.
 
@@ -22,465 +26,467 @@ När man startar en ny R-session bör man ladda de paket man vet kommer behövas
 library(tidyverse)
 ```
 
-I datorövning 3 tittade vi på funktioner för att ta fram sannolikheter och slumptal från någon given fördelning. 
+I datorövning 4 tittade vi på analys av ett stickprov av normalfördelad data. Det underliggande upplägget är att vi vill säga något om en population genom att titta på ett stickprov. Ett *t-test* kan användas för att testa en given *nollhypotes*. Ett konfidensintervall ringar in populationens medelvärde med en viss konfidensgrad - oftast 95 procent. Ett normalfördelningsantagande kan undersökas med histogram eller QQ-grafer.
 
-Sannolikhetsfunktionen - som anger sannolikheten för ett specifikt utfall - kan i R tas fram med funktioner som börjar med `d`, till exempel `dbinom()` och `dpois()`. För en kontinuerlig slumpvariabel ger `d` istället täthetsfunktionens värde, till exempel `dnorm()` för normalfördelningen.
+Ta som exempel följande data på jord-pH och låt oss anta att det är relevant att testa om populationens medelvärde är 7.
 
-Binomialfördelningen är en fördelning för summan av positiva utfall vid n upprepningar av likadana binära slumphändelser. Fördelningens parametrar är n - antalet försök, och p - sannolikheten för varje enskilt försök. Ett exempel kan vara att man kastar en tiosidig tärning fem gånger och tittar på antalet ettor. Följande beräkning ger sannolikheten att få tre ettor vid fem kast. 
+```{r, fig.height=2.5}
+dat_pH <- data.frame(pH = c(6.3, 6.55, 6.75, 6.4, 7.25, 6.65, 6.8, 7.3, 7.15, 6.7))
 
-```{r}
-dbinom(3, 5, prob = 0.1)
+ggplot(dat_pH, aes(pH, 0)) +
+  geom_point(size = 4) +
+  geom_vline(xintercept = 7, size = 5, color = "red", alpha = 0.4) +
+  theme(axis.text.y = element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.ticks = element_blank())
 ```
 
-Poissonfördelning är en fördelning för antalet händelser om händelsen potentiellt kan inträffa väldigt ofta men gör så med låg sannolikhet. Fördelningen har en parameter, lambda, och vanliga exempel är observationer av ovanliga arter och olika typer av sällsynta händelser. Säg som exempel att någon art vanligen observeras tio gånger per år i en viss region. Sannolikheten för exakt fem observationer ett visst år ges av
+Hypoteser ges av
+
+- H0: mu lika med 7
+- H1: mu ej lika med 7
+
+Testet kan genomföras med funktionen `t.test()`.
 
 ```{r}
-dpois(5, lambda = 10)
+t.test(dat_pH$pH, mu = 7)
 ```
 
-Fördelningsfunktionen - som anger sannolikhet under eller lika med ett givet värde - tas fram med funktioner som börjar på `p`, till exempel `pbinom()`, `ppois()` och `pnorm()`. Fördelningsfunktionen är särskilt användbar för normalfördelningen. Om en plantas höjd tros vara normalfördelad med medelvärde 10 cm och standardavvikelse 2, kan man beräkna sannolikheten att en slumpmässigt vald planta är över 13 cm.
+Ett p-värde över 0.05 ger att vi inte förkastar nollhypotesen - den observerade skillnaden mot 7 är inte statistiskt signifikant. Konfidensintervallet ger att populationens medelvärde ligger mellan 6.54 och 7.03 med 95 procents konfidens.
+
+En QQ-graf kan visa om det finns några avvikelser från normalantagandet. Med små datamängder är det oftast svårt att se några tydliga tecken på icke-normalitet.
+
+```{r, fig.height=3, fig.width=3}
+ggplot(dat_pH, aes(sample = pH)) +
+  geom_qq() +
+  geom_qq_line()
+```
+
+## Proportioner från binär data
+
+Binär data är data där en observation har ett av två utfall, vilka kan kodas som noll och ett. Man talar ibland om utfallet ett som ett *positivt* utfall. Binär data kan sammanfattas med en proportion - antalet positiva utfall delat på det totala antalet upprepningar. En proportion kan testas med ett z-test för proportioner (eller *relativ frekvens*). Testet följer stegen för hypotestest (Hypoteser - Testvärde - Testfördelning - P-värde (eller jämförelse med kritiskt värde) - Slutsats). 
+
+Låt oss importera lite exempeldata och beräkna ett exempel. Följande rad importerar matchresultat i fotbollsallsvenskan för damer 2000-2020.
 
 ```{r}
-1 - pnorm(13, mean = 10, sd = 2)
-```
-
-Eftersom `pnorm()` ger sannolikheten *under* 13, ger ett minus den sannolikheten värdet *över* 13.
-
-Slumputfall kan beräknas med funktionen `sample()`, till exempel `sample(1:6, 10000000, replace = T)` för tio miljoner tärningskast. För specifika fördelningar finns särskilda funktioner som `rbinom()`, `rpois()` och `rnorm()`.
-
-## Test av medelvärde för normalfördelad data
-
-Om man har en normalfördelad variabel och vill testa om populationens medelvärde är skilt från något hypotetiskt värde $\mu_0$ kan man använda ett *t-test för ett stickprov*. Ta som exempel följande data på 8 observationer av havreskörd. Av någon historisk anledning vill man testa om populationsmedelvärdet är skilt från 50.
-
-```{r, fig.height=2}
 library(tidyverse)
+dat_alls <- read_csv("https://raw.githubusercontent.com/adamflr/ST0060/main/Data/Allsvenskan%2C%20damer%2C%202000-2020.csv")
 
-dat <- data.frame(x = c(49.8, 58.4, 49.4, 57.1, 52.2, 49.1, 44.6, 55.4))
-dat
-
-ggplot(dat, aes(x, 0)) + 
-  geom_point() +
-  geom_vline(xintercept = 50, color = "red")
+ggplot(dat_alls, aes(hemmamal, bortamal)) +
+  geom_jitter(size = 0.1)
 ```
 
-I grafen ser vi att värdena ligger jämt spridda kring 50, så 50 är nog ganska rimligt som medelvärde, men låt oss göra ett formellt test. 
-I R kan ett t-test genomföras med `t.test()`.
+::: {.exercise name="En interaktiv målgraf"}
+Kör stycket nedan för en interaktiv målgraf. Vilken match gav det högsta antalet gjorda bortamål?
+```{r, eval = F}
+# install.packages(plotly)
+library(plotly)
+g <- ggplot(dat_alls, aes(hemmamal, bortamal, text = paste(sasong, hemma, "-", borta))) +
+  geom_jitter(size = 0.1)
+
+ggplotly(g)
+```
+:::
+
+Gammal bollkunskap säger att var tredje match är en bortavinst. Vi kan testa det med ett z-test för proportioner. För att ta fram antalet bortasegrar och totalt antal matcher använder vi `count()` på kolumnen `resultat`. Man kan också använda funktionen `table()` för ett liknande resultat.
 
 ```{r}
-t.test(dat$x, mu = 50)   # Ett t-test på variabeln x i dataobjektet dat
+dat_alls %>% count(resultat)
+table(dat_alls$resultat)
 ```
 
-Utskriften ger ett p-värde från vilket vi kan dra en slutsats. I det här fallet är p-värdet högt (över fem procent) så vi kan inte förkasta nollhypotesen (vilken är att populationsmedelvärdet är lika med 50).
-
-Vi tittar nu på stegen bakom t-testet.
-Ett t-test bygger, som alla hypotestest, på en serie steg:
-
-1. sätt upp en *nollhypotes* och en *alternativhypotes*,
-2. beräkna ett *testvärde* från en testfunktion,
-3. identifiera en *testfördelning*,
-4. beräkna ett *p-värde*, eller uppskatta ett genom att ställa testvärde mot ett kritiskt värde,
-5. dra en klar *slutsats* om statistisk signifikans.
-
-Vi vill testa om medelskörden är skild från 50, så hypoteser ges av
-
-- H0: mu lika med 50
-- H1: mu ej lika med 50
-
-Alternativhypotesen är tvåsidig - vi tittar både på möjligheten att populationsmedelvärdet är större och på möjligheten att det är mindre.
-
-::: {.exercise name="Ensidig mothypotes"}
-Hur hade hypoteserna sett ut om vi ville testa om medelvärdet är *större* än 50?
-:::
-
-Vårt mål är att testa ett medelvärde och det är rimligt att anta normalfördelning för den undersökta variabeln. Det lämpliga testet är då ett t-test för ett stickprov och testvärdet kan beräknas av en testfunktion som ges av det observerade stickprovet minus nollhypotesens värde, delat på standardavvikelsen delat på roten ur antalet observationer. Låt oss beräkna detta i flera steg och jämföra med utskriften från `t.test()`.
+Datan har 947 bortasegrar av totalt 947 + 1803 matcher. Vår skattade proportion `p` och totala antal `n` är alltså
 
 ```{r}
-mean(dat$x)
-sd(dat$x)
+n <- 947 + 1803
+p_est <- 947 / n
 
-t_value <- (52 - 50) / (4.680354 / sqrt(8))
+p_est
+n
 ```
 
-::: {.exercise name="Operationsordning"}
-Räkna ut samma sak på miniräknare eller telefon. Vad händer om man missar parenteser runt `4.680354 / sqrt(8)`?
-:::
+För att genomföra ett z-test sätter vi upp hypoteser om proportionen bortasegrar.
 
-::: {.exercise name="t-värdets delar"}
-Vad händer med t-värdet om något av följande händer, givet att övriga delar är desamma? Det observerade medelvärdet (här 52) ökar. Nollhypotesens värde (här 50) minskar. Standardavvikelsen (här 4.680354) minskar. Antalet observationer (här 8) ökar. 
+- Nollhypotes H0: p lika med 0.33
+- Alternativhypotes H1: p ej lika med 0.33
 
-Testa genom att ändra värdena i kodstycket ovan och beräkna `t_value` på nytt.
-:::
+Ett test kan köras i R med `prop.test()`.
 
-Nästa steg är att identifiera testfördelning, det vill säga den slumpfördelning testvärdet följet om nollhypotesen är sann. Fördelningen ges i regel av statistisk teori. I det här fallet är testfördelning en t-fördelning med n - 1 frihetsgrader. Vi har åtta observationer, så antalet frihetsgrader blir 7. I R kan man ta fram täthetsfunktionen för en t-fördelning med `dt()` och fördelningsfunktionen med `pt()`.
-
-```{r, fig.height=2}
-dat_t <- data.frame(x = seq(-4, 4, 0.1)) %>% 
-  mutate(p = dt(x, df = 7),
-         P = pt(x, df = 7))
-
-ggplot(dat_t, aes(x, p)) +
-  geom_line()
-
-ggplot(dat_t, aes(x, P)) +
-  geom_line()
+```{r}
+prop.test(x = 947, n = 2750, p = 0.33, correct = F)
 ```
 
-Nästa steg i ett hypotestest är att ta fram ett p-värdet. P-värdet kan illustreras som ytan under t-fördelning *bortom* test-värdet. I ett tvåsidigt test tar vi med bägge svansarna.
+P-värdet ställs mot en förbestämd signifikansnivå (vanligen 5 procent). I det här fallet leder det höga p-värdet till att nollhypotesen accepteras.
 
-```{r, fig.height=2}
-ggplot(dat_t) +
+Om vi tar en närmre titt på testets steg brörjar vi med att beräkna ett testvärde.
+
+```{r}
+p0 <- 0.33
+z_value <- (p_est - p0) / sqrt(p0 * (1 - p0) / n)
+z_value
+```
+
+Därefter kan p-värdet räknas ut som arean under en standardiserad normalfördelning bortom z-värdet. Eftersom vi har en tvåsidig mothypotes adderas de två svansarna.
+
+```{r}
+dat_norm <- data.frame(x = seq(-4, 4, 0.1)) %>% 
+  mutate(p = dnorm(x))
+
+ggplot(dat_norm) +
   geom_line(aes(x, p)) +
-  geom_ribbon(aes(x = x, ymin = 0, ymax = p), data = dat_t %>% filter(x > abs(t_value)), fill = "salmon") +
-  geom_ribbon(aes(x = x, ymin = 0, ymax = p), data = dat_t %>% filter(x < -abs(t_value)), fill = "salmon")
+  geom_ribbon(aes(x = x, ymin = 0, ymax = p), data = dat_norm %>% filter(x > abs(z_value)), fill = "salmon") +
+  geom_ribbon(aes(x = x, ymin = 0, ymax = p), data = dat_norm %>% filter(x < -abs(z_value)), fill = "salmon")
 ```
 
-De röda ytorna i *svansarna* motsvarar p-värdet. De anger sannolikheten att få ett större t-värde än det vi fått, under antagandet att nollhypotesen stämmer. Vi kan beräkna p-värdet med `pt()`. För ett tvåsidigt test multipliceras värdet med 2.
+Areans yta kan tas fram med normalfördelningens fördelningsfunktion `pnorm()`.
 
 ```{r}
-2 * pt(-abs(t_value), 7) # Tvåsidigt p-värde
+2 * pnorm(-z_value)
 ```
 
-P-värdet ges av 0.266. En tolkning av det är om försöket upprepas ett stort antal gånger och nollhypotesen är sann, kommer vi 26.6 procent av gångerna få ett större testvärde än 1.2086. Det vi observerar är ganska sannolikt under nollhypotesen, vilket tyder på att nollhypotesen är rimligt.
+Testets p-värde är ungefär 11 procent. Vår observation är alltså inte ett orimligt utfall om den faktiska sannolikheten för bortaseger är 0.33 och vi kan inte förkasta nollhypotesen på femprocentsnivån.
 
-Det avslutande steget är att dra en formell slutsats och ge ett tydligt svar. Det klassiska sättet är att jämföra p-värdet med en förbestämd signifikansnivå, oftast fem procent. Här är p-värdet över den nivån, så vi kan inte förkasta nollhyptesen. Slutsatsen är att det *inte* finns någon signifikant skillnad från 50 i havreskörd.
+Om man löste uppgiften för hand skulle man istället för att beräkna p-värdet jämföra z-värdet med ett kritisk värde ur en tabell. Det kritiska värdet för fem-procentig signifikans är 1.96. Vi kan också ta fram det genom `qnorm(0.975)`.
 
-::: {.exercise name="Kritiskt värde"}
-Om man gör ett t-test för hand kan man inte enkelt ta fram ett p-värde, men kan se om p-värdet är större eller mindre än fem procent genom att ställa testvärdet mot ett kritiskt värde. Använd en tabell för t-fördelning för att hitta det kritiska värdet.
-
-I R kan man ta fram kritiska värden med `qt()`. För fem procent i svansarna har man 0.025 i respektive svans och det kritiska värdet ges av
+Vi kan jämföra den beräkning med den direkta R-funktionen.
 
 ```{r}
-qt(0.975, 7)
+prop.test(x = 947, n = 2750, p = 0.33, correct = F)
+```
+
+Den stegvisa beräkningen gav samma utfall som funktionen (`p-value = 0.01092`). Funktionen ger inte z-värdet utan ett chi-två-värde (2.5661). Här är det värdet lika med z-värdet i kvadrat.
+
+```{r}
+z_value^2
+```
+
+::: {.exercise name="Ensidigt test"}
+Titta på hjälpsidan med `?prop.test`. Hur genomför man ett ensidigt test? Gör lämpligt tillägg för att testa om andelen bortasegrar är större än 0.33.
+:::
+
+::: {.exercise name="Test för proportionen oavgjorda"}
+Samma gamla bollkunskap säger att 20 procent av matcher blir oavgjorda. I datan är 518 av 2750 matcher oavgjorda. Ställ upp hypoteser och fyll i koden nedan för att testa om bollkunskapen stämmer.
+
+```{r, eval = F}
+prop.test(x = ___, n = ___, p = ___, correct = F)
 ```
 :::
 
-Som visades i början har R en specifik funktion för t-testet, `t.test()`. Funktionens argument är datan man testar och ett nollhypotesvärde `mu`. Om man vill ha ett ensidigt test kan det sättas med argumentet `alternative`. För vår data ges testet av
+::: {.exercise name="Test för proportionen hemmasegrar"}
+Slutligen är då resten av matcherna, 1285 av 2750, hemmasegrar. Gammal bollkunskap säger: *47 procent av alla matcher är hemmasegrar*. Genomför ett z-test för att testa det påstående.
 
-```{r}
-t.test(dat$x, mu = 50) # Tvåsidigt test
+```{r, eval = F}
+prop.test(x = ___, n = ___, p = ___, correct = F)
+```
+:::
+
+::: {.exercise name="Population och stickprov"}
+Ett hypotestest bygger på en underliggande tanke med en population (med någon för oss okänd proportion positiva utfall) och ett stickprov (i vilket vi kan observera andelen positiva utfall). Det är inte alltid uppenbart vad som egentligen är populationen. I fallet med fotbollsdatan, vad kan ses som populationen? Hur långt skulle man kunna generalisera de slutsatser man kan dra från datan?
+:::
+
+::: {.exercise name="Guldfiskgenetik"}
+(Fråga från Olsson, *Biometri*) En teori inom genetik förutsäger att tre fjärdedelar i en grupp guldfiskar ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test med `prop.test()` för att se om den faktiska proportionen skiljer sig från 0.75. Lös gärna först uppgiften för hand eller med miniräknare.
+:::
+
+::: {.exercise name="Mer guldfiskgenetik"}
+(Fråga från Olsson, *Biometri*) En konkurrerande teori inom genetik förutsäger att femton sextondelar (proportionen 0.9375) ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test med `prop.test()` för att se om proportionen skiljer sig från 0.9375. Lös gärna först uppgiften för hand eller med miniräknare.
+:::
+
+Hypotestestet för proportioner som används här, *z-testet*, bygger på en normalapproximation av en binomialfördelning. Approximation blir bättre när antalet observationer är stort och nollhypotesens värde p0 ligger nära 0.5. En vanlig tumregel för när approximationen är giltig är att n gånger p0 gånger (1 - p0) ska vara större än 10. För fotbollsdatan över oavgjorda matcher ger det 2750 * 0.2 * 0.8 vilket är klart större än 10.
+
+::: {.exercise name="Giltig approximation"}
+I det andra guldfiskexemplet är antalet observationer 100 och nollhypotesens värde 0.9375. Är normalapproximationen *giltig* i det fallet?
+:::
+
+::: {.exercise name="Fågelproportioner"}
+I ett naturreservat tror man fördelningen av tre fåglar (tärnmås, fiskmås och fisktärna) är 50, 30 respektive 20 procent. En studie ger antalen 115, 54 respektive 31. Genomför tre z-test för att testa den antagna andelarna. För tärnmås får man till exempel `prop.test(115, 200, p = 0.5, correct = F)`.
+:::
+
+::: {.exercise name="Förbestämd signifikans"}
+En intressant egenskap hos proportionstest är att man redan i förväg kan beräkna vilka utfall som ger signifikanta resulat. Säg att man har möjlighet att göra 100 replikat. Ändra i stycket nedan för att hitta det högsta värde på x som ger ett *icke*-signifikant utfall.
+
+```{r, eval = F}
+prop.test(x, n = 100, p = 0.5, correct = F)
 ```
 
-Funktionen skriver ut det beräkna t-värdet, antal frihetsgrader och p-värdet.
-
-::: {.exercise name="Ensigt test"}
-Använd `?t.test` för att ta fram funktionens hjälpsida. Försök att utifrån hjälpsidan beräkna ett *ensidigt* test för att se om medelskörden är *större* än 50.
+Det är möjligt att göra liknande beräkningar för ett t-test för normalfördelad data, men då måste man göra antaganden om standardavvikelsens storlek.
 :::
 
-::: {.exercise name="Ny nollhypotes"}
-Upprepa det tvåsidiga testet från exemplet ovan. Testa denna gång om medelskörden är skild från 48. Dra en tydlig slutsats.
+## Konfidensintervall för proportioner
+
+Konstruktionen av ett konfidensintervall för en proportion är ganska lik konstruktionen för ett medelvärde. För en skattad proportion p och antal observationer n kan man beräkna p plus/minus ett z-värde från tabell gånger medelfelet, där medelfelet ges av roten ur p * (1 - p) / n. För exemplet med bortasegrar i allsvenskan är p = 0.344 och n = 2750. Tabellvärdet hämtas från en tabell över kvantiler. För ett 95-procentigt konfidensintervall tar vi kvantilen 0.975 (2.5 procent i respektive svans) vilket ger värdet 1.96. Konfidensintervallet ges av
+
+```{r}
+n <- 947 + 1803
+p <- 947 / n
+
+p - 1.96 * sqrt(p * (1 - p) / n)
+p + 1.96 * sqrt(p * (1 - p) / n)
+```
+
+Notera att 0.33, det värde som var nollhypotesen i det tidigare testet, *ingår* i intervallet. Om man tittar på utskriften från `prop.test()` kan man se ett konfidensintervall. Det intervallet är dock inte beräknat på samma sätt den formel som förekommer på föreläsningarna. För att få matchande utskrift kan vi använda paketet `binom` och funktionen `binom.asymp()`.
+
+```{r}
+#install.packages("binom")
+library(binom)
+binom.asymp(x = 947, n = 2750)
+```
+
+::: {.exercise name="99-procentigt konfidensintervall"}
+Gör lämplig ändring i koden nedan för att beräkna ett 99-procentigt konfidensintervall för andelen bortasegrar.
+
+```{r, eval = F}
+binom.asymp(x = 947, n = 2750, conf.level = 0.95)
+```
 :::
 
-::: {.exercise name="Importera smältpunkt-data"}
-På canvassidan finns en excelfil med data för kursens uppgifter *Uppgiftsdata.xlsx*. Fliken *Smältdata* innehåller data för en legerings smältpunkt.
+::: {.exercise name="Perfekta utfall"}
+Vad händer om man försöker räkna ut ett konfidensintervall för ett perfekt utfall - t.ex. om man får 100 av 100 positiva utfall?
+:::
 
-Ladda ner filen till lämplig plats på datorn och importera datan genom att fylla i följande rad.
+::: {.exercise name="Konfidensintervall för guldfiskar"}
+Använd funktionen `binom.asymp()` för att ta fram konfidensintervallet för andelen guldfiskar från den tidigare uppgiften. Hur förhåller sig resultatet till nollhypotesernas värden (0.75 respektive 0.9375)? Gör motsvarande beräkning med miniräknare.
+:::
+
+## Chi-två-test för goodness-of-fit
+
+Ett proportionstest kan ses som ett test av en variabel med två möjliga klasser som utfall. Ett *goodness-of-fit*-test utvecklar det till valfritt antal klasser. Testet utförs som ett chi-två-test genom att beräkna ett observerat antal O och ett förväntat antal E för varje klass. Testvärdet ges av att man beräknar (O - E)^2 / E för varje klass och sedan summerar. Testfunktionen är en chi-två-fördelning där antalet frihetsgrader beror på antalet klasser.
+
+Låt oss göra ett exempel baserat på fotbollsdatan. Där hade vi utfallet 947, 518 och 1285 för bortaseger, oavgjort och hemmaseger. Klassisk bollkunskap gav oss sannolikheterna 33, 20 och 47 procent. Testets hypoteser ges av
+
+H0: sannolikheterna för de olika utfallet ges av 33, 20 respektive 47 procent
+
+H1: minst något utfall har en annan sannolikhet än 33, 20 respektive 47 procent
+
+För att få de förväntade värdena E multipliceras nollhypotesens sannolikheter med det totala antalet matcher.
+
+```{r}
+O <- c(947, 518, 1285)
+E <- c(0.33,0.20,0.47) * 2750
+```
+
+::: {.exercise name="Granska E"}
+Skriv ut objektet `E` och jämför med de observerade värdena. Notera att de förväntade värdena inte måste vara heltal, trots att de observerade värdena förstås alltid kommer vara det.
+:::
+
+Testvärdet beräknas genom formeln för varje term följt av summan.
+
+```{r}
+chisq_value <- sum((O - E)^2 / E)
+```
+
+P-värdet beräknas från en chi-två-fördelning. Antalet frihetsgrader ges av antalet klasser minus antalet skattade parametrar minus ett. I det här fallet har inga parametrar skattats från datan så antalet frihetsgrader blir två. Ett chi-två-test beräknas med kvadrater så vi är enbart intresserade av högra svansen.
+
+```{r}
+dat_chisq <- data.frame(x = seq(0, 10, 0.1)) %>% 
+  mutate(p = dchisq(x, df = 2))
+
+ggplot() +
+  geom_line(aes(x, p), data = dat_chisq) +
+  geom_ribbon(aes(x, ymin = 0, ymax = p), data = dat_chisq %>% filter(x > chisq_value), fill = "salmon")
+```
+
+Man kan också beräkna ytan i svansen med `pchisq()`. Ett minus det resultatet ger den övre delen.
+
+```{r}
+1 - pchisq(chisq_value, df = 2)
+```
+
+P-värdet är alltså 0.16, över den klassiska signifikansnivån på 5 procent, vilket ger att vi inte kan förkasta nollhypotesen. Om man gör ett chi-två-test för hand jämför man det observerade chi-två-värdet med ett tabellvärde över kvantiler. Tabellvärdet kan också hämtas med funktionen `qchisq()`, i det här fallet
+
+```{r}
+qchisq(0.95, df = 2)
+```
+
+Notera att man tar 0.95 eftersom man alltid tittar på den yttre svansen i ett chi-två-test.
+
+R har en inbyggd funktion för chi-två-test. Dess argument ges av observerade antal och sannolikheter.
+
+```{r}
+chisq.test(O, p = c(0.33, 0.2, 0.47))
+```
+
+Testet ger samma chi-två-värde och p-värde som beräknats ovan.
+
+::: {.exercise name="Chi-två med två klasser"}
+Situationen med flera klasser kan som sagt ses som en generalisering av fallet med två klasser. Det är alltså logiskt att chi-två-test kan användas även när man har två klasser. Följande exempel ger samma test som vi sett tidigare av andelen bortasegrar.
+
+```{r}
+chisq.test(x = c(947, 1803), p = c(0.33, 0.67), correct = F)
+```
+
+Likt `prop.test()` sätter vi `correct` till `FALSE` för att inte göra en korrektion. Notera att `x` här anges som positiva och negativa utfall istället för positiva utfall och totalt antal utfall, vilket var fallet i `prop.test()`.
+
+Använd stycket ovan som mall för att göra uppgiften om guldfiskar som ett chi-två-test. Testa nollhypotesen att andelen positiva utfall är 0.75.
+:::
+
+Chi-två-testet bygger på en underliggande normal-liknande approximation. En vanlig tumregel är att alla förväntade värden ska vara större än 5. R ger en varning om så inte är fallet.
+
+```{r}
+chisq.test(c(6,4), p = c(0.51, 0.49))
+```
+
+::: {.exercise name="Chi-två med lika sannolikheter"}
+En vanlig tillämpning av goodness-of-fit-testet är för att testa om alla klasser är lika sannolika. En jämn fördelning är grundinställning i `chisq.test()` så i det fallet behöver man bara ange de observerade värdena. En datainsamling om M&M-godis gav följande antal.
+
+```{r}
+dat_mnm <- data.frame(Color = c("blue", "brown", "green", "orange", "red", "yellow"),
+                      Count = c(180, 80, 88, 160, 134, 166))
+
+ggplot(dat_mnm, aes(Color, Count, fill = Color)) +
+  geom_col() +
+  scale_fill_manual(values = dat_mnm$Color)
+```
+
+Använd de observerade värdena i kolumnen `Count` för att testa om alla godisfärger är lika vanliga.
+:::
+
+Om man har flera klasser kan det vara värdefullt att se vilken klass som bidrar mest till chi-två-värdet. Det kan ge en bild av vilka klasser som är mest speciella. Ett enkelt sätt att göra det på är att spara utfallet av `chisq.test()` som ett objekt och därifrån hämta `observed` och `expected`. Som fortsättning på fotbollsexemplet:
+
+```{r}
+test <- chisq.test(c(947, 518, 1285), p = c(0.33, 0.2, 0.47))
+test$expected
+test$observed
+(test$observed - test$expected)^2 / test$expected
+```
+
+Antalet hemmavinster (det tredje värdet) ligger när den teoretiska sannolikheten medan de övriga två utfallen ligger längre från.
+
+::: {.exercise name="Udda färger"}
+Spara testobjektet från testet på M&M-färger för att se vilka färger som avviker mest från det väntade utfallet.
+:::
+
+::: {.exercise name="Fågelproportioner som chi-två"}
+I naturreservatet från en tidigare uppgift tror man fördelningen av tre fåglar (tärnmås, fiskmås och fisktärna) är 50, 30 respektive 20 procent. En studie ger antalen 115, 54 respektive 31. Genomför ett chi-två-test för att testa de antagna andelarna. Är resultatet i linje med de separata testen från den tidigare uppgiften?
+:::
+
+::: {.exercise name="Udda fåglar"}
+Spara testobjektet från chi-två-testet för fåglarna för att se vilka fågelarter som avviker mest från det väntade utfallet.
+:::
+
+## Chi-två-test när någon parameter skattas från datan
+
+(Det här stycket är överkurs och kan läsas översiktligt eller hoppas över.)
+
+I de exempel vi sett hittills har nollhypotesen direkt givit de sannolikheter vi vill testa. Ett annat vanligt fall är att man testar om värdena följer en viss fördelning, men parametervärden i den fördelningen skattas från den insamlade datan. Ta som exempel frågan om antal mål per match följer en poissonfördelning. Hypoteserna ges av
+
+H0: antal mål följer en poissonfördelning,
+
+H1: antal mål följer ej en poissonfördelning.
+
+Här måste vi skatta medelvärdet från datan för att beräkna sannolikheter från fördelningen.
+
+```{r}
+mean_goals <- mean(dat_alls$hemmamal + dat_alls$bortamal)
+mean_goals
+
+dat_goals <- dat_alls %>% 
+  count(Mål = bortamal + hemmamal, name = "O") %>% 
+  mutate(p = dpois(Mål, lambda = mean_goals),
+         E = p * 2750)
+dat_goals
+```
+
+En graf kan illustrera faktiska antal (som punkter) och den skattade poissonfördelningen (som linje).
+
+::: {.exercise name="Målgraf"}
+Fyll i de saknade delarna i koden nedan för en graf med faktiska antal `O` som punkter och förväntade antal `E` som en linje.
+
+```{r, eval = F}
+ggplot(dat_goals) +
+  geom_point(aes(x = Mål, y = ___)) +
+  geom_line(aes(x = Mål, y = ___))
+```
+:::
+
+De faktiska observationerna är inte så långt från poissonfördelningen.
+
+Ett problem med de förväntade antalen är att några av dem är under 5 - den gräns vi satte för en acceptabel chi-två-approximation. Det vanligaste sättet att hantera det är att slå ihop klasser. Här slås klasser över 9 ihop till en grupp. Det är inte så väsentligt hur det görs här, även om `ifelse()` kan vara ett nyttigt trick.
+
+```{r}
+dat_goals_merged <- dat_goals %>% 
+  mutate(Mål = ifelse(Mål > 9, 10, Mål)) %>% 
+  group_by(Mål) %>% 
+  summarise(O = sum(O),
+            p = sum(p),
+            E = sum(E))
+dat_goals_merged
+```
+
+En sista svårighet är antalet frihetsgrader. I ett goodness-of-fit-test ges antalet frihetsgrader av antalet klasser minus antalet skattade parametrar minus 1. I det här fallet har vi nu 11 klasser och vi har skattat en parameter. Vi ska alltså ha 9 frihetsgrader i testet. Funktionen `chisq.test()` beräknar tyvärr antalet frihetsgrader internt som antalet klasser minus 1, så vi får beräkna chi-två-värde och p-värde på egen hand.
+
+```{r}
+chisq_value <- sum((dat_goals_merged$O - dat_goals_merged$E)^2 / dat_goals_merged$E)
+1 - pchisq(chisq_value, df = 9)
+```
+
+Chi-två-värdet blir extremt stort och p-värdet väldigt lågt. Nollhypotesen att antalet mål följer en poissonfördelning förkastas.
+
+## Bonus. Interaktiva kartor med leaflet
+
+Paketet `leaflet` (https://rstudio.github.io/leaflet/) kopplar R till leaflet - ett verktyg för interaktiva kartor som ofta använd för kartor online. 
+
+::: {.exercise name="Installera leaflet"}
+Installera och ladda `leaflet genom att fylla i och köra raden nedan.
+
+```{r, eval = F}
+install.packages("leaflet")
+library(leaflet)
+```
+:::
+
+Som en första kontroll kan vi köra den exempelkod som ges på hemsidan länkad till ovan.
+
+```{r, eval = F}
+m <- leaflet() %>%
+  addTiles() %>%
+  addMarkers(lng = 174.768, lat = -36.852, popup="The birthplace of R")
+m
+```
+
+På canvassidan finns en excelfil med data tillgänglig på Artportalen - *Artportalen, feromoninventering, 2011-2013.xlsx*. Datan kommer från från ett inventeringsprojekt vid SLU.
+
+::: {.exercise name="Importera datan"}
+Ladda ner excelfilen och läs in datan med `read_excel()` från paketet `readxl`.
 
 ```{r, eval = F}
 library(readxl)
-dat_smält <- read_excel("___", sheet = "Smältpunkt")
+dat_leaf <- read_excel("___")
 ```
 :::
 
-::: {.exercise name="Plotta smältpunkt-data"}
-Illustrera smältpunktsdatan på samma sätt som exempeldatan genom att fylla i följande kod. Vårt mål är att testa om medelvärde är skilt från 1050, vilket här kan noteras med ett vertikalt streck vid 1050.
+Kartans utseende kan ändras genom att ange en källa och karttyp. Tillgängliga alternativ kan skrivas ut med `providers`. 
 
 ```{r, eval = F}
-ggplot(___, aes(x = Smältpunkt, y = 0)) + 
-  ___() +
-  geom_vline(xintercept = ___, color = "red")
+leaflet() %>% 
+  addTiles() %>% 
+  addProviderTiles(providers$Stamen.Toner)
 ```
 
-Kan man utifrån grafen säga om 1050 är ett rimligt medelvärde för populationen, givet det stickprov vi observerar?
+::: {.exercise name="Baskarta"}
+Skriv ut tillgängliga baskartor med `providers`. Välj ett alternativ slumpmässigt och ändra koden ovan för att se hur det ser ut.
 :::
 
-::: {.exercise name="Hypotestest för hand"}
-Genomför ett t-test för hand för att se om medelsmältpunkten är skild från 1050. Skriv ut tydliga hypoteser. Medelvärde och standardavvikelse ges av följande.
+För att lägga till datapunkter kan man använda `addCircleMarkers()`.
 
 ```{r, eval = F}
-mean(dat_smält$Smältpunkt)
-sd(dat_smält$Smältpunkt)
+leaflet() %>% 
+  addTiles() %>% 
+  addCircleMarkers(lng = dat_leaf$lng, lat = dat_leaf$lat, radius = 10)
 ```
 
-Ett kritiskt värde kan tas från en tabell över t-fördelningen eller beräknas i R med
+::: {.exercise name="Cirkelstorlek"}
+Ändra storleken på cirklarna från `addCircleMarkers()` genom argumentet `radius`.
+:::
+
+Slutligen kan vi lägga till en etikett för år med argumentet `popup`. Texten kommer upp när man klickar på en punkt.
 
 ```{r, eval = F}
-qt(0.975, df = 9)
-```
-:::
-
-::: {.exercise name="Hypotestest i R"}
-Genomför ett t-test med funktionen `t.test()` för att se om medelsmältpunkten är skild från 1050.
-:::
-
-## Konfidensintervall för normalfördelad data
-
-För exemplet på havredata tittade vi på två olika värden för nollhypotesen.
-
-```{r, eval = F}
-t.test(dat$x, mu = 50)
-t.test(dat$x, mu = 48)
+leaflet() %>% 
+  addTiles() %>% 
+  addCircleMarkers(lng = dat_leaf$lng, lat = dat_leaf$lat, radius = 10, popup = dat_leaf$Rödlistade)
 ```
 
-Från p-värdena kan man dra slutsatsen att förkasta vid nollhypotesen att mu är 48, men inte förkasta vid nollhypotesen att mu är 50. Värdet 50 är alltså i någon mening ett mer troligt värde på populationens medelvärde än vad 48 är. *Konfidensintervall* kan ses som en generalisering av den tanken: ett konfidensintervall ger ett spann av värden där man *inte* förkastar. Intervallet tolkas vanligen som att det täcker det sanna populationsmedelvärdet med en viss konfidens.
-
-För ett stickprov och antagen normalfördelning ges konfidensintervallet av
-
-medelvärde ± kvantil från t-fördelningen x standardavvikelse delat på roten ur antalet observationer
-
-Kvantilen från t-fördelningen kan hämtas från en tabell (samma som det kritiska värdet i testet) eller genom R. Antalet frihetsgrader ges av antalet observationer minus ett. I det här fallet ges delarna av
-
-```{r}
-mean(dat$x)
-sd(dat$x)
-qt(0.975, 7)
-```
-
-och konfidensintervallet ges alltså av
-
-52 ± 2.365 * 4.680 / sqrt(8)
-
-::: {.exercise name="Konfidensintervall för hand"}
-Ta fram medelvärde, standardavvikelse och kritiskt värde för smältpunktsdata, med hjälp av R (eller en tabell för det kritiska värdet). Beräkna konfidensintervallet för smältpunktsdatan för hand.
-:::
-
-Funktionen `t.test()` ger automatiskt ett konfidensintervall, direkt under utfallet av testet. Notera att konfidensintervallet inte beror på nollhypotesen. Konfidensintervall kan beräknas med skilda konfidensnivåer, oftast 95 procent, vilket sätts med argumentet `conf.level`.
-
-::: {.exercise name="Konfidensnivå"}
-Gör lämplig ändring i koden nedan för att beräkna ett 99-procentigt konfidensintervall, istället för ett 95-procentigt.
-
-```{r}
-t.test(dat$x, conf.level = 0.95)
-```
-
-Är ett 99-procentigt konfidensintervall bredare eller smalare än ett 95-procentigt?
-:::
-
-::: {.exercise name="Ensidiga konfidensintervall"}
-I en tidigare uppgift användes argumentet `alternative` för att göra ett ensidigt test med `t.test()`. Vad händer med konfidensintervallet om man anger ett ensidigt test?
-:::
-
-::: {.exercise name="Konfidensintervall för smältdata"}
-Ta datan över smältpunkter och beräkna ett konfidensintervall med `t.test()`. Tolka intervallet.
-:::
-
-Ett konfidensintervall illustreras ofta med en felstapel. Vi kan lägga till en till den punktgraf vi tidigare sett för observationerna.
-
-```{r}
-interval <- t.test(dat$x)$conf.int
-ggplot(dat, aes(x, 0)) +
-  geom_point() +
-  annotate("errorbar", xmin = interval[1], xmax = interval[2], y = -1, width = 0.1)
-```
-
-::: {.exercise name="Illustration av smältdata"}
-Använd exempelillustrationen för havredata till en liknande illustration av smältpunktsdatan.
-:::
-
-## Normalfördelad data och centrala gränsvärdesatsen
-
-Eftersom t-testet bygger på att data är normalfördelad är det förstås bra att kunna undersöka om det antagandet stämmer. Ett sätt är att göra ett histogram över datan - om den underliggande variabeln är normalfördelad bör stickprovet ge den typiska klockformen. Det här kräver dock ganska mycket data. Ta ett histogram för havredatan som exempel
-
-```{r}
-ggplot(dat, aes(x)) + geom_histogram(bins = 5)
-```
-
-Uppenbarligen helt meningslöst. Låt oss titta på histogram över genererad normalfördelad data.
-
-```{r}
-n <- 10
-ggplot() + geom_histogram(aes(x = rnorm(n)), bins = 30)
-```
-
-::: {.exercise name="Histogram för normalfördelning"}
-Testa koden ovan för lite olika värden på `n`. Det kan vara nyttigt att sätta antalet staplar `bins` för att få ett bättre histogram. Hur stort måste n vara för att ge en karaktäristisk klockform för histogrammet?
-:::
-
-Ett annat vanligt alternativ för att grafisk undersöka om data följer en ungefärlig normalfördelning är en QQ-graf (*QQ-plot*). En qq-graf är ett spridningsdiagram med teoretiska kvantiler på en axel och datans kvantiler på den andra axeln. Om data perfekt följer en normalfördelning kommer grafen visa en rak diagonal linje. En QQ-graf kan tas fram med `qqnorm()` eller `geom_qq()` i en ggplot. En diagonal linje för jämförelse kan läggas till med `geom_qq_line()`.
-
-```{r}
-ggplot(dat, aes(sample = x)) + geom_qq() + geom_qq_line()
-```
-
-Punkterna ligger nära linjen. Vi kan återigen demonstrera med lite genererad data.
-
-```{r}
-n <- 10
-dat_norm <- data.frame(x = rnorm(n))
-ggplot(dat_norm, aes(sample = x)) + geom_qq() + geom_qq_line()
-```
-
-::: {.exercise name="Histogram för normalfördelning"}
-Funktionen `runif()` ger slumpmässiga värden mellan 0 och 1. Testa att ändra i kodstycket ovan så att slumptal genereras med `runif()` istället för `rnorm()`. Hur påverkar det QQ-grafen?
-:::
-
-## Centrala gränsvärdesatsen
-
-Även om data inte är normalfördelad kan t-testet vara ett lämpligt val av test. Detta beror på *centrala gränsvärdesatsen*, som säger att summor (och därmed även medelvärden) av lika slumpvariabler går mot en normalfördelning där antalet observationer ökar. Den tidigare uppgiften gav att `runif()` inte ger normalfördelad data. Vad händer om vi tar medelvärdet av flera observationer från `runif()`? Följande kod beräknar tiotusen medelvärden av två observationer.
-
-```{r}
-n <- 2
-
-dat_sim_unif <- expand_grid(Observation = 1:n, Upprepning = 1:10000) %>% 
-  mutate(x = runif(n())) %>% 
-  group_by(Upprepning) %>% 
-  summarise(x = mean(x))
-
-ggplot(dat_sim_unif, aes(x)) + geom_histogram(bins = 50)
-ggplot(dat_sim_unif, aes(sample = x)) + geom_qq() + geom_qq_line()
-```
-
-Fördelningen för summan är inte likformig, men inte heller särskilt normalfördelad. Vad händer om vi ökar antal termer i summan?
-
-::: {.exercise name="Antalet observationer för normalfördelning"}
-Vad måste ändras i koden ovan för beräkna medelvärdet av tio observationer? Följer de medelvärdena en ungefärlig normalfördelning? Vad är det lägsta antalet observationer som ger ungefärligen normalfördelade medelvärden?
-:::
-
-Under en tidigare datorövning såg vi exempel på diskreta fördelningar: binomial- och poissonfördelningarna. Vi ska senare titta på specifika test för variabler som följer en diskret fördelning, men centrala gränsvärdesatsen kan även då rättfärdiga ett t-test. Ta som exempel medelvärdet av tio observationer som följer en poissonfördelning med lambda = 10.
-
-```{r}
-n <- 10
-lambda <- 10
-dat_sim_unif <- expand_grid(Observation = 1:n, Upprepning = 1:10000) %>% 
-  mutate(x = rpois(n(), lambda = lambda)) %>% 
-  group_by(Upprepning) %>% 
-  summarise(x = mean(x))
-
-ggplot(dat_sim_unif, aes(x)) + geom_histogram(bins = 30)
-ggplot(dat_sim_unif, aes(sample = x)) + geom_qq() + geom_qq_line()
-```
-
-Histogrammet visar på en typisk klockform och punkterna följer linjen *ungefärligt*. QQ-grafens trappeffekt är typisk för diskret data. Det här tyder alltså på att t-testet är ett acceptabelt alternativ om man har en poissonfördelning med lambda runt tio och gör tio upprepningar.
-
-::: {.exercise name="Svag normalapproximation"}
-Testa att minska värdena på n och lambda. Vad är de lägsta värdena som ger ett histogram med en symmetrisk fördelning och punkter nära linjen i QQ-grafen?
-:::
-
-Det kan också finnas situationer där någon matematisk transformation kan göra icke-normal data till normalfördelad data. Vanliga transformationer är att ta en kvadratrot eller att *logaritmera* datan. Som exempel kan vi återvända till Gapminder-datan vi använde i en tidigare datorövning. Paketet `patchwork` kan användas för att placera flera grafer bredvid varandra. Den exakta koden är mindre viktig här.
-
-```{r}
-library(gapminder)
-gapminder_2007 <- gapminder %>% filter(year == 2007)
-
-g1 <- ggplot(gapminder_2007, aes(pop)) + geom_histogram(bins = 30)
-g2 <- ggplot(gapminder_2007, aes(sample = pop)) + geom_qq() + geom_qq_line()
-g3 <- ggplot(gapminder_2007, aes(sqrt(pop))) + geom_histogram(bins = 30)
-g4 <- ggplot(gapminder_2007, aes(sample = sqrt(pop))) + geom_qq() + geom_qq_line()
-g5 <- ggplot(gapminder_2007, aes(log10(pop))) + geom_histogram(bins = 30)
-g6 <- ggplot(gapminder_2007, aes(sample = log10(pop))) + geom_qq() + geom_qq_line()
-
-library(patchwork)
-g1 + g3 + g5 + g2 + g4 + g6
-```
-
-I grafen har vi den ursprungliga variabeln (befolkning per land 2007), den kvadratrot-transformerade variabeln (`sqrt()`) och den log-transformerade variabeln (`log10()`). De två första fallen påverkas kraftigt av extremvärden och är klart icke-normala medan den log-transformerade variabeln ger en ungefärlig normalkurva och följer diagonalen väl i QQ-grafen.
-
-::: {.exercise name="Transformera medellivslängd"}
-Använd kodstycket ovan som mall och ta fram grafer för medellivslängd (`lifeExp`) istället för befolkningsstorlek (`pop`). Visar grafen samma mönster som för befolkningsdatan?
-:::
-
-## Bonus. Simuleringar för t-test och konfidensintervall
-
-Följande kod simulerar ett dataset om tio observationer från en normalfördelning med medelvärde 7 och standardavvikelse 5, beräknar ett hypotestest med nollhypotesen att populationsmedelvärdet är 7, och beräknar ett konfidensintervall.
-
-```{r}
-dat_sim <- data.frame(x = rnorm(10, mean = 7, sd = 5))
-t.test(dat_sim$x, mu = 7)
-```
-
-::: {.exercise name="Upprepad simulering"}
-Kör de två raderna i stycket ovan ett tiotal gånger. Du bör se att man ibland förkastar nollhypotesen trots att den ska stämma. Kan du få en känsla för hur stor andel av gångerna man felaktigt förkastar?
-:::
-
-Låt oss upprepa simuleringen tusen gånger. Ett sätt är att upprepa ett steg flera gånger är genom en for-loop. 
-
-```{r}
-dat_sim <- data.frame()
-for(i in 1:1000){
-  new_data <- data.frame(x = rnorm(10, mean = 7, sd = 5))
-  test <- t.test(new_data$x, mu = 7)
-  new_results <- data.frame(t_value = test$statistic, p_value = test$p.value,
-               ci_lower = test$conf.int[1], ci_upper = test$conf.int[2])
-  dat_sim <- bind_rows(dat_sim, new_results)
-}
-```
-
-Enligt statistisk teori ska t-värdet följa en t-fördelning med nio frihetsgrader. Vi kan undersöka det genom ett histogram med en överliggande t-fördelning.
-
-```{r}
-ggplot(dat_sim) +
-  geom_histogram(aes(t_value, y = ..density..), bins = 50, fill = "white", color = "black") +
-  geom_function(fun = dt, args = list(df = 9), color = "red", size = 1)
-```
-
-Den teoretiska t-fördelning passar histogrammet nästan perfekt.
-
-Vidare ska p-värdet vara under fem procent fem procent av gångerna.
-
-```{r}
-mean(dat_sim$p_value < 0.05)
-```
-
-Även det stämmer någorlunda väl. Det här innebär alltså att om man har en signifikansnivå på fem procent kommer man förkasta nollhypotesen fem procent av gångerna även om nollhypotesen stämmer. Det kallas ett *falskt positivt* utfall.
-
-::: {.exercise name="Simulerade konfidensintervall"}
-Hur många av de simulerade konfidensintervallen täcker värdet 7?
-:::
-
-::: {.exercise name="Signifikant skillnad"}
-Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har nollhypotesen att populationsmedelvärdet är 7. Här vill vi alltså förkasta nollhypotesen.
-
-```{r, eval = F}
-dat_sim <- data.frame()
-for(i in 1:1000){
-  new_data <- data.frame(x = rnorm(10, mean = 9, sd = 5))
-  test <- t.test(new_data$x, mu = 7)
-  new_results <- data.frame(t_value = test$statistic, p_value = test$p.value,
-               ci_lower = test$conf.int[1], ci_upper = test$conf.int[2])
-  dat_sim <- bind_rows(dat_sim, new_results)
-}
-```
-
-Använd kod från den första simuleringen för att undersöka hur väl histogrammet stämmer med den teoretiska fördelningen och för att se hur stor andel av gångerna man förkastar nollhypotesen på signifikansnivån 5 procent.
-:::
-
-::: {.exercise name="50/50"}
-Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har nollhypotesen att populationsmedelvärdet är 7. Ändra värdet för n och se hur det påverkar andelen gånger man förkastar nollhypotesen.
-
-```{r, eval = F}
-n <- 10
-
-dat_sim <- data.frame()
-for(i in 1:1000){
-  new_data <- data.frame(x = rnorm(n, mean = 9, sd = 5))
-  test <- t.test(new_data$x, mu = 7)
-  new_results <- data.frame(t_value = test$statistic, p_value = test$p.value,
-               ci_lower = test$conf.int[1], ci_upper = test$conf.int[2])
-  dat_sim <- bind_rows(dat_sim, new_results)
-}
-
-mean(dat_sim$p_value < 0.05)
-```
-
-Ungefär hur många observationer behövs för att ha femtio procents sannolikhet att förkasta nollhypotesen?
-:::
-
-::: {.exercise name="Konfidensintervallets bredd"}
-Ett konfidensintervall blir smalare och smalare ju större stickprovet är. Koden nedan ger medelvärdet för stickprovsbredden i simulerad data med standardavvikelsen 1.
-
-```{r, eval = F}
-n <- 10
-
-dat_sim <- data.frame()
-for(i in 1:1000){
-  new_data <- data.frame(x = rnorm(n, mean = 0, sd = 1))
-  test <- t.test(new_data$x, mu = 7)
-  new_results <- data.frame(t_value = test$statistic, p_value = test$p.value,
-               ci_lower = test$conf.int[1], ci_upper = test$conf.int[2])
-  dat_sim <- bind_rows(dat_sim, new_results)
-}
-
-mean(dat_sim$ci_upper - dat_sim$ci_lower)
-```
-
-Ungefär hur många observationer behövs för att konfidensintervallets bredd ska bli under 1, under 0.9, under 0.8, och så vidare ned till 0.1?
+::: {.exercise name="Artnamn"}
+Ändra i koden ovan för att ange artnamn som popup-text istället för rödlistestatus. Funktionen `paste()` kan också vara intressant för att ta med mer information i texten: `paste(dat_leaf$Rödlistade, dat_leaf$Antal)` skulle exempelvis ge både status och antal individer vid den specifika observationen.
 :::

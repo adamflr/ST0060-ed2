@@ -189,7 +189,7 @@ Den typen av sekvenser kan genomföras på ett par olika sätt. Ett första sät
 
 ```{r}
 c <- c(-4, -2, -1, 1, 2, 4)   # Skapa en vektor av värden
-c_absolute <- abs(c)          # Ta absolutvärden. Spara som c_absolut
+c_absolute <- abs(c)          # Ta absolutvärden. Skapa c_absolut
 sum(c_absolute)               # Summera värden i c_absolut
 ```
 
@@ -200,22 +200,23 @@ Notera att det är möjligt att skapa ett objekt med namnet `c` trots att det re
 Fyll i och kör följande rader för att ta varje värde i `new_vector` i kvadrat, *sedan* summera, och sedan ta roten ur.
 
 ```{r, eval = F}
-new_vector_squared <- new_vector^2     # Ta kvadraten av varje värde
-new_vector_squared_sum <- sum(___)     # Summera vektorn med kvadrater
-sqrt(___)                              # Ta kvadratroten ur summan
+new_vector_squared <- new_vector^2 # Ta kvadraten av varje värde
+new_vector_squared_sum <- sum(___) # Summera kvadraterna
+sqrt(___)                          # Ta kvadratroten ur summan
 ```
 :::
 
 Ett alternativ till att spara utfallet i varje steg är att skriva en senare funktion *runt* en tidigare funktion. Det fungerar för att R utvärderar funktioner inifrån-ut. Med samma exempel som tidigare får man
 
 ```{r, eval=F}
-sum(abs(c(-4, -2, -1, 1, 2, 4)))  # Ta summan av absolutvärden av vektorn
+sum(abs(c(-4, -2, -1, 1, 2, 4)))  
+# Ta summan av absolutvärden av vektorn
 ```
 
 medan beräkningen i övningen blir
 
 ```{r, eval=F}
-sqrt(sum(new_vector^2))           # Ta roten ur summan av vektorn i kvadrat
+sqrt(sum(new_vector^2)) # Ta roten ur summan av vektorn i kvadrat
 ```
 
 Den här typen av skrivning kan spara plats men blir snabbt svårläst.
@@ -223,7 +224,7 @@ Den här typen av skrivning kan spara plats men blir snabbt svårläst.
 Ett sista alternativ är att använda en så kallad *pipe* (namnet kommer från att en sekvens funktioner kallas en *pipeline*). En pipe skrivs `%>%` och kan i RStudio tas fram med kortkommandon *Ctrl + Shift + M*. Pipen tar utfallet av en funktion till vänster och sänder till en funktion till höger. Den kan utläsas i dagligt tal som *och sen*. Med samma exempel som tidigare kan vi skriva
 
 ```{r}
-library(tidyverse)                # Ladda tidyverse, ej nödvändigt om redan gjort
+library(tidyverse)
 
 c(-4, -2, -1, 1, 2, 4) %>%        # Skapa en datamängd och sen
   abs() %>%                       # ta absolutvärden, och sen
@@ -234,9 +235,9 @@ c(-4, -2, -1, 1, 2, 4) %>%        # Skapa en datamängd och sen
 Fyll i de saknade funktionerna och kör följande rader för att ta varje värde i `new_vector` i kvadrat, *sedan* summera, och sedan ta roten ur, denna gång genom att länka funktionerna med en pipe `%>%`.
 
 ```{r, eval = F}
-new_vector^2 %>%                  # Ta kvadraterna av new_vector, och sen
-  ___() %>%                       # beräkna summan, och sen
-  ____()                          # Ta kvadratroten med sqrt()
+new_vector^2 %>% # Ta kvadraterna av new_vector, och sen
+  ___() %>%      # beräkna summan, och sen
+  ____()         # Ta kvadratroten med sqrt()
 ```
 :::
 
@@ -249,10 +250,14 @@ Det första praktiska steget i en statistisk analys är att importera data. I R 
 I ett tidigare exempel användes funktionen `c()` för att skapa en vektor av data. Ofta ordnas flera vektorer i en tabell där varje kolumn är en vektor och varje rad en observation av någon enhet. En datatabell (en `data.frame` i R) skapas genom funktionen `data.frame()` följt av namngivna vektorer. Exempeldata kan skrivas in genom föjande.
 
 ```{r, results='hide'}
-dat <- data.frame(Vecka = c(7,7,7,7,7,7,11,11,11,11,11,11),
-                  Behandling = c("A","A","A","B","B","B","A","A","A","B","B","B"),
-                  Vikt = c(232,161,148,368,218,257,1633,2213,972,2560,2430,855),
-                  N = c(2.63,2.90,2.99,3.54,3.30,2.85,1.53,1.90,NA,2.58,NA,NA))
+dat <- data.frame(Vecka = c(7,7,7,7,7,7,
+                            11,11,11,11,11,11),
+                  Behandling = c("A","A","A","B","B","B",
+                                 "A","A","A","B","B","B"),
+                  Vikt = c(232,161,148,368,218,257,
+                           1633,2213,972,2560,2430,855),
+                  N = c(2.63,2.90,2.99,3.54,3.30,2.85,
+                        1.53,1.90,NA,2.58,NA,NA))
 dat
 ```
 
@@ -278,7 +283,7 @@ Man kan också plocka ut rader och kolumner med hakparenteser och ordningstal.
 
 ```{r, eval=F}
 dat[2,3]          # Andra raden och tredje kolumnen
-dat[2, ]          # Tomt värde ger alla värden. Här alla värden i rad 2
+dat[2, ]          # Tomt värde ger alla värden.
 dat[ ,3]          # Alla värden i kolumn 3
 ```
 
@@ -343,16 +348,16 @@ gapminder %>%
 och om man vill ha mer än ett villkor kan man rada dem i filter-funktionen:
 
 ```{r, eval=F}
-gapminder %>%                                   # Ta datan, och sen
-  filter(country %in% c("Sweden", "Finland"),   # filtrera för länder
-         year == 2002)                          # och för år
+gapminder %>%                                 # Ta datan, och sen
+  filter(country %in% c("Sweden", "Finland"), # filtrera för land
+         year == 2002)                        # och för år
 ```
 
 För att se fler eller färre rader kan man använda en pipe `%>%` till funktionen `print()`. Följande skriver ut fem rader
 
 ```{r, results='hide'}
-gapminder %>%                                     # Ta datan, och sen
-  filter(country %in% c("Sweden", "Finland")) %>% # filtrera för specifika länder
+gapminder %>%
+  filter(country %in% c("Sweden", "Finland")) %>%
   print(n = 5)
 ```
 
@@ -360,7 +365,7 @@ Om man istället vill göra ett urval av kolumner kan man använda `select()`. S
 
 ```{r, results='hide'}
 gapminder %>%                   # Ta datan, och sen
-  select(country, lifeExp)      # välj kolumnerna country och lifeExp
+  select(country, lifeExp)      # välj kolumner
 ```
 
 ::: {.exercise name="Befolkade länder"}
@@ -407,7 +412,8 @@ ggplot(gm_2002, aes(x = lifeExp, y = gdpPercap)) +
 Grafen kan byggas ut genom att sätta *aestethics*  för färg och storlek. Man kan också dela en graf i småfönster med `facet_wrap` och styra grafens utseende genom att sätta ett tema såsom `theme_bw`.
 
 ```{r, fig.height=6, results='hide', fig.show='hide'}
-ggplot(gm_2002, aes(x = lifeExp, y = gdpPercap, color = continent, size = pop)) +
+ggplot(gm_2002, aes(x = lifeExp, y = gdpPercap, 
+                    color = continent, size = pop)) +
   geom_point() +
   facet_wrap(~ continent)
 ```
@@ -452,9 +458,11 @@ Vi kan ändra utseendet på grafen genom argument inom geometrier och med funkti
 ggplot(dat_small, aes(lifeExp, continent)) +
   geom_boxplot(fill = "lightblue") +
   theme(panel.background = element_rect(fill = "red3"),
-        text = element_text(size = 15, color = "white", family = "serif"),
+        text = element_text(size = 15, 
+                            color = "white", family = "serif"),
         axis.text = element_text(color = "white"),
-        plot.background = element_rect(fill = "grey30", color = "black"),
+        plot.background = element_rect(fill = "grey30", 
+                                       color = "black"),
         panel.grid.major.y = element_blank())
 ```
 
@@ -470,7 +478,7 @@ ggplot(dat_small, aes(lifeExp, continent)) +
 
 Nedan har vi en graf gjord med `ggplot2` med flera olika *geom* och ändringar från standardtemat.
 
-```{r, fig.height=7, echo=F}
+```{r, fig.height=5.3, echo=F}
 counts <- c("Sweden", "Norway")
 col <- "lightblue"
 ggplot(gapminder %>% filter(continent == "Europe", year == 2007), aes(gdpPercap, lifeExp)) +
@@ -494,5 +502,9 @@ Vilka geografiska former (punkter, linjer ytor) visas i grafen och hur är de ko
 :::
 
 ::: {.exercise name="Rekonstrera grafen"}
-Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att rekonstrera grafen. Börja med att beskriva grafen i ord och be om R-kod. Med vissa chatverktyg kan man också dela bilden och be om den bakomliggande koden.
+Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att rekonstrera grafen. Börja med att beskriva grafen i ord och be om R-kod. Klipp ut koden och kör i R. Läs koden du fått. Finns det några delar som är svåra att förstå. Med vissa chatverktyg kan man också klippa in bilden och be om den bakomliggande koden.
+:::
+
+::: {.exercise name="Steg i Excel"}
+Hur skulle man gå tillväga för att skapa samma graf i Excel? Be en chatbot om en stegvis instruktion.
 :::
