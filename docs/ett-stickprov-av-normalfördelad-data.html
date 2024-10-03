@@ -567,13 +567,13 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 ##  One Sample t-test
 ## 
 ## data:  dat_sim$x
-## t = 0.75793, df = 9, p-value = 0.4679
+## t = -0.6325, df = 9, p-value = 0.5428
 ## alternative hypothesis: true mean is not equal to 7
 ## 95 percent confidence interval:
-##   4.355632 12.309183
+##   1.471649 10.112403
 ## sample estimates:
 ## mean of x 
-##  8.332408</code></pre>
+##  5.792026</code></pre>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-61" class="exercise"><strong>Uppgift 3.21  (Upprepad simulering) </strong></span>Kör de två raderna i stycket ovan ett tiotal gånger. Du bör se att man ibland förkastar nollhypotesen trots att den ska stämma. Kan du få en känsla för hur stor andel av gångerna man felaktigt förkastar?</p>
 </div>
@@ -594,7 +594,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <p>Den teoretiska t-fördelning passar histogrammet nästan perfekt.</p>
 <p>Vidare ska p-värdet vara under fem procent fem procent av gångerna.</p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb160-1" tabindex="-1"></a><span class="fu">mean</span>(dat_sim<span class="sc">$</span>p_value <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<pre><code>## [1] 0.055</code></pre>
+<pre><code>## [1] 0.058</code></pre>
 <p>Även det stämmer någorlunda väl. Det här innebär alltså att om man har en signifikansnivå på fem procent kommer man förkasta nollhypotesen fem procent av gångerna även om nollhypotesen stämmer. Det kallas ett <em>falskt positivt</em> utfall.</p>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-62" class="exercise"><strong>Uppgift 3.22  (Simulerade konfidensintervall) </strong></span>Hur många av de simulerade konfidensintervallen täcker värdet 7?</p>

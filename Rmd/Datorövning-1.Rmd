@@ -308,7 +308,7 @@ Funktionen `plot()` ger en enkel graf.
 plot(dat$Vecka, dat$Vikt)
 ```
 
-::: {.exercise name="Alea iacta est"}
+::: {.exercise name="Tärningsgraf"}
 Använd datan i objektet `dat_dice` och skapa ett diagram med kolumnen kast på x-axeln och kolumnen Utfall på y-axeln.
 
 ```{r, eval = F}

@@ -706,7 +706,7 @@ Funktionen \texttt{plot()} ger en enkel graf.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{exercise}[Alea iacta est]
+\begin{exercise}[Tärningsgraf]
 
 Använd datan i objektet \texttt{dat\_dice} och skapa ett diagram med kolumnen kast på x-axeln och kolumnen Utfall på y-axeln.
 
@@ -2180,13 +2180,13 @@ Följande kod simulerar ett dataset om tio observationer från en normalfördeln
 ##  One Sample t-test
 ## 
 ## data:  dat_sim$x
-## t = 0.98832, df = 9, p-value = 0.3488
+## t = 2.9627, df = 9, p-value = 0.01589
 ## alternative hypothesis: true mean is not equal to 7
 ## 95 percent confidence interval:
-##   4.70899 12.84605
+##   7.690195 12.147697
 ## sample estimates:
 ## mean of x 
-##  8.777518
+##  9.918946
 \end{verbatim}
 
 \begin{exercise}[Upprepad simulering]
@@ -2231,7 +2231,7 @@ Vidare ska p-värdet vara under fem procent fem procent av gångerna.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.05
+## [1] 0.047
 \end{verbatim}
 
 Även det stämmer någorlunda väl. Det här innebär alltså att om man har en signifikansnivå på fem procent kommer man förkasta nollhypotesen fem procent av gångerna även om nollhypotesen stämmer. Det kallas ett \emph{falskt positivt} utfall.
@@ -4510,27 +4510,27 @@ Anledning till att vi justerar p-värden är att man vid varje test har en sanno
 
 \begin{verbatim}
 ## $emmeans
-##  group emmean    SE df lower.CL upper.CL
-##  a      0.237 0.255 45   -0.277    0.750
-##  b      0.362 0.255 45   -0.152    0.876
-##  c     -0.363 0.255 45   -0.877    0.150
-##  d      0.718 0.255 45    0.204    1.231
-##  e      0.261 0.255 45   -0.253    0.775
+##  group  emmean    SE df lower.CL upper.CL
+##  a     -0.2106 0.274 45   -0.763    0.341
+##  b     -0.3016 0.274 45   -0.854    0.250
+##  c     -0.7015 0.274 45   -1.253   -0.150
+##  d      0.0265 0.274 45   -0.525    0.578
+##  e      0.4410 0.274 45   -0.111    0.993
 ## 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ##  contrast estimate    SE df t.ratio p.value
-##  a - b     -0.1256 0.361 45  -0.348  0.7293
-##  a - c      0.6000 0.361 45   1.663  0.1032
-##  a - d     -0.4810 0.361 45  -1.334  0.1890
-##  a - e     -0.0244 0.361 45  -0.068  0.9463
-##  b - c      0.7256 0.361 45   2.012  0.0503
-##  b - d     -0.3554 0.361 45  -0.985  0.3297
-##  b - e      0.1012 0.361 45   0.281  0.7803
-##  c - d     -1.0810 0.361 45  -2.997  0.0044
-##  c - e     -0.6244 0.361 45  -1.731  0.0903
-##  d - e      0.4566 0.361 45   1.266  0.2120
+##  a - b       0.091 0.388 45   0.235  0.8154
+##  a - c       0.491 0.388 45   1.267  0.2118
+##  a - d      -0.237 0.388 45  -0.612  0.5437
+##  a - e      -0.652 0.388 45  -1.682  0.0996
+##  b - c       0.400 0.388 45   1.032  0.3077
+##  b - d      -0.328 0.388 45  -0.847  0.4016
+##  b - e      -0.743 0.388 45  -1.916  0.0617
+##  c - d      -0.728 0.388 45  -1.879  0.0668
+##  c - e      -1.142 0.388 45  -2.948  0.0051
+##  d - e      -0.414 0.388 45  -1.070  0.2905
 \end{verbatim}
 
 Kör koden tio gånger. Hur många gånger av de tio ger de parvisa jämförelserna \emph{någon} signifikant skillnad (det vill säga något p-värde under 0.05)?
