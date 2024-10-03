@@ -422,7 +422,7 @@ ggplot(gm_2002, aes(x = lifeExp, y = gdpPercap,
 Vad ska ändras i stycket nedan för att skapa en graf med år på x-axeln, medellivslängd på y-axeln och skilda småfönster för olika kontinenter?
 
 ```{r, eval = F}
-ggplot(dat_small, aes(x = ____, y = ____)) + 
+ggplot(gm_2002, aes(x = ____, y = ____)) + 
   geom_point() +
   facet_wrap(~ continent)
 ```
