@@ -16,7 +16,7 @@ Datorövning 6 handlar om variansanalys. Efter övningen ska vi kunna
 - göra parvisa jämförelser mellan behandlingar.
 
 
-## Repetition av datorövning 6
+## Repetition av datorövning 5
 
 När man startar en ny R-session bör man ladda de paket man vet kommer behövas med `library()`. Om paket inte finns installerade måste man först köra `install.packages()`.
 

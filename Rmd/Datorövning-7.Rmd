@@ -15,7 +15,7 @@ Datorövning 7 handlar om regression och korrelation. Efter övningen ska vi kun
 
 - beräkna och tolka korrelationen mellan två variabler.
 
-## Repetition av datorövning 7
+## Repetition av datorövning 6
 
 När man startar en ny R-session bör man ladda de paket man vet kommer behövas med `library()`. Om paket inte finns installerade måste man först köra `install.packages()`.
 

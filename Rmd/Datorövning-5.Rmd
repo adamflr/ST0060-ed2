@@ -15,7 +15,7 @@ Datorövning 5 handlar om hypotestest och konfidensintervall för jämförelse a
 
 - konfidensintervall för skillnaden mellan två medelvärden eller två proportioner.
 
-## Repetition av datorövning 5
+## Repetition av datorövning 4
 
 När man startar en ny R-session bör man ladda de paket man vet kommer behövas med `library()`. Om paket inte finns installerade måste man först köra `install.packages()`.
 

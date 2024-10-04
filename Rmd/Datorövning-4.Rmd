@@ -17,7 +17,7 @@ Datorövning 4 handlar om hypotestest och konfidensintervall för ett stickprov 
 
 Om det finns tid för en bonussektion kommer vi också titta på interaktiva kartor med `leaflet`.
 
-## Repetition av datorövning 4
+## Repetition av datorövning 3
 
 När man startar en ny R-session bör man ladda de paket man vet kommer behövas med `library()`. Om paket inte finns installerade måste man först köra `install.packages()`.
 

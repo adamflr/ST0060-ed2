@@ -126,7 +126,7 @@ gapminder
 
 Om man vill skapa en kolumn med mellanrum i namnet måste man skriva namnet inom *backticks* \` för att ange att namnet ska tolkas som en enhet. Jag rekommenderar att undvika mellanrum i kolumnnamn och istället använda stora bokstäver eller understreck för ett nytt ord (`NationalGDP` eller `National_GDP`).
 
-```{r}
+```{r, results='hide'}
 gapminder %>% 
   mutate(`National GDP` = gdpPercap * pop)
 ```

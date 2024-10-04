@@ -105,6 +105,9 @@
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
 \AtBeginDocument{\renewcommand{\chaptername}{Kapitel}}
+
+\usepackage[swedish]{babel}
+\selectlanguage{swedish}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -134,7 +137,7 @@
 
 \title{R-anvisningar till \emph{Grundläggande statistik}}
 \author{}
-\date{\vspace{-2.5em}2024-10-03}
+\date{\vspace{-2.5em}2024-10-04}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Sats}[chapter]
@@ -1095,23 +1098,6 @@ Om man vill skapa en kolumn med mellanrum i namnet måste man skriva namnet inom
   \FunctionTok{mutate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{National GDP}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ gdpPercap }\SpecialCharTok{*}\NormalTok{ pop)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 1,704 x 8
-##    country     continent  year lifeExp      pop gdpPercap     gdp `National GDP`
-##    <fct>       <fct>     <int>   <dbl>    <int>     <dbl>   <dbl>          <dbl>
-##  1 Afghanistan Asia       1952    28.8  8425333      779. 6.57e 9    6567086330.
-##  2 Afghanistan Asia       1957    30.3  9240934      821. 7.59e 9    7585448670.
-##  3 Afghanistan Asia       1962    32.0 10267083      853. 8.76e 9    8758855797.
-##  4 Afghanistan Asia       1967    34.0 11537966      836. 9.65e 9    9648014150.
-##  5 Afghanistan Asia       1972    36.1 13079460      740. 9.68e 9    9678553274.
-##  6 Afghanistan Asia       1977    38.4 14880372      786. 1.17e10   11697659231.
-##  7 Afghanistan Asia       1982    39.9 12881816      978. 1.26e10   12598563401.
-##  8 Afghanistan Asia       1987    40.8 13867957      852. 1.18e10   11820990309.
-##  9 Afghanistan Asia       1992    41.7 16317921      649. 1.06e10   10595901589.
-## 10 Afghanistan Asia       1997    41.8 22227415      635. 1.41e10   14121995875.
-## # i 1,694 more rows
-\end{verbatim}
 
 \section{Sammanfattande lägesmått}\label{sammanfattande-luxe4gesmuxe5tt}
 
@@ -2180,13 +2166,13 @@ Följande kod simulerar ett dataset om tio observationer från en normalfördeln
 ##  One Sample t-test
 ## 
 ## data:  dat_sim$x
-## t = 2.9627, df = 9, p-value = 0.01589
+## t = -1.9103, df = 9, p-value = 0.08842
 ## alternative hypothesis: true mean is not equal to 7
 ## 95 percent confidence interval:
-##   7.690195 12.147697
+##  0.8958046 7.5147998
 ## sample estimates:
 ## mean of x 
-##  9.918946
+##  4.205302
 \end{verbatim}
 
 \begin{exercise}[Upprepad simulering]
@@ -2231,7 +2217,7 @@ Vidare ska p-värdet vara under fem procent fem procent av gångerna.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.047
+## [1] 0.05
 \end{verbatim}
 
 Även det stämmer någorlunda väl. Det här innebär alltså att om man har en signifikansnivå på fem procent kommer man förkasta nollhypotesen fem procent av gångerna även om nollhypotesen stämmer. Det kallas ett \emph{falskt positivt} utfall.
@@ -2322,7 +2308,7 @@ Datorövning 4 handlar om hypotestest och konfidensintervall för ett stickprov 
 
 Om det finns tid för en bonussektion kommer vi också titta på interaktiva kartor med \texttt{leaflet}.
 
-\section{Repetition av datorövning 4}\label{repetition-av-datoruxf6vning-4}
+\section{Repetition av datorövning 3}\label{repetition-av-datoruxf6vning-3}
 
 När man startar en ny R-session bör man ladda de paket man vet kommer behövas med \texttt{library()}. Om paket inte finns installerade måste man först köra \texttt{install.packages()}.
 
@@ -3135,7 +3121,7 @@ Datorövning 5 handlar om hypotestest och konfidensintervall för jämförelse a
   konfidensintervall för skillnaden mellan två medelvärden eller två proportioner.
 \end{itemize}
 
-\section{Repetition av datorövning 5}\label{repetition-av-datoruxf6vning-5}
+\section{Repetition av datorövning 4}\label{repetition-av-datoruxf6vning-4}
 
 När man startar en ny R-session bör man ladda de paket man vet kommer behövas med \texttt{library()}. Om paket inte finns installerade måste man först köra \texttt{install.packages()}.
 
@@ -4098,7 +4084,7 @@ Datorövning 6 handlar om variansanalys. Efter övningen ska vi kunna
   göra parvisa jämförelser mellan behandlingar.
 \end{itemize}
 
-\section{Repetition av datorövning 6}\label{repetition-av-datoruxf6vning-6}
+\section{Repetition av datorövning 5}\label{repetition-av-datoruxf6vning-5}
 
 När man startar en ny R-session bör man ladda de paket man vet kommer behövas med \texttt{library()}. Om paket inte finns installerade måste man först köra \texttt{install.packages()}.
 
@@ -4511,26 +4497,26 @@ Anledning till att vi justerar p-värden är att man vid varje test har en sanno
 \begin{verbatim}
 ## $emmeans
 ##  group  emmean    SE df lower.CL upper.CL
-##  a     -0.2106 0.274 45   -0.763    0.341
-##  b     -0.3016 0.274 45   -0.854    0.250
-##  c     -0.7015 0.274 45   -1.253   -0.150
-##  d      0.0265 0.274 45   -0.525    0.578
-##  e      0.4410 0.274 45   -0.111    0.993
+##  a      0.3102 0.344 45   -0.382    1.003
+##  b      0.1899 0.344 45   -0.503    0.882
+##  c     -0.2747 0.344 45   -0.967    0.418
+##  d     -0.3239 0.344 45   -1.016    0.369
+##  e      0.0984 0.344 45   -0.594    0.791
 ## 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ##  contrast estimate    SE df t.ratio p.value
-##  a - b       0.091 0.388 45   0.235  0.8154
-##  a - c       0.491 0.388 45   1.267  0.2118
-##  a - d      -0.237 0.388 45  -0.612  0.5437
-##  a - e      -0.652 0.388 45  -1.682  0.0996
-##  b - c       0.400 0.388 45   1.032  0.3077
-##  b - d      -0.328 0.388 45  -0.847  0.4016
-##  b - e      -0.743 0.388 45  -1.916  0.0617
-##  c - d      -0.728 0.388 45  -1.879  0.0668
-##  c - e      -1.142 0.388 45  -2.948  0.0051
-##  d - e      -0.414 0.388 45  -1.070  0.2905
+##  a - b      0.1204 0.486 45   0.248  0.8056
+##  a - c      0.5849 0.486 45   1.203  0.2352
+##  a - d      0.6341 0.486 45   1.304  0.1988
+##  a - e      0.2119 0.486 45   0.436  0.6651
+##  b - c      0.4645 0.486 45   0.956  0.3444
+##  b - d      0.5137 0.486 45   1.057  0.2963
+##  b - e      0.0915 0.486 45   0.188  0.8515
+##  c - d      0.0492 0.486 45   0.101  0.9198
+##  c - e     -0.3730 0.486 45  -0.767  0.4469
+##  d - e     -0.4222 0.486 45  -0.868  0.3897
 \end{verbatim}
 
 Kör koden tio gånger. Hur många gånger av de tio ger de parvisa jämförelserna \emph{någon} signifikant skillnad (det vill säga något p-värde under 0.05)?
@@ -5285,7 +5271,7 @@ Datorövning 7 handlar om regression och korrelation. Efter övningen ska vi kun
   beräkna och tolka korrelationen mellan två variabler.
 \end{itemize}
 
-\section{Repetition av datorövning 7}\label{repetition-av-datoruxf6vning-7}
+\section{Repetition av datorövning 6}\label{repetition-av-datoruxf6vning-6}
 
 När man startar en ny R-session bör man ladda de paket man vet kommer behövas med \texttt{library()}. Om paket inte finns installerade måste man först köra \texttt{install.packages()}.
 
