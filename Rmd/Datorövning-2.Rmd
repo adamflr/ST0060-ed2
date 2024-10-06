@@ -362,8 +362,6 @@ dat_dice <- dat_dice %>%
 dat_dice
 ```
 
-Om beräkning inte är uppenbar här, ta någon minut för att förstå den.
-
 ::: {.exercise name="Kumulativt medelvärde"}
 Vad ska läggas till för att stycket nedan ska ge en linjegraf över medelvärdet?
 
@@ -430,7 +428,7 @@ Vad måste läggas till i funktionen nedan för att filtrera för data där åre
 
 ```{r, eval = F}
 dat_2007 <- gapminder %>% 
-  ___(year == ___)
+  filter(year == ___)
 ```
 :::
 
@@ -440,8 +438,8 @@ Vi kan nu konstruera en 3d-graf med datan.
 Vad måste läggas till i funktionen nedan för en 3d-graf med befolkningsmängd (`pop`)  på x-axeln, livslängd (`lifeExp`) på y-axeln, bnp per capita (`gdpPercap`) på z-axeln, och färg efter kontinent (`continent`)? För att kunna identifiera specifika länder kan man också sätta argumentet `text`.
 
 ```{r, eval = F}
-plot_ly(___, x = ~___, y = ~___, z = ~___, 
-        color = ~___, text = ~country) %>% 
+plot_ly(data_2007, x = ~pop, y = ~___, z = ~___, 
+        color = ~continent, text = ~country) %>% 
   add_markers()
 ```
 :::
@@ -452,7 +450,7 @@ Inom statistiken är det vanligt att transformera variabler för att ta bort ext
 Grafen i uppgiften ovan präglas mycket av skillnader i bnp och befolkningsstorlek. Testa att tio-logaritmera variablerna och se om det blir en mer eller mindre överskådlig graf. Logaritmen kan göras genom att byta den ursprungliga variabeln mot en variabel transformerad med `log10()`. Fyll i stycket nedan.
 
 ```{r, eval = F}
-plot_ly(___, x = ~log10(___), y = ~log10(___), 
+plot_ly(dat_2007, x = ~log10(pop), y = ~log10(___), 
         z = ~___, color = ~___, text = ~country) %>% 
   add_markers()
 ```
@@ -462,9 +460,19 @@ plot_ly(___, x = ~log10(___), y = ~log10(___),
 Likt en ggplot kan man lägga till graf-element. Här använder man dock en pipe för lägga till ett nytt element. Fyll i kodstycket nedan. Vad, om något, har lagts till i grafen?
 
 ```{r, eval = F}
-plot_ly(___, x = ~log10(___), y = ~log10(___), 
-        z = ~___, color = ~___, text = ~country) %>% 
+plot_ly(dat_2007, x = ~log10(pop), y = ~log10(___), 
+        z = ~___, color = ~continent, text = ~country) %>% 
   add_markers() %>% 
   add_lines(data = gapminder %>% filter(country == "Costa Rica"))
 ```
+:::
+
+## AI-uppgift II
+
+::: {.exercise name="Standardavvikelse från gapminder-datan"}
+Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att få kod som beräknar standardavvikelsen av medellivslängd från gapminder-datan. Fråga också om tolkning av standardavvikelsen och om det finns några specifika tolkningsproblem för just den här gapminder-datan.
+:::
+
+::: {.exercise name="3d-graf återigen"}
+Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att få kod som skapar en 3d-graf lik den vi skapade ovan. Se om det går att utveckla grafen ytterligare, t.ex. med en linje som går ner till grafen *botten*, eller linjer som kopplar samma länder till kontinentens medelvärde.
 :::

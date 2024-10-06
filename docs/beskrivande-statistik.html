@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 Beskrivande statistik | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="2 Beskrivande statistik | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 Beskrivande statistik | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2024-10-04" />
+<meta name="date" content="2024-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -154,10 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#packages-från-cran"><i class="fa fa-check"></i><b>1.2</b> <em>Packages</em> från CRAN</a></li>
 <li class="chapter" data-level="1.3" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#objekt-och-funktioner"><i class="fa fa-check"></i><b>1.3</b> Objekt och funktioner</a></li>
 <li class="chapter" data-level="1.4" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#sekvenser-av-funktioner"><i class="fa fa-check"></i><b>1.4</b> Sekvenser av funktioner</a></li>
-<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning-och-dataimport-från-web"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning och dataimport från web</a>
-<ul>
-<li class="chapter" data-level="1.5.1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#inskrivning-av-data"><i class="fa fa-check"></i><b>1.5.1</b> Inskrivning av data</a></li>
-</ul></li>
+<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning</a></li>
 <li class="chapter" data-level="1.6" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter"><i class="fa fa-check"></i><b>1.6</b> Urval ur en tabell med <code>select</code> och <code>filter</code></a></li>
 <li class="chapter" data-level="1.7" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#grafer-med-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Grafer med <code>ggplot2</code></a></li>
 <li class="chapter" data-level="1.8" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#ai-uppgift-i"><i class="fa fa-check"></i><b>1.8</b> AI-uppgift I</a></li>
@@ -172,6 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ordna-upp-beskrivande-statistik-och-exportera"><i class="fa fa-check"></i><b>2.6</b> Ordna upp beskrivande statistik och exportera</a></li>
 <li class="chapter" data-level="2.7" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#kumulativt-medelvärde"><i class="fa fa-check"></i><b>2.7</b> Kumulativt medelvärde</a></li>
 <li class="chapter" data-level="2.8" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#bonus.-tredimensionella-grafer-med-plotly"><i class="fa fa-check"></i><b>2.8</b> Bonus. Tredimensionella grafer med <code>plotly</code></a></li>
+<li class="chapter" data-level="2.9" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ai-uppgift-ii"><i class="fa fa-check"></i><b>2.9</b> AI-uppgift II</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html"><i class="fa fa-check"></i><b>3</b> Ett stickprov av normalfördelad data</a>
 <ul>
@@ -462,7 +460,6 @@ Vi kan skriva ut objektet och se resultatet av beräkningen:</p>
 <span id="cb97-6"><a href="beskrivande-statistik.html#cb97-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">kumulativ_summa =</span> <span class="fu">cumsum</span>(Utfall),  </span>
 <span id="cb97-7"><a href="beskrivande-statistik.html#cb97-7" tabindex="-1"></a>         kumulativt_medelvärde <span class="ot">=</span> kumulativ_summa <span class="sc">/</span> Kast)</span>
 <span id="cb97-8"><a href="beskrivande-statistik.html#cb97-8" tabindex="-1"></a>dat_dice</span></code></pre></div>
-<p>Om beräkning inte är uppenbar här, ta någon minut för att förstå den.</p>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-34" class="exercise"><strong>Uppgift 2.12  (Kumulativt medelvärde) </strong></span>Vad ska läggas till för att stycket nedan ska ge en linjegraf över medelvärdet?</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="beskrivande-statistik.html#cb98-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_dice, <span class="fu">aes</span>(<span class="at">x =</span> Kast, <span class="at">y =</span> ___)) <span class="sc">+</span></span>
@@ -506,28 +503,37 @@ Vi kan skriva ut objektet och se resultatet av beräkningen:</p>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-37" class="exercise"><strong>Uppgift 2.15  (Filtrera för år) </strong></span>Vad måste läggas till i funktionen nedan för att filtrera för data där året är 2007?</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="beskrivande-statistik.html#cb103-1" tabindex="-1"></a>dat_2007 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> </span>
-<span id="cb103-2"><a href="beskrivande-statistik.html#cb103-2" tabindex="-1"></a>  <span class="fu">___</span>(year <span class="sc">==</span> ___)</span></code></pre></div>
+<span id="cb103-2"><a href="beskrivande-statistik.html#cb103-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> ___)</span></code></pre></div>
 </div>
 <p>Vi kan nu konstruera en 3d-graf med datan.</p>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-38" class="exercise"><strong>Uppgift 2.16  (Gapminder i 3d) </strong></span>Vad måste läggas till i funktionen nedan för en 3d-graf med befolkningsmängd (<code>pop</code>) på x-axeln, livslängd (<code>lifeExp</code>) på y-axeln, bnp per capita (<code>gdpPercap</code>) på z-axeln, och färg efter kontinent (<code>continent</code>)? För att kunna identifiera specifika länder kan man också sätta argumentet <code>text</code>.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="beskrivande-statistik.html#cb104-1" tabindex="-1"></a><span class="fu">plot_ly</span>(___, <span class="at">x =</span> <span class="sc">~</span>___, <span class="at">y =</span> <span class="sc">~</span>___, <span class="at">z =</span> <span class="sc">~</span>___, </span>
-<span id="cb104-2"><a href="beskrivande-statistik.html#cb104-2" tabindex="-1"></a>        <span class="at">color =</span> <span class="sc">~</span>___, <span class="at">text =</span> <span class="sc">~</span>country) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="beskrivande-statistik.html#cb104-1" tabindex="-1"></a><span class="fu">plot_ly</span>(data_2007, <span class="at">x =</span> <span class="sc">~</span>pop, <span class="at">y =</span> <span class="sc">~</span>___, <span class="at">z =</span> <span class="sc">~</span>___, </span>
+<span id="cb104-2"><a href="beskrivande-statistik.html#cb104-2" tabindex="-1"></a>        <span class="at">color =</span> <span class="sc">~</span>continent, <span class="at">text =</span> <span class="sc">~</span>country) <span class="sc">%&gt;%</span> </span>
 <span id="cb104-3"><a href="beskrivande-statistik.html#cb104-3" tabindex="-1"></a>  <span class="fu">add_markers</span>()</span></code></pre></div>
 </div>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-39" class="exercise"><strong>Uppgift 2.17  (Log-transformationer) </strong></span>Inom statistiken är det vanligt att transformera variabler för att ta bort extremeffekter och visa på specifika dataegenskaper. En vanlig transform är att <em>logaritmera</em> ett värde, vilket innebär att man istället för att använda det ursprungliga värdet använder exponenten i någon bas (ofta basen tio). Ta till exempel värdet 10000, dess tio-logaritm är 4, eftersom 10 upphöjt i 4 är 10000. Logaritmer är vanliga vid data med extremvärden.</p>
 <p>Grafen i uppgiften ovan präglas mycket av skillnader i bnp och befolkningsstorlek. Testa att tio-logaritmera variablerna och se om det blir en mer eller mindre överskådlig graf. Logaritmen kan göras genom att byta den ursprungliga variabeln mot en variabel transformerad med <code>log10()</code>. Fyll i stycket nedan.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="beskrivande-statistik.html#cb105-1" tabindex="-1"></a><span class="fu">plot_ly</span>(___, <span class="at">x =</span> <span class="sc">~</span><span class="fu">log10</span>(___), <span class="at">y =</span> <span class="sc">~</span><span class="fu">log10</span>(___), </span>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="beskrivande-statistik.html#cb105-1" tabindex="-1"></a><span class="fu">plot_ly</span>(dat_2007, <span class="at">x =</span> <span class="sc">~</span><span class="fu">log10</span>(pop), <span class="at">y =</span> <span class="sc">~</span><span class="fu">log10</span>(___), </span>
 <span id="cb105-2"><a href="beskrivande-statistik.html#cb105-2" tabindex="-1"></a>        <span class="at">z =</span> <span class="sc">~</span>___, <span class="at">color =</span> <span class="sc">~</span>___, <span class="at">text =</span> <span class="sc">~</span>country) <span class="sc">%&gt;%</span> </span>
 <span id="cb105-3"><a href="beskrivande-statistik.html#cb105-3" tabindex="-1"></a>  <span class="fu">add_markers</span>()</span></code></pre></div>
 </div>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-40" class="exercise"><strong>Uppgift 2.18  (Följa ett land) </strong></span>Likt en ggplot kan man lägga till graf-element. Här använder man dock en pipe för lägga till ett nytt element. Fyll i kodstycket nedan. Vad, om något, har lagts till i grafen?</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="beskrivande-statistik.html#cb106-1" tabindex="-1"></a><span class="fu">plot_ly</span>(___, <span class="at">x =</span> <span class="sc">~</span><span class="fu">log10</span>(___), <span class="at">y =</span> <span class="sc">~</span><span class="fu">log10</span>(___), </span>
-<span id="cb106-2"><a href="beskrivande-statistik.html#cb106-2" tabindex="-1"></a>        <span class="at">z =</span> <span class="sc">~</span>___, <span class="at">color =</span> <span class="sc">~</span>___, <span class="at">text =</span> <span class="sc">~</span>country) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="beskrivande-statistik.html#cb106-1" tabindex="-1"></a><span class="fu">plot_ly</span>(dat_2007, <span class="at">x =</span> <span class="sc">~</span><span class="fu">log10</span>(pop), <span class="at">y =</span> <span class="sc">~</span><span class="fu">log10</span>(___), </span>
+<span id="cb106-2"><a href="beskrivande-statistik.html#cb106-2" tabindex="-1"></a>        <span class="at">z =</span> <span class="sc">~</span>___, <span class="at">color =</span> <span class="sc">~</span>continent, <span class="at">text =</span> <span class="sc">~</span>country) <span class="sc">%&gt;%</span> </span>
 <span id="cb106-3"><a href="beskrivande-statistik.html#cb106-3" tabindex="-1"></a>  <span class="fu">add_markers</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb106-4"><a href="beskrivande-statistik.html#cb106-4" tabindex="-1"></a>  <span class="fu">add_lines</span>(<span class="at">data =</span> gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Costa Rica&quot;</span>))</span></code></pre></div>
+</div>
+</div>
+<div id="ai-uppgift-ii" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> AI-uppgift II<a href="beskrivande-statistik.html#ai-uppgift-ii" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-41" class="exercise"><strong>Uppgift 2.19  (Standardavvikelse från gapminder-datan) </strong></span>Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att få kod som beräknar standardavvikelsen av medellivslängd från gapminder-datan. Fråga också om tolkning av standardavvikelsen och om det finns några specifika tolkningsproblem för just den här gapminder-datan.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-42" class="exercise"><strong>Uppgift 2.20  (3d-graf återigen) </strong></span>Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att få kod som skapar en 3d-graf lik den vi skapade ovan. Se om det går att utveckla grafen ytterligare, t.ex. med en linje som går ner till grafen <em>botten</em>, eller linjer som kopplar samma länder till kontinentens medelvärde.</p>
 </div>
 
 </div>

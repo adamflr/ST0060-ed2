@@ -241,9 +241,7 @@ new_vector^2 %>% # Ta kvadraterna av new_vector, och sen
 ```
 :::
 
-## Datainskrivning och dataimport från web
-
-### Inskrivning av data
+## Datainskrivning
 
 Det första praktiska steget i en statistisk analys är att importera data. I R kan det göras genom att direkt skriva in sin data och spara som ett nytt objekt, men ett bättre och vanligare sätt är att importera sin data från en extern fil eller databas.
 

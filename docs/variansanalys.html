@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 Variansanalys | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="6 Variansanalys | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 Variansanalys | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2024-10-04" />
+<meta name="date" content="2024-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -154,10 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#packages-från-cran"><i class="fa fa-check"></i><b>1.2</b> <em>Packages</em> från CRAN</a></li>
 <li class="chapter" data-level="1.3" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#objekt-och-funktioner"><i class="fa fa-check"></i><b>1.3</b> Objekt och funktioner</a></li>
 <li class="chapter" data-level="1.4" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#sekvenser-av-funktioner"><i class="fa fa-check"></i><b>1.4</b> Sekvenser av funktioner</a></li>
-<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning-och-dataimport-från-web"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning och dataimport från web</a>
-<ul>
-<li class="chapter" data-level="1.5.1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#inskrivning-av-data"><i class="fa fa-check"></i><b>1.5.1</b> Inskrivning av data</a></li>
-</ul></li>
+<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning</a></li>
 <li class="chapter" data-level="1.6" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter"><i class="fa fa-check"></i><b>1.6</b> Urval ur en tabell med <code>select</code> och <code>filter</code></a></li>
 <li class="chapter" data-level="1.7" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#grafer-med-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Grafer med <code>ggplot2</code></a></li>
 <li class="chapter" data-level="1.8" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#ai-uppgift-i"><i class="fa fa-check"></i><b>1.8</b> AI-uppgift I</a></li>
@@ -172,6 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ordna-upp-beskrivande-statistik-och-exportera"><i class="fa fa-check"></i><b>2.6</b> Ordna upp beskrivande statistik och exportera</a></li>
 <li class="chapter" data-level="2.7" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#kumulativt-medelvärde"><i class="fa fa-check"></i><b>2.7</b> Kumulativt medelvärde</a></li>
 <li class="chapter" data-level="2.8" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#bonus.-tredimensionella-grafer-med-plotly"><i class="fa fa-check"></i><b>2.8</b> Bonus. Tredimensionella grafer med <code>plotly</code></a></li>
+<li class="chapter" data-level="2.9" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ai-uppgift-ii"><i class="fa fa-check"></i><b>2.9</b> AI-uppgift II</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html"><i class="fa fa-check"></i><b>3</b> Ett stickprov av normalfördelad data</a>
 <ul>
@@ -398,10 +396,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <p>Det låga p-värdet tyder på att nollhypotesen bör förkastas, vilket alltså pekar på att det finns någon eller några skillnader i medelvärde.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-116" class="exercise"><strong>Uppgift 6.1  (Anova för hand) </strong></span>Anovatabell från <code>Anova()</code> ger kvadratsummor och frihetsgrader. Använd den informationen för att, för hand, beräkna medelkvadratsummor och F-värdet.</p>
+<p><span id="exr:unlabeled-div-118" class="exercise"><strong>Uppgift 6.1  (Anova för hand) </strong></span>Anovatabell från <code>Anova()</code> ger kvadratsummor och frihetsgrader. Använd den informationen för att, för hand, beräkna medelkvadratsummor och F-värdet.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-117" class="exercise"><strong>Uppgift 6.2  (Tabellvärde för F-fördelningen) </strong></span>Anova-tabellen ger ett p-värde från vilket vi kan dra en direkt slutsats. Om man istället löser uppgiften för hand ställer man det beräknade F-värdet mot ett kritiskt värde från en tabell över F-fördelningen. Se efter om man kan hitta ett lämpligt tabellvärde för det aktuella testet (med 2 och 27 frihetsgrader). Det är möjligt att det inte finns en rad för 27 i en vanlig F-fördelningstabell, använd isåfall värdet på närmast övre rad (t.ex. 26 eller 25). I R kan kvantiler för F-fördelningen tas fram med <code>qf()</code>, t.ex.</p>
+<p><span id="exr:unlabeled-div-119" class="exercise"><strong>Uppgift 6.2  (Tabellvärde för F-fördelningen) </strong></span>Anova-tabellen ger ett p-värde från vilket vi kan dra en direkt slutsats. Om man istället löser uppgiften för hand ställer man det beräknade F-värdet mot ett kritiskt värde från en tabell över F-fördelningen. Se efter om man kan hitta ett lämpligt tabellvärde för det aktuella testet (med 2 och 27 frihetsgrader). Det är möjligt att det inte finns en rad för 27 i en vanlig F-fördelningstabell, använd isåfall värdet på närmast övre rad (t.ex. 26 eller 25). I R kan kvantiler för F-fördelningen tas fram med <code>qf()</code>, t.ex.</p>
 <div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="variansanalys.html#cb327-1" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="dv">2</span>, <span class="dv">27</span>)</span></code></pre></div>
 <pre><code>## [1] 3.354131</code></pre>
 </div>
@@ -458,7 +456,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 ##       But we also did not show them to be the same.</code></pre>
 <p>Tolkning av grupperingen till höger är att grupper som delar en bokstav inte är signifikant skilda. I det här fallet är den lägsta nivån skild från de två högsta. I övrigt finns inga signifikanta skillnader. Jämför gärna med p-värdena från tabellen med parvisa jämförelser. Man bör se att parvisa jämförelser med ett p-värde under fem procent motsvaras av att de behandlingarna inte delar någon bokstav i bokstavstabellen.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-118" class="exercise"><strong>Uppgift 6.3  (Anova med två behandlingar) </strong></span>Följande kod skapar en datamängd med två behandlingar.</p>
+<p><span id="exr:unlabeled-div-120" class="exercise"><strong>Uppgift 6.3  (Anova med två behandlingar) </strong></span>Följande kod skapar en datamängd med två behandlingar.</p>
 <div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="variansanalys.html#cb335-1" tabindex="-1"></a>dat_two <span class="ot">&lt;-</span> PlantGrowth <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;trt1&quot;</span>, <span class="st">&quot;trt2&quot;</span>))</span></code></pre></div>
 <p>Använd den datan för att göra ett t-test för två oberoende stickprov med lika varians, ett t-test för två oberoende stickprov utan antagande om lika varians, och ett F-test (ofullständig exempelkod nedan). Vad kan sägas om p-värdena från de tre testen?</p>
 <div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="variansanalys.html#cb336-1" tabindex="-1"></a><span class="fu">t.test</span>(___ <span class="sc">~</span> group, <span class="at">data =</span> dat_two, <span class="at">var.equal =</span> T)</span>
@@ -468,46 +466,46 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb336-5"><a href="variansanalys.html#cb336-5" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-119" class="exercise"><strong>Uppgift 6.4  (Mass-signifikans) </strong></span>Anledning till att vi justerar p-värden är att man vid varje test har en sannolikhet att förkasta. Om man gör ett stort antal tester är man nästan garanterad att få något (falskt) signifikant resultat. Justering höjer p-värdena för att minska den risken. Följande kod simulerar data med 5 grupper och producerar de parvisa jämförelserna.</p>
+<p><span id="exr:unlabeled-div-121" class="exercise"><strong>Uppgift 6.4  (Mass-signifikans) </strong></span>Anledning till att vi justerar p-värden är att man vid varje test har en sannolikhet att förkasta. Om man gör ett stort antal tester är man nästan garanterad att få något (falskt) signifikant resultat. Justering höjer p-värdena för att minska den risken. Följande kod simulerar data med 5 grupper och producerar de parvisa jämförelserna.</p>
 <div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="variansanalys.html#cb337-1" tabindex="-1"></a>n_groups <span class="ot">&lt;-</span> <span class="dv">5</span></span>
 <span id="cb337-2"><a href="variansanalys.html#cb337-2" tabindex="-1"></a>dat_sim <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">obs =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">group =</span> letters[<span class="dv">1</span><span class="sc">:</span>n_groups]) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">rnorm</span>(<span class="fu">n</span>()))</span>
 <span id="cb337-3"><a href="variansanalys.html#cb337-3" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> group, dat_sim)</span>
 <span id="cb337-4"><a href="variansanalys.html#cb337-4" tabindex="-1"></a><span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> group, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <pre><code>## $emmeans
-##  group emmean    SE df lower.CL upper.CL
-##  a      0.539 0.352 45  -0.1689    1.248
-##  b      0.726 0.352 45   0.0177    1.434
-##  c      0.553 0.352 45  -0.1554    1.261
-##  d     -0.110 0.352 45  -0.8179    0.599
-##  e      0.150 0.352 45  -0.5586    0.858
+##  group emmean  SE df lower.CL upper.CL
+##  a     -0.084 0.3 45   -0.688    0.520
+##  b     -0.477 0.3 45   -1.081    0.126
+##  c      0.142 0.3 45   -0.462    0.746
+##  d      0.426 0.3 45   -0.178    1.030
+##  e      0.130 0.3 45   -0.473    0.734
 ## 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ##  contrast estimate    SE df t.ratio p.value
-##  a - b     -0.1865 0.497 45  -0.375  0.7094
-##  a - c     -0.0135 0.497 45  -0.027  0.9785
-##  a - d      0.6490 0.497 45   1.305  0.1986
-##  a - e      0.3897 0.497 45   0.784  0.4374
-##  b - c      0.1731 0.497 45   0.348  0.7295
-##  b - d      0.8355 0.497 45   1.680  0.0999
-##  b - e      0.5762 0.497 45   1.159  0.2527
-##  c - d      0.6625 0.497 45   1.332  0.1896
-##  c - e      0.4032 0.497 45   0.811  0.4219
-##  d - e     -0.2593 0.497 45  -0.521  0.6047</code></pre>
+##  a - b      0.3932 0.424 45   0.928  0.3586
+##  a - c     -0.2262 0.424 45  -0.534  0.5962
+##  a - d     -0.5098 0.424 45  -1.203  0.2354
+##  a - e     -0.2143 0.424 45  -0.506  0.6157
+##  b - c     -0.6195 0.424 45  -1.461  0.1509
+##  b - d     -0.9030 0.424 45  -2.130  0.0387
+##  b - e     -0.6075 0.424 45  -1.433  0.1587
+##  c - d     -0.2836 0.424 45  -0.669  0.5070
+##  c - e      0.0119 0.424 45   0.028  0.9777
+##  d - e      0.2955 0.424 45   0.697  0.4894</code></pre>
 <p>Kör koden tio gånger. Hur många gånger av de tio ger de parvisa jämförelserna <em>någon</em> signifikant skillnad (det vill säga något p-värde under 0.05)?</p>
 <p>En passande xkcd-serie: <a href="https://xkcd.com/882/" class="uri">https://xkcd.com/882/</a></p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-120" class="exercise"><strong>Uppgift 6.5  (Äppelinfektionsimport) </strong></span>En studie har givit ett mått på infektion hos äppelträd. Fyra sorter jämförs med tre replikat per sort. Data finns i fliken <em>Äppelangrepp</em> i excelfilen <em>Uppgiftsdata.xslx</em> på canvassidan. Fyll i kodstycket nedan för att importera datan.</p>
+<p><span id="exr:unlabeled-div-122" class="exercise"><strong>Uppgift 6.5  (Äppelinfektionsimport) </strong></span>En studie har givit ett mått på infektion hos äppelträd. Fyra sorter jämförs med tre replikat per sort. Data finns i fliken <em>Äppelangrepp</em> i excelfilen <em>Uppgiftsdata.xslx</em> på canvassidan. Fyll i kodstycket nedan för att importera datan.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-121" class="exercise"><strong>Uppgift 6.6  (Äppelinfektionsgraf) </strong></span>Fyll i kodstycket nedan för att skapa en graf av äppeldatan.</p>
+<p><span id="exr:unlabeled-div-123" class="exercise"><strong>Uppgift 6.6  (Äppelinfektionsgraf) </strong></span>Fyll i kodstycket nedan för att skapa en graf av äppeldatan.</p>
 <div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="variansanalys.html#cb339-1" tabindex="-1"></a><span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___)) <span class="sc">+</span></span>
 <span id="cb339-2"><a href="variansanalys.html#cb339-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-122" class="exercise"><strong>Uppgift 6.7  (Äppelinfektionsmodell) </strong></span>Fyll i kodstycket nedan för att skatta en anovamodell och ta fram anovatabellen. Vad är F-testets noll- och alternativhypotes? Vilken slutsats kan man dra från testet?</p>
+<p><span id="exr:unlabeled-div-124" class="exercise"><strong>Uppgift 6.7  (Äppelinfektionsmodell) </strong></span>Fyll i kodstycket nedan för att skatta en anovamodell och ta fram anovatabellen. Vad är F-testets noll- och alternativhypotes? Vilken slutsats kan man dra från testet?</p>
 <div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="variansanalys.html#cb340-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(___ <span class="sc">~</span> ___, <span class="at">data =</span> dat_apple)</span>
 <span id="cb340-2"><a href="variansanalys.html#cb340-2" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 </div>
@@ -606,7 +604,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 ##       But we also did not show them to be the same.</code></pre>
 <p>Modellen utan block ger samma medelvärden <code>emmean</code> men större medelfel <code>SE</code> och färre signifikanta skillnader.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-123" class="exercise"><strong>Uppgift 6.8  (Block med två behandlingar. Graf) </strong></span>Det minsta möjliga blocket är det med två behandlingar. Vi filtrerar havredatan för att den situationen.</p>
+<p><span id="exr:unlabeled-div-125" class="exercise"><strong>Uppgift 6.8  (Block med två behandlingar. Graf) </strong></span>Det minsta möjliga blocket är det med två behandlingar. Vi filtrerar havredatan för att den situationen.</p>
 <div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="variansanalys.html#cb352-1" tabindex="-1"></a>dat_small_block <span class="ot">&lt;-</span> oats <span class="sc">%&gt;%</span> <span class="fu">filter</span>(V <span class="sc">==</span> <span class="st">&quot;Marvellous&quot;</span>, N <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;0.6cwt&quot;</span>, <span class="st">&quot;0.0cwt&quot;</span>))</span>
 <span id="cb352-2"><a href="variansanalys.html#cb352-2" tabindex="-1"></a>dat_small_block</span></code></pre></div>
 <pre><code>##      B          V      N   Y
@@ -628,26 +626,26 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb354-3"><a href="variansanalys.html#cb354-3" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-124" class="exercise"><strong>Uppgift 6.9  (Block med två behandlingar. Test) </strong></span>Eftersom det är ett försök med en förklarande faktor och block kan man modellera det med den tidigare blockmodellen. Men eftersom man bara har två observationer per block kan man också se det som matchade stickprov, vilket kan lösas med ett t-test. Fyll i stycket nedan för att göra de två testen - utfallsvariabeln är skörd <code>Y</code> och den förklarande faktorn är kvävenivån <code>N</code>. Jämför resultaten.</p>
+<p><span id="exr:unlabeled-div-126" class="exercise"><strong>Uppgift 6.9  (Block med två behandlingar. Test) </strong></span>Eftersom det är ett försök med en förklarande faktor och block kan man modellera det med den tidigare blockmodellen. Men eftersom man bara har två observationer per block kan man också se det som matchade stickprov, vilket kan lösas med ett t-test. Fyll i stycket nedan för att göra de två testen - utfallsvariabeln är skörd <code>Y</code> och den förklarande faktorn är kvävenivån <code>N</code>. Jämför resultaten.</p>
 <div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="variansanalys.html#cb355-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(___ <span class="sc">~</span> ___ <span class="sc">+</span> B, <span class="at">data =</span> dat_small_block)</span>
 <span id="cb355-2"><a href="variansanalys.html#cb355-2" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span>
 <span id="cb355-3"><a href="variansanalys.html#cb355-3" tabindex="-1"></a></span>
 <span id="cb355-4"><a href="variansanalys.html#cb355-4" tabindex="-1"></a><span class="fu">t.test</span>(___ <span class="sc">~</span> ___, <span class="at">data =</span> dat_small_block, <span class="at">paired =</span> ___)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-125" class="exercise"><strong>Uppgift 6.10  (Majshybridimport) </strong></span>I fliken <em>Majshybrider</em> i excelfilen <em>Uppgiftsdata.xlsx</em> finns data på fyra majssorter, vardera sorterad på fem platser (som agerar som block). Importera datan med funktionen <code>read_excel()</code> genom att fylla i kodstycket nedan.</p>
+<p><span id="exr:unlabeled-div-127" class="exercise"><strong>Uppgift 6.10  (Majshybridimport) </strong></span>I fliken <em>Majshybrider</em> i excelfilen <em>Uppgiftsdata.xlsx</em> finns data på fyra majssorter, vardera sorterad på fem platser (som agerar som block). Importera datan med funktionen <code>read_excel()</code> genom att fylla i kodstycket nedan.</p>
 <div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="variansanalys.html#cb356-1" tabindex="-1"></a>dat_corn <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;&quot;</span>, <span class="at">sheet =</span> ___)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-126" class="exercise"><strong>Uppgift 6.11  (Majshybridgraf) </strong></span>Skapa en lämplig graf av datan på majshybrider. Grafen ska illustrera både jämförelsen mellan hybrider och jämförelsen mellan platser. Se exemplet ovan som guide.</p>
+<p><span id="exr:unlabeled-div-128" class="exercise"><strong>Uppgift 6.11  (Majshybridgraf) </strong></span>Skapa en lämplig graf av datan på majshybrider. Grafen ska illustrera både jämförelsen mellan hybrider och jämförelsen mellan platser. Se exemplet ovan som guide.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-127" class="exercise"><strong>Uppgift 6.12  (Majshybridmodell) </strong></span>Fyll i koden nedan för att skatta en anova-modell med block för datan på majshybrider. Ta fram anovatabellen med <code>Anova()</code>. Vilka slutsatser kan man dra från anovatabellen?</p>
+<p><span id="exr:unlabeled-div-129" class="exercise"><strong>Uppgift 6.12  (Majshybridmodell) </strong></span>Fyll i koden nedan för att skatta en anova-modell med block för datan på majshybrider. Ta fram anovatabellen med <code>Anova()</code>. Vilka slutsatser kan man dra från anovatabellen?</p>
 <div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="variansanalys.html#cb357-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(___ <span class="sc">~</span> ___ <span class="sc">+</span> Plats, <span class="at">data =</span> dat_corn)</span>
 <span id="cb357-2"><a href="variansanalys.html#cb357-2" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-128" class="exercise"><strong>Uppgift 6.13  (Majshybridjämförelser) </strong></span>Gör lämplig ändring i koden nedan för att jämföra hybrider, istället för platser.</p>
+<p><span id="exr:unlabeled-div-130" class="exercise"><strong>Uppgift 6.13  (Majshybridjämförelser) </strong></span>Gör lämplig ändring i koden nedan för att jämföra hybrider, istället för platser.</p>
 <div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="variansanalys.html#cb358-1" tabindex="-1"></a><span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> Plats)</span></code></pre></div>
 </div>
 </div>
@@ -728,10 +726,10 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 ## Confidence level used: 0.95</code></pre>
 <p>Även här kan man göra jämförelser mellan nivåer genom att sätta <code>pairwise ~ N + V</code> eller beräkna signifikansbokstäver med <code>cld</code>. Följande kod jämför kvävenivåer <em>inom</em> sort.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-129" class="exercise"><strong>Uppgift 6.14  (Sort uppdelat efter kvävenivå) </strong></span>Gör lämplig ändring i koden ovan för att jämföra sorter <em>inom</em> kvävenivå. Finns det några signifikanta skillnader?</p>
+<p><span id="exr:unlabeled-div-131" class="exercise"><strong>Uppgift 6.14  (Sort uppdelat efter kvävenivå) </strong></span>Gör lämplig ändring i koden ovan för att jämföra sorter <em>inom</em> kvävenivå. Finns det några signifikanta skillnader?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-130" class="exercise"><strong>Uppgift 6.15  (Interaktion med ett block) </strong></span>I modellen ovan är block en <em>additiv</em> faktor - den ingår inte i någon interaktionseffekt. Vad händer med testerna om man skattar modellen där samtliga interaktioner tas med? Varför?</p>
+<p><span id="exr:unlabeled-div-132" class="exercise"><strong>Uppgift 6.15  (Interaktion med ett block) </strong></span>I modellen ovan är block en <em>additiv</em> faktor - den ingår inte i någon interaktionseffekt. Vad händer med testerna om man skattar modellen där samtliga interaktioner tas med? Varför?</p>
 <div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="variansanalys.html#cb369-1" tabindex="-1"></a>mod_two_fact <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N <span class="sc">*</span> V <span class="sc">*</span> B, <span class="at">data =</span> oats)</span></code></pre></div>
 </div>
 </div>
@@ -756,11 +754,11 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-258-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Om datan är i linje med antaganden ska diagrammet se ut som slumpmässigt placerade punkter med ungefär lika stor spridning kring noll-linjen för samtliga nivåer på x-axeln. För det här exemplet ser det okej ut.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-131" class="exercise"><strong>Uppgift 6.16  (Bakterieimport) </strong></span>Fliken <em>Bakterier</em> i filen <em>Uppgiftsdata.xlsx</em> innehåller data om tillväxt hos gräs efter inokulering av bakterier. Ladda ner filen och importera datan genom att fylla i koden nedan.</p>
+<p><span id="exr:unlabeled-div-133" class="exercise"><strong>Uppgift 6.16  (Bakterieimport) </strong></span>Fliken <em>Bakterier</em> i filen <em>Uppgiftsdata.xlsx</em> innehåller data om tillväxt hos gräs efter inokulering av bakterier. Ladda ner filen och importera datan genom att fylla i koden nedan.</p>
 <div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="variansanalys.html#cb373-1" tabindex="-1"></a>dat_bact <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;___&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Bakterier&quot;</span>)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-132" class="exercise"><strong>Uppgift 6.17  (Bakterieimport) </strong></span>Illustrera datan med en lämplig graf, till exempel ett spridningsdiagram med <code>Inoculation</code> på x-axeln, <code>Dry weight</code> på y-axeln, småfönster efter <code>Cultivar</code> och färg efter <code>Block</code>.</p>
+<p><span id="exr:unlabeled-div-134" class="exercise"><strong>Uppgift 6.17  (Bakterieimport) </strong></span>Illustrera datan med en lämplig graf, till exempel ett spridningsdiagram med <code>Inoculation</code> på x-axeln, <code>Dry weight</code> på y-axeln, småfönster efter <code>Cultivar</code> och färg efter <code>Block</code>.</p>
 <div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="variansanalys.html#cb374-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_bact, <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> <span class="st">`</span><span class="at">___</span><span class="st">`</span>, <span class="at">color =</span> Block)) <span class="sc">+</span></span>
 <span id="cb374-2"><a href="variansanalys.html#cb374-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">6</span>) <span class="sc">+</span></span>
 <span id="cb374-3"><a href="variansanalys.html#cb374-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> ___)</span></code></pre></div>
@@ -769,16 +767,16 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb375-2"><a href="variansanalys.html#cb375-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Block =</span> <span class="fu">as.character</span>(Block))</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-133" class="exercise"><strong>Uppgift 6.18  (Bakteriemodell) </strong></span>Bakteriedatan har två faktorer och en blockfaktor. Skatta en anova-modell med interaktion och block genom att fylla i stycket nedan. Ta fram anovatabell och dra en slutsats från F-testen. Ligger slutsatsen i linje med grafen?</p>
+<p><span id="exr:unlabeled-div-135" class="exercise"><strong>Uppgift 6.18  (Bakteriemodell) </strong></span>Bakteriedatan har två faktorer och en blockfaktor. Skatta en anova-modell med interaktion och block genom att fylla i stycket nedan. Ta fram anovatabell och dra en slutsats från F-testen. Ligger slutsatsen i linje med grafen?</p>
 <div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="variansanalys.html#cb376-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="st">`</span><span class="at">___</span><span class="st">`</span> <span class="sc">~</span> ___ <span class="sc">*</span> ___ <span class="sc">+</span> ___, <span class="at">data =</span> dat_bact)</span>
 <span id="cb376-2"><a href="variansanalys.html#cb376-2" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-134" class="exercise"><strong>Uppgift 6.19  (Bakteriejämförelser) </strong></span>Använd <code>emmeans()</code> för parvisa jämförelser mellan inokuleringsmetoder. Vilka par är signifikant åtskilda?</p>
+<p><span id="exr:unlabeled-div-136" class="exercise"><strong>Uppgift 6.19  (Bakteriejämförelser) </strong></span>Använd <code>emmeans()</code> för parvisa jämförelser mellan inokuleringsmetoder. Vilka par är signifikant åtskilda?</p>
 <div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="variansanalys.html#cb377-1" tabindex="-1"></a><span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> ___)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-135" class="exercise"><strong>Uppgift 6.20  (Bakterieresidualer) </strong></span>Vi använder den skattade modellen för att ta fram skattade värden och residualer.</p>
+<p><span id="exr:unlabeled-div-137" class="exercise"><strong>Uppgift 6.20  (Bakterieresidualer) </strong></span>Vi använder den skattade modellen för att ta fram skattade värden och residualer.</p>
 <div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="variansanalys.html#cb378-1" tabindex="-1"></a>dat_bact <span class="ot">&lt;-</span> dat_bact <span class="sc">%&gt;%</span> </span>
 <span id="cb378-2"><a href="variansanalys.html#cb378-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Residualer =</span> <span class="fu">residuals</span>(mod),</span>
 <span id="cb378-3"><a href="variansanalys.html#cb378-3" tabindex="-1"></a>         <span class="at">Skattade =</span> <span class="fu">fitted</span>(mod))</span></code></pre></div>
@@ -812,7 +810,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-267-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Ytterligare alternativ kan vara upprepade lådagram eller staplar med småfönster per art.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-136" class="exercise"><strong>Uppgift 6.21  (Populationsgrafer) </strong></span>Vad måste läggas till i stycket nedan för göra ett lådagram (med art på y-axeln och abundans på x-axeln) och ett stapeldiagram (med platstyp på x-axeln och abundans på y-axeln)?</p>
+<p><span id="exr:unlabeled-div-138" class="exercise"><strong>Uppgift 6.21  (Populationsgrafer) </strong></span>Vad måste läggas till i stycket nedan för göra ett lådagram (med art på y-axeln och abundans på x-axeln) och ett stapeldiagram (med platstyp på x-axeln och abundans på y-axeln)?</p>
 <div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="variansanalys.html#cb383-1" tabindex="-1"></a>dune_long</span>
 <span id="cb383-2"><a href="variansanalys.html#cb383-2" tabindex="-1"></a><span class="fu">ggplot</span>(dune_long, <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___, <span class="at">fill =</span> Type)) <span class="sc">+</span></span>
 <span id="cb383-3"><a href="variansanalys.html#cb383-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
@@ -829,7 +827,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb384-5"><a href="variansanalys.html#cb384-5" tabindex="-1"></a>     <span class="at">axes =</span> F, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ann =</span> F)</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-269-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-137" class="exercise"><strong>Uppgift 6.22  (Avståndsmått) </strong></span>Ta upp hjälpsidan till distansfunktionen med <code>?dist</code>. Under <code>method</code> finns flera möjliga avståndsmått. Vad måste ändras i kodstycket ovan för att ange ett Manhattan-avstånd? Har avståndet någon betydande effekt på träddiagrammet?</p>
+<p><span id="exr:unlabeled-div-139" class="exercise"><strong>Uppgift 6.22  (Avståndsmått) </strong></span>Ta upp hjälpsidan till distansfunktionen med <code>?dist</code>. Under <code>method</code> finns flera möjliga avståndsmått. Vad måste ändras i kodstycket ovan för att ange ett Manhattan-avstånd? Har avståndet någon betydande effekt på träddiagrammet?</p>
 </div>
 <p>För att göra en klustring av arter kan man <em>transponera</em> data så att rader och kolumner byter plats med varandra. Här kommer artnamn automatisk med eftersom raderna i datan har namn. Det är inte alltid fallet, så det kan vara nödvändigt att sätta etiketter med argumentet <code>labels</code> i <code>plot()</code>.</p>
 <div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="variansanalys.html#cb385-1" tabindex="-1"></a>dune_data <span class="ot">&lt;-</span> <span class="fu">t</span>(dune_data)</span>
@@ -847,7 +845,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-271-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Platserna illustreras med punkter och arterna med pilar. Pilar i samma riktning motsvarar arter som är lika (de finns på samma platser), närliggande punkter motsvarar lika platser (de har samma arter), och punkter i samma riktning som en pil har höga värden för den arten.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-138" class="exercise"><strong>Uppgift 6.23  (Skalning i en PCA) </strong></span>En PCA kan göras med och utan att skala variablerna. Om variablerna skalas får en variabel som varierar mycket samma vikt som en variabel som varierar lite. Det kan vara bra om man har variabler som är mätta på olika sätt, till exempel om en variabel är i meter och en är i centimeter. Gör lämplig ändring i kodstycket ovan för att skala variablerna i <code>prcomp()</code>. Har det någon effekt på grafen?</p>
+<p><span id="exr:unlabeled-div-140" class="exercise"><strong>Uppgift 6.23  (Skalning i en PCA) </strong></span>En PCA kan göras med och utan att skala variablerna. Om variablerna skalas får en variabel som varierar mycket samma vikt som en variabel som varierar lite. Det kan vara bra om man har variabler som är mätta på olika sätt, till exempel om en variabel är i meter och en är i centimeter. Gör lämplig ändring i kodstycket ovan för att skala variablerna i <code>prcomp()</code>. Har det någon effekt på grafen?</p>
 </div>
 <p>Den sista ansatsen vi ska titta på är att sammanfatta en population i ett enskilt tal - ett diversitetsindex. Genom att beräkna ett index kan man reducera datan till en observation på plats. Man kan därifrån tillämpa de metoder vi sett i övriga delar av kursen (t-test och variansanalys). Det finns en stor mängd olika index. Det vanligaste än Shannon-Weaver indexet (eller entropi), vilket beräknas genom att ta andelen per art, multiplicera med logaritmen av andelen, summera över arter, och multiplicera med minus ett. Om man har tre arter med andelarna 0.3, 0.5 och 0.2 ges Shannon-Weaver alltså av</p>
 <div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="variansanalys.html#cb387-1" tabindex="-1"></a><span class="sc">-</span>(<span class="fl">0.3</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fl">0.3</span>) <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fl">0.5</span>) <span class="sc">+</span> <span class="fl">0.2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fl">0.2</span>))</span></code></pre></div>
@@ -877,10 +875,10 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 ## Confidence level used: 0.95</code></pre>
 <p>Här finns en signifikant skillnad med platstyper.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-139" class="exercise"><strong>Uppgift 6.24  (Diversitetsindex) </strong></span>Ta upp hjälpsidan till funktionen <code>diversity()</code>. Hur anger man att funktionen ska ge Simpsons index?</p>
+<p><span id="exr:unlabeled-div-141" class="exercise"><strong>Uppgift 6.24  (Diversitetsindex) </strong></span>Ta upp hjälpsidan till funktionen <code>diversity()</code>. Hur anger man att funktionen ska ge Simpsons index?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-140" class="exercise"><strong>Uppgift 6.25  (Test på nytt index) </strong></span>Gör om analysen på diversitet (anovamodellen och F-testet) med Simpsons index istället för Shannon-Weaver. Påverkar valet av diversitetsindex utfallet av testet?</p>
+<p><span id="exr:unlabeled-div-142" class="exercise"><strong>Uppgift 6.25  (Test på nytt index) </strong></span>Gör om analysen på diversitet (anovamodellen och F-testet) med Simpsons index istället för Shannon-Weaver. Påverkar valet av diversitetsindex utfallet av testet?</p>
 </div>
 
 </div>

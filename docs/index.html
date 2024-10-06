@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2024-10-04" />
+<meta name="date" content="2024-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -154,10 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#packages-från-cran"><i class="fa fa-check"></i><b>1.2</b> <em>Packages</em> från CRAN</a></li>
 <li class="chapter" data-level="1.3" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#objekt-och-funktioner"><i class="fa fa-check"></i><b>1.3</b> Objekt och funktioner</a></li>
 <li class="chapter" data-level="1.4" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#sekvenser-av-funktioner"><i class="fa fa-check"></i><b>1.4</b> Sekvenser av funktioner</a></li>
-<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning-och-dataimport-från-web"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning och dataimport från web</a>
-<ul>
-<li class="chapter" data-level="1.5.1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#inskrivning-av-data"><i class="fa fa-check"></i><b>1.5.1</b> Inskrivning av data</a></li>
-</ul></li>
+<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning</a></li>
 <li class="chapter" data-level="1.6" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter"><i class="fa fa-check"></i><b>1.6</b> Urval ur en tabell med <code>select</code> och <code>filter</code></a></li>
 <li class="chapter" data-level="1.7" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#grafer-med-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Grafer med <code>ggplot2</code></a></li>
 <li class="chapter" data-level="1.8" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#ai-uppgift-i"><i class="fa fa-check"></i><b>1.8</b> AI-uppgift I</a></li>
@@ -172,6 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ordna-upp-beskrivande-statistik-och-exportera"><i class="fa fa-check"></i><b>2.6</b> Ordna upp beskrivande statistik och exportera</a></li>
 <li class="chapter" data-level="2.7" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#kumulativt-medelvärde"><i class="fa fa-check"></i><b>2.7</b> Kumulativt medelvärde</a></li>
 <li class="chapter" data-level="2.8" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#bonus.-tredimensionella-grafer-med-plotly"><i class="fa fa-check"></i><b>2.8</b> Bonus. Tredimensionella grafer med <code>plotly</code></a></li>
+<li class="chapter" data-level="2.9" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ai-uppgift-ii"><i class="fa fa-check"></i><b>2.9</b> AI-uppgift II</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html"><i class="fa fa-check"></i><b>3</b> Ett stickprov av normalfördelad data</a>
 <ul>
@@ -239,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="header">
 <h1 class="title">R-anvisningar till <em>Grundläggande statistik</em></h1>
-<p class="date"><em>2024-10-04</em></p>
+<p class="date"><em>2024-10-06</em></p>
 </div>
 <div id="introduktion" class="section level1 unnumbered hasAnchor">
 <h1>Introduktion<a href="index.html#introduktion" class="anchor-section" aria-label="Anchor link to header"></a></h1>

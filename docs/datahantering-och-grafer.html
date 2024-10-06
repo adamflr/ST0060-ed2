@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 Datahantering och grafer | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="1 Datahantering och grafer | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 Datahantering och grafer | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2024-10-04" />
+<meta name="date" content="2024-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -154,10 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#packages-från-cran"><i class="fa fa-check"></i><b>1.2</b> <em>Packages</em> från CRAN</a></li>
 <li class="chapter" data-level="1.3" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#objekt-och-funktioner"><i class="fa fa-check"></i><b>1.3</b> Objekt och funktioner</a></li>
 <li class="chapter" data-level="1.4" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#sekvenser-av-funktioner"><i class="fa fa-check"></i><b>1.4</b> Sekvenser av funktioner</a></li>
-<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning-och-dataimport-från-web"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning och dataimport från web</a>
-<ul>
-<li class="chapter" data-level="1.5.1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#inskrivning-av-data"><i class="fa fa-check"></i><b>1.5.1</b> Inskrivning av data</a></li>
-</ul></li>
+<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning</a></li>
 <li class="chapter" data-level="1.6" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter"><i class="fa fa-check"></i><b>1.6</b> Urval ur en tabell med <code>select</code> och <code>filter</code></a></li>
 <li class="chapter" data-level="1.7" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#grafer-med-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Grafer med <code>ggplot2</code></a></li>
 <li class="chapter" data-level="1.8" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#ai-uppgift-i"><i class="fa fa-check"></i><b>1.8</b> AI-uppgift I</a></li>
@@ -172,6 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ordna-upp-beskrivande-statistik-och-exportera"><i class="fa fa-check"></i><b>2.6</b> Ordna upp beskrivande statistik och exportera</a></li>
 <li class="chapter" data-level="2.7" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#kumulativt-medelvärde"><i class="fa fa-check"></i><b>2.7</b> Kumulativt medelvärde</a></li>
 <li class="chapter" data-level="2.8" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#bonus.-tredimensionella-grafer-med-plotly"><i class="fa fa-check"></i><b>2.8</b> Bonus. Tredimensionella grafer med <code>plotly</code></a></li>
+<li class="chapter" data-level="2.9" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ai-uppgift-ii"><i class="fa fa-check"></i><b>2.9</b> AI-uppgift II</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html"><i class="fa fa-check"></i><b>3</b> Ett stickprov av normalfördelad data</a>
 <ul>
@@ -375,10 +373,8 @@ Notera att det är möjligt att skapa ett objekt med namnet <code>c</code> trots
 <span id="cb35-3"><a href="datahantering-och-grafer.html#cb35-3" tabindex="-1"></a>  <span class="fu">____</span>()         <span class="co"># Ta kvadratroten med sqrt()</span></span></code></pre></div>
 </div>
 </div>
-<div id="datainskrivning-och-dataimport-från-web" class="section level2 hasAnchor" number="1.5">
-<h2><span class="header-section-number">1.5</span> Datainskrivning och dataimport från web<a href="datahantering-och-grafer.html#datainskrivning-och-dataimport-från-web" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="inskrivning-av-data" class="section level3 hasAnchor" number="1.5.1">
-<h3><span class="header-section-number">1.5.1</span> Inskrivning av data<a href="datahantering-och-grafer.html#inskrivning-av-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="datainskrivning" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Datainskrivning<a href="datahantering-och-grafer.html#datainskrivning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Det första praktiska steget i en statistisk analys är att importera data. I R kan det göras genom att direkt skriva in sin data och spara som ett nytt objekt, men ett bättre och vanligare sätt är att importera sin data från en extern fil eller databas.</p>
 <p>I ett tidigare exempel användes funktionen <code>c()</code> för att skapa en vektor av data. Ofta ordnas flera vektorer i en tabell där varje kolumn är en vektor och varje rad en observation av någon enhet. En datatabell (en <code>data.frame</code> i R) skapas genom funktionen <code>data.frame()</code> följt av namngivna vektorer. Exempeldata kan skrivas in genom föjande.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="datahantering-och-grafer.html#cb36-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Vecka =</span> <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">7</span>,</span>
@@ -418,7 +414,6 @@ Notera att det är möjligt att skapa ett objekt med namnet <code>c</code> trots
 <div class="exercise">
 <p><span id="exr:unlabeled-div-14" class="exercise"><strong>Uppgift 1.14  (Tärningsgraf) </strong></span>Använd datan i objektet <code>dat_dice</code> och skapa ett diagram med kolumnen kast på x-axeln och kolumnen Utfall på y-axeln.</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="datahantering-och-grafer.html#cb47-1" tabindex="-1"></a><span class="fu">plot</span>(dat_dice<span class="sc">$</span>___, dat_dice<span class="sc">$</span>___)</span></code></pre></div>
-</div>
 </div>
 </div>
 <div id="urval-ur-en-tabell-med-select-och-filter" class="section level2 hasAnchor" number="1.6">

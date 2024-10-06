@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Ett stickprov av normalfördelad data | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="3 Ett stickprov av normalfördelad data | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Ett stickprov av normalfördelad data | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2024-10-04" />
+<meta name="date" content="2024-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -154,10 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#packages-från-cran"><i class="fa fa-check"></i><b>1.2</b> <em>Packages</em> från CRAN</a></li>
 <li class="chapter" data-level="1.3" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#objekt-och-funktioner"><i class="fa fa-check"></i><b>1.3</b> Objekt och funktioner</a></li>
 <li class="chapter" data-level="1.4" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#sekvenser-av-funktioner"><i class="fa fa-check"></i><b>1.4</b> Sekvenser av funktioner</a></li>
-<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning-och-dataimport-från-web"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning och dataimport från web</a>
-<ul>
-<li class="chapter" data-level="1.5.1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#inskrivning-av-data"><i class="fa fa-check"></i><b>1.5.1</b> Inskrivning av data</a></li>
-</ul></li>
+<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning</a></li>
 <li class="chapter" data-level="1.6" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter"><i class="fa fa-check"></i><b>1.6</b> Urval ur en tabell med <code>select</code> och <code>filter</code></a></li>
 <li class="chapter" data-level="1.7" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#grafer-med-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Grafer med <code>ggplot2</code></a></li>
 <li class="chapter" data-level="1.8" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#ai-uppgift-i"><i class="fa fa-check"></i><b>1.8</b> AI-uppgift I</a></li>
@@ -172,6 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ordna-upp-beskrivande-statistik-och-exportera"><i class="fa fa-check"></i><b>2.6</b> Ordna upp beskrivande statistik och exportera</a></li>
 <li class="chapter" data-level="2.7" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#kumulativt-medelvärde"><i class="fa fa-check"></i><b>2.7</b> Kumulativt medelvärde</a></li>
 <li class="chapter" data-level="2.8" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#bonus.-tredimensionella-grafer-med-plotly"><i class="fa fa-check"></i><b>2.8</b> Bonus. Tredimensionella grafer med <code>plotly</code></a></li>
+<li class="chapter" data-level="2.9" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ai-uppgift-ii"><i class="fa fa-check"></i><b>2.9</b> AI-uppgift II</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html"><i class="fa fa-check"></i><b>3</b> Ett stickprov av normalfördelad data</a>
 <ul>
@@ -341,7 +339,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 </ul>
 <p>Alternativhypotesen är tvåsidig - vi tittar både på möjligheten att populationsmedelvärdet är större och på möjligheten att det är mindre.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-41" class="exercise"><strong>Uppgift 3.1  (Ensidig mothypotes) </strong></span>Hur hade hypoteserna sett ut om vi ville testa om medelvärdet är <em>större</em> än 50?</p>
+<p><span id="exr:unlabeled-div-43" class="exercise"><strong>Uppgift 3.1  (Ensidig mothypotes) </strong></span>Hur hade hypoteserna sett ut om vi ville testa om medelvärdet är <em>större</em> än 50?</p>
 </div>
 <p>Vårt mål är att testa ett medelvärde och det är rimligt att anta normalfördelning för den undersökta variabeln. Det lämpliga testet är då ett t-test för ett stickprov och testvärdet kan beräknas av en testfunktion som ges av det observerade stickprovet minus nollhypotesens värde, delat på standardavvikelsen delat på roten ur antalet observationer. Låt oss beräkna detta i flera steg och jämföra med utskriften från <code>t.test()</code>.</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb118-1" tabindex="-1"></a><span class="fu">mean</span>(dat<span class="sc">$</span>x)</span></code></pre></div>
@@ -350,10 +348,10 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <pre><code>## [1] 4.680354</code></pre>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb122-1" tabindex="-1"></a>t_value <span class="ot">&lt;-</span> (<span class="dv">52</span> <span class="sc">-</span> <span class="dv">50</span>) <span class="sc">/</span> (<span class="fl">4.680354</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">8</span>))</span></code></pre></div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-42" class="exercise"><strong>Uppgift 3.2  (Operationsordning) </strong></span>Räkna ut samma sak på miniräknare eller telefon. Vad händer om man missar parenteser runt <code>4.680354 / sqrt(8)</code>?</p>
+<p><span id="exr:unlabeled-div-44" class="exercise"><strong>Uppgift 3.2  (Operationsordning) </strong></span>Räkna ut samma sak på miniräknare eller telefon. Vad händer om man missar parenteser runt <code>4.680354 / sqrt(8)</code>?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-43" class="exercise"><strong>Uppgift 3.3  (t-värdets delar) </strong></span>Vad händer med t-värdet om något av följande händer, givet att övriga delar är desamma? Det observerade medelvärdet (här 52) ökar. Nollhypotesens värde (här 50) minskar. Standardavvikelsen (här 4.680354) minskar. Antalet observationer (här 8) ökar.</p>
+<p><span id="exr:unlabeled-div-45" class="exercise"><strong>Uppgift 3.3  (t-värdets delar) </strong></span>Vad händer med t-värdet om något av följande händer, givet att övriga delar är desamma? Det observerade medelvärdet (här 52) ökar. Nollhypotesens värde (här 50) minskar. Standardavvikelsen (här 4.680354) minskar. Antalet observationer (här 8) ökar.</p>
 <p>Testa genom att ändra värdena i kodstycket ovan och beräkna <code>t_value</code> på nytt.</p>
 </div>
 <p>Nästa steg är att identifiera testfördelning, det vill säga den slumpfördelning testvärdet följet om nollhypotesen är sann. Fördelningen ges i regel av statistisk teori. I det här fallet är testfördelning en t-fördelning med n - 1 frihetsgrader. Vi har åtta observationer, så antalet frihetsgrader blir 7. I R kan man ta fram täthetsfunktionen för en t-fördelning med <code>dt()</code> och fördelningsfunktionen med <code>pt()</code>.</p>
@@ -379,7 +377,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <p>P-värdet ges av 0.266. En tolkning av det är om försöket upprepas ett stort antal gånger och nollhypotesen är sann, kommer vi 26.6 procent av gångerna få ett större testvärde än 1.2086. Det vi observerar är ganska sannolikt under nollhypotesen, vilket tyder på att nollhypotesen är rimligt.</p>
 <p>Det avslutande steget är att dra en formell slutsats och ge ett tydligt svar. Det klassiska sättet är att jämföra p-värdet med en förbestämd signifikansnivå, oftast fem procent. Här är p-värdet över den nivån, så vi kan inte förkasta nollhyptesen. Slutsatsen är att det <em>inte</em> finns någon signifikant skillnad från 50 i havreskörd.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-44" class="exercise"><strong>Uppgift 3.4  (Kritiskt värde) </strong></span>Om man gör ett t-test för hand kan man inte enkelt ta fram ett p-värde, men kan se om p-värdet är större eller mindre än fem procent genom att ställa testvärdet mot ett kritiskt värde. Använd en tabell för t-fördelning för att hitta det kritiska värdet.</p>
+<p><span id="exr:unlabeled-div-46" class="exercise"><strong>Uppgift 3.4  (Kritiskt värde) </strong></span>Om man gör ett t-test för hand kan man inte enkelt ta fram ett p-värde, men kan se om p-värdet är större eller mindre än fem procent genom att ställa testvärdet mot ett kritiskt värde. Använd en tabell för t-fördelning för att hitta det kritiska värdet.</p>
 <p>I R kan man ta fram kritiska värden med <code>qt()</code>. För fem procent i svansarna har man 0.025 i respektive svans och det kritiska värdet ges av</p>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb128-1" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">7</span>)</span></code></pre></div>
 <pre><code>## [1] 2.364624</code></pre>
@@ -399,33 +397,33 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 ##        52</code></pre>
 <p>Funktionen skriver ut det beräkna t-värdet, antal frihetsgrader och p-värdet.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-45" class="exercise"><strong>Uppgift 3.5  (Ensigt test) </strong></span>Använd <code>?t.test</code> för att ta fram funktionens hjälpsida. Försök att utifrån hjälpsidan beräkna ett <em>ensidigt</em> test för att se om medelskörden är <em>större</em> än 50.</p>
+<p><span id="exr:unlabeled-div-47" class="exercise"><strong>Uppgift 3.5  (Ensigt test) </strong></span>Använd <code>?t.test</code> för att ta fram funktionens hjälpsida. Försök att utifrån hjälpsidan beräkna ett <em>ensidigt</em> test för att se om medelskörden är <em>större</em> än 50.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-46" class="exercise"><strong>Uppgift 3.6  (Ny nollhypotes) </strong></span>Upprepa det tvåsidiga testet från exemplet ovan. Testa denna gång om medelskörden är skild från 48. Dra en tydlig slutsats.</p>
+<p><span id="exr:unlabeled-div-48" class="exercise"><strong>Uppgift 3.6  (Ny nollhypotes) </strong></span>Upprepa det tvåsidiga testet från exemplet ovan. Testa denna gång om medelskörden är skild från 48. Dra en tydlig slutsats.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-47" class="exercise"><strong>Uppgift 3.7  (Importera smältpunkt-data) </strong></span>På canvassidan finns en excelfil med data för kursens uppgifter <em>Uppgiftsdata.xlsx</em>. Fliken <em>Smältdata</em> innehåller data för en legerings smältpunkt.</p>
+<p><span id="exr:unlabeled-div-49" class="exercise"><strong>Uppgift 3.7  (Importera smältpunkt-data) </strong></span>På canvassidan finns en excelfil med data för kursens uppgifter <em>Uppgiftsdata.xlsx</em>. Fliken <em>Smältdata</em> innehåller data för en legerings smältpunkt.</p>
 <p>Ladda ner filen till lämplig plats på datorn och importera datan genom att fylla i följande rad.</p>
 <div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb132-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb132-2"><a href="ett-stickprov-av-normalfördelad-data.html#cb132-2" tabindex="-1"></a>dat_smält <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;___&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Smältpunkt&quot;</span>)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-48" class="exercise"><strong>Uppgift 3.8  (Plotta smältpunkt-data) </strong></span>Illustrera smältpunktsdatan på samma sätt som exempeldatan genom att fylla i följande kod. Vårt mål är att testa om medelvärde är skilt från 1050, vilket här kan noteras med ett vertikalt streck vid 1050.</p>
+<p><span id="exr:unlabeled-div-50" class="exercise"><strong>Uppgift 3.8  (Plotta smältpunkt-data) </strong></span>Illustrera smältpunktsdatan på samma sätt som exempeldatan genom att fylla i följande kod. Vårt mål är att testa om medelvärde är skilt från 1050, vilket här kan noteras med ett vertikalt streck vid 1050.</p>
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb133-1" tabindex="-1"></a><span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">x =</span> Smältpunkt, <span class="at">y =</span> <span class="dv">0</span>)) <span class="sc">+</span> </span>
 <span id="cb133-2"><a href="ett-stickprov-av-normalfördelad-data.html#cb133-2" tabindex="-1"></a>  <span class="fu">___</span>() <span class="sc">+</span></span>
 <span id="cb133-3"><a href="ett-stickprov-av-normalfördelad-data.html#cb133-3" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> ___, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p>Kan man utifrån grafen säga om 1050 är ett rimligt medelvärde för populationen, givet det stickprov vi observerar?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-49" class="exercise"><strong>Uppgift 3.9  (Hypotestest för hand) </strong></span>Genomför ett t-test för hand för att se om medelsmältpunkten är skild från 1050. Skriv ut tydliga hypoteser. Medelvärde och standardavvikelse ges av följande.</p>
+<p><span id="exr:unlabeled-div-51" class="exercise"><strong>Uppgift 3.9  (Hypotestest för hand) </strong></span>Genomför ett t-test för hand för att se om medelsmältpunkten är skild från 1050. Skriv ut tydliga hypoteser. Medelvärde och standardavvikelse ges av följande.</p>
 <div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb134-1" tabindex="-1"></a><span class="fu">mean</span>(dat_smält<span class="sc">$</span>Smältpunkt)</span>
 <span id="cb134-2"><a href="ett-stickprov-av-normalfördelad-data.html#cb134-2" tabindex="-1"></a><span class="fu">sd</span>(dat_smält<span class="sc">$</span>Smältpunkt)</span></code></pre></div>
 <p>Ett kritiskt värde kan tas från en tabell över t-fördelningen eller beräknas i R med</p>
 <div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb135-1" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">9</span>)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-50" class="exercise"><strong>Uppgift 3.10  (Hypotestest i R) </strong></span>Genomför ett t-test med funktionen <code>t.test()</code> för att se om medelsmältpunkten är skild från 1050.</p>
+<p><span id="exr:unlabeled-div-52" class="exercise"><strong>Uppgift 3.10  (Hypotestest i R) </strong></span>Genomför ett t-test med funktionen <code>t.test()</code> för att se om medelsmältpunkten är skild från 1050.</p>
 </div>
 </div>
 <div id="konfidensintervall-för-normalfördelad-data" class="section level2 hasAnchor" number="3.3">
@@ -446,11 +444,11 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <p>och konfidensintervallet ges alltså av</p>
 <p>52 ± 2.365 * 4.680 / sqrt(8)</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-51" class="exercise"><strong>Uppgift 3.11  (Konfidensintervall för hand) </strong></span>Ta fram medelvärde, standardavvikelse och kritiskt värde för smältpunktsdata, med hjälp av R (eller en tabell för det kritiska värdet). Beräkna konfidensintervallet för smältpunktsdatan för hand.</p>
+<p><span id="exr:unlabeled-div-53" class="exercise"><strong>Uppgift 3.11  (Konfidensintervall för hand) </strong></span>Ta fram medelvärde, standardavvikelse och kritiskt värde för smältpunktsdata, med hjälp av R (eller en tabell för det kritiska värdet). Beräkna konfidensintervallet för smältpunktsdatan för hand.</p>
 </div>
 <p>Funktionen <code>t.test()</code> ger automatiskt ett konfidensintervall, direkt under utfallet av testet. Notera att konfidensintervallet inte beror på nollhypotesen. Konfidensintervall kan beräknas med skilda konfidensnivåer, oftast 95 procent, vilket sätts med argumentet <code>conf.level</code>.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-52" class="exercise"><strong>Uppgift 3.12  (Konfidensnivå) </strong></span>Gör lämplig ändring i koden nedan för att beräkna ett 99-procentigt konfidensintervall, istället för ett 95-procentigt.</p>
+<p><span id="exr:unlabeled-div-54" class="exercise"><strong>Uppgift 3.12  (Konfidensnivå) </strong></span>Gör lämplig ändring i koden nedan för att beräkna ett 99-procentigt konfidensintervall, istället för ett 95-procentigt.</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb143-1" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span>x, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
@@ -466,10 +464,10 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <p>Är ett 99-procentigt konfidensintervall bredare eller smalare än ett 95-procentigt?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-53" class="exercise"><strong>Uppgift 3.13  (Ensidiga konfidensintervall) </strong></span>I en tidigare uppgift användes argumentet <code>alternative</code> för att göra ett ensidigt test med <code>t.test()</code>. Vad händer med konfidensintervallet om man anger ett ensidigt test?</p>
+<p><span id="exr:unlabeled-div-55" class="exercise"><strong>Uppgift 3.13  (Ensidiga konfidensintervall) </strong></span>I en tidigare uppgift användes argumentet <code>alternative</code> för att göra ett ensidigt test med <code>t.test()</code>. Vad händer med konfidensintervallet om man anger ett ensidigt test?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-54" class="exercise"><strong>Uppgift 3.14  (Konfidensintervall för smältdata) </strong></span>Ta datan över smältpunkter och beräkna ett konfidensintervall med <code>t.test()</code>. Tolka intervallet.</p>
+<p><span id="exr:unlabeled-div-56" class="exercise"><strong>Uppgift 3.14  (Konfidensintervall för smältdata) </strong></span>Ta datan över smältpunkter och beräkna ett konfidensintervall med <code>t.test()</code>. Tolka intervallet.</p>
 </div>
 <p>Ett konfidensintervall illustreras ofta med en felstapel. Vi kan lägga till en till den punktgraf vi tidigare sett för observationerna.</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb145-1" tabindex="-1"></a>interval <span class="ot">&lt;-</span> <span class="fu">t.test</span>(dat<span class="sc">$</span>x)<span class="sc">$</span>conf.int</span>
@@ -478,7 +476,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <span id="cb145-4"><a href="ett-stickprov-av-normalfördelad-data.html#cb145-4" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;errorbar&quot;</span>, <span class="at">xmin =</span> interval[<span class="dv">1</span>], <span class="at">xmax =</span> interval[<span class="dv">2</span>], <span class="at">y =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">width =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-110-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-55" class="exercise"><strong>Uppgift 3.15  (Illustration av smältdata) </strong></span>Använd exempelillustrationen för havredata till en liknande illustration av smältpunktsdatan.</p>
+<p><span id="exr:unlabeled-div-57" class="exercise"><strong>Uppgift 3.15  (Illustration av smältdata) </strong></span>Använd exempelillustrationen för havredata till en liknande illustration av smältpunktsdatan.</p>
 </div>
 </div>
 <div id="normalfördelad-data-och-centrala-gränsvärdesatsen" class="section level2 hasAnchor" number="3.4">
@@ -491,7 +489,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <span id="cb147-2"><a href="ett-stickprov-av-normalfördelad-data.html#cb147-2" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(n)), <span class="at">bins =</span> <span class="dv">30</span>)</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-112-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-56" class="exercise"><strong>Uppgift 3.16  (Histogram för normalfördelning) </strong></span>Testa koden ovan för lite olika värden på <code>n</code>. Det kan vara nyttigt att sätta antalet staplar <code>bins</code> för att få ett bättre histogram. Hur stort måste n vara för att ge en karaktäristisk klockform för histogrammet?</p>
+<p><span id="exr:unlabeled-div-58" class="exercise"><strong>Uppgift 3.16  (Histogram för normalfördelning) </strong></span>Testa koden ovan för lite olika värden på <code>n</code>. Det kan vara nyttigt att sätta antalet staplar <code>bins</code> för att få ett bättre histogram. Hur stort måste n vara för att ge en karaktäristisk klockform för histogrammet?</p>
 </div>
 <p>Ett annat vanligt alternativ för att grafisk undersöka om data följer en ungefärlig normalfördelning är en QQ-graf (<em>QQ-plot</em>). En qq-graf är ett spridningsdiagram med teoretiska kvantiler på en axel och datans kvantiler på den andra axeln. Om data perfekt följer en normalfördelning kommer grafen visa en rak diagonal linje. En QQ-graf kan tas fram med <code>qqnorm()</code> eller <code>geom_qq()</code> i en ggplot. En diagonal linje för jämförelse kan läggas till med <code>geom_qq_line()</code>.</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb148-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">sample =</span> x)) <span class="sc">+</span> <span class="fu">geom_qq</span>() <span class="sc">+</span> <span class="fu">geom_qq_line</span>()</span></code></pre></div>
@@ -502,7 +500,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <span id="cb149-3"><a href="ett-stickprov-av-normalfördelad-data.html#cb149-3" tabindex="-1"></a><span class="fu">ggplot</span>(dat_norm, <span class="fu">aes</span>(<span class="at">sample =</span> x)) <span class="sc">+</span> <span class="fu">geom_qq</span>() <span class="sc">+</span> <span class="fu">geom_qq_line</span>()</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-114-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-57" class="exercise"><strong>Uppgift 3.17  (Histogram för normalfördelning) </strong></span>Funktionen <code>runif()</code> ger slumpmässiga värden mellan 0 och 1. Testa att ändra i kodstycket ovan så att slumptal genereras med <code>runif()</code> istället för <code>rnorm()</code>. Hur påverkar det QQ-grafen?</p>
+<p><span id="exr:unlabeled-div-59" class="exercise"><strong>Uppgift 3.17  (Histogram för normalfördelning) </strong></span>Funktionen <code>runif()</code> ger slumpmässiga värden mellan 0 och 1. Testa att ändra i kodstycket ovan så att slumptal genereras med <code>runif()</code> istället för <code>rnorm()</code>. Hur påverkar det QQ-grafen?</p>
 </div>
 </div>
 <div id="centrala-gränsvärdesatsen" class="section level2 hasAnchor" number="3.5">
@@ -521,7 +519,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-115-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Fördelningen för summan är inte likformig, men inte heller särskilt normalfördelad. Vad händer om vi ökar antal termer i summan?</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-58" class="exercise"><strong>Uppgift 3.18  (Antalet observationer för normalfördelning) </strong></span>Vad måste ändras i koden ovan för beräkna medelvärdet av tio observationer? Följer de medelvärdena en ungefärlig normalfördelning? Vad är det lägsta antalet observationer som ger ungefärligen normalfördelade medelvärden?</p>
+<p><span id="exr:unlabeled-div-60" class="exercise"><strong>Uppgift 3.18  (Antalet observationer för normalfördelning) </strong></span>Vad måste ändras i koden ovan för beräkna medelvärdet av tio observationer? Följer de medelvärdena en ungefärlig normalfördelning? Vad är det lägsta antalet observationer som ger ungefärligen normalfördelade medelvärden?</p>
 </div>
 <p>Under en tidigare datorövning såg vi exempel på diskreta fördelningar: binomial- och poissonfördelningarna. Vi ska senare titta på specifika test för variabler som följer en diskret fördelning, men centrala gränsvärdesatsen kan även då rättfärdiga ett t-test. Ta som exempel medelvärdet av tio observationer som följer en poissonfördelning med lambda = 10.</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb152-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
@@ -537,7 +535,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-116-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Histogrammet visar på en typisk klockform och punkterna följer linjen <em>ungefärligt</em>. QQ-grafens trappeffekt är typisk för diskret data. Det här tyder alltså på att t-testet är ett acceptabelt alternativ om man har en poissonfördelning med lambda runt tio och gör tio upprepningar.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-59" class="exercise"><strong>Uppgift 3.19  (Svag normalapproximation) </strong></span>Testa att minska värdena på n och lambda. Vad är de lägsta värdena som ger ett histogram med en symmetrisk fördelning och punkter nära linjen i QQ-grafen?</p>
+<p><span id="exr:unlabeled-div-61" class="exercise"><strong>Uppgift 3.19  (Svag normalapproximation) </strong></span>Testa att minska värdena på n och lambda. Vad är de lägsta värdena som ger ett histogram med en symmetrisk fördelning och punkter nära linjen i QQ-grafen?</p>
 </div>
 <p>Det kan också finnas situationer där någon matematisk transformation kan göra icke-normal data till normalfördelad data. Vanliga transformationer är att ta en kvadratrot eller att <em>logaritmera</em> datan. Som exempel kan vi återvända till Gapminder-datan vi använde i en tidigare datorövning. Paketet <code>patchwork</code> kan användas för att placera flera grafer bredvid varandra. Den exakta koden är mindre viktig här.</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb154-1" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
@@ -555,7 +553,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-117-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>I grafen har vi den ursprungliga variabeln (befolkning per land 2007), den kvadratrot-transformerade variabeln (<code>sqrt()</code>) och den log-transformerade variabeln (<code>log10()</code>). De två första fallen påverkas kraftigt av extremvärden och är klart icke-normala medan den log-transformerade variabeln ger en ungefärlig normalkurva och följer diagonalen väl i QQ-grafen.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-60" class="exercise"><strong>Uppgift 3.20  (Transformera medellivslängd) </strong></span>Använd kodstycket ovan som mall och ta fram grafer för medellivslängd (<code>lifeExp</code>) istället för befolkningsstorlek (<code>pop</code>). Visar grafen samma mönster som för befolkningsdatan?</p>
+<p><span id="exr:unlabeled-div-62" class="exercise"><strong>Uppgift 3.20  (Transformera medellivslängd) </strong></span>Använd kodstycket ovan som mall och ta fram grafer för medellivslängd (<code>lifeExp</code>) istället för befolkningsstorlek (<code>pop</code>). Visar grafen samma mönster som för befolkningsdatan?</p>
 </div>
 </div>
 <div id="bonus.-simuleringar-för-t-test-och-konfidensintervall" class="section level2 hasAnchor" number="3.6">
@@ -567,15 +565,15 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 ##  One Sample t-test
 ## 
 ## data:  dat_sim$x
-## t = 0.2226, df = 9, p-value = 0.8288
+## t = -0.11857, df = 9, p-value = 0.9082
 ## alternative hypothesis: true mean is not equal to 7
 ## 95 percent confidence interval:
-##   3.704843 11.014420
+##   3.352926 10.283794
 ## sample estimates:
 ## mean of x 
-##  7.359631</code></pre>
+##   6.81836</code></pre>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-61" class="exercise"><strong>Uppgift 3.21  (Upprepad simulering) </strong></span>Kör de två raderna i stycket ovan ett tiotal gånger. Du bör se att man ibland förkastar nollhypotesen trots att den ska stämma. Kan du få en känsla för hur stor andel av gångerna man felaktigt förkastar?</p>
+<p><span id="exr:unlabeled-div-63" class="exercise"><strong>Uppgift 3.21  (Upprepad simulering) </strong></span>Kör de två raderna i stycket ovan ett tiotal gånger. Du bör se att man ibland förkastar nollhypotesen trots att den ska stämma. Kan du få en känsla för hur stor andel av gångerna man felaktigt förkastar?</p>
 </div>
 <p>Låt oss upprepa simuleringen tusen gånger. Ett sätt är att upprepa ett steg flera gånger är genom en for-loop.</p>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb157-1" tabindex="-1"></a>dat_sim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
@@ -594,13 +592,13 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <p>Den teoretiska t-fördelning passar histogrammet nästan perfekt.</p>
 <p>Vidare ska p-värdet vara under fem procent fem procent av gångerna.</p>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb159-1" tabindex="-1"></a><span class="fu">mean</span>(dat_sim<span class="sc">$</span>p_value <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<pre><code>## [1] 0.052</code></pre>
+<pre><code>## [1] 0.062</code></pre>
 <p>Även det stämmer någorlunda väl. Det här innebär alltså att om man har en signifikansnivå på fem procent kommer man förkasta nollhypotesen fem procent av gångerna även om nollhypotesen stämmer. Det kallas ett <em>falskt positivt</em> utfall.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-62" class="exercise"><strong>Uppgift 3.22  (Simulerade konfidensintervall) </strong></span>Hur många av de simulerade konfidensintervallen täcker värdet 7?</p>
+<p><span id="exr:unlabeled-div-64" class="exercise"><strong>Uppgift 3.22  (Simulerade konfidensintervall) </strong></span>Hur många av de simulerade konfidensintervallen täcker värdet 7?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-63" class="exercise"><strong>Uppgift 3.23  (Signifikant skillnad) </strong></span>Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har nollhypotesen att populationsmedelvärdet är 7. Här vill vi alltså förkasta nollhypotesen.</p>
+<p><span id="exr:unlabeled-div-65" class="exercise"><strong>Uppgift 3.23  (Signifikant skillnad) </strong></span>Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har nollhypotesen att populationsmedelvärdet är 7. Här vill vi alltså förkasta nollhypotesen.</p>
 <div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb161-1" tabindex="-1"></a>dat_sim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
 <span id="cb161-2"><a href="ett-stickprov-av-normalfördelad-data.html#cb161-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
 <span id="cb161-3"><a href="ett-stickprov-av-normalfördelad-data.html#cb161-3" tabindex="-1"></a>  new_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">9</span>, <span class="at">sd =</span> <span class="dv">5</span>))</span>
@@ -612,7 +610,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <p>Använd kod från den första simuleringen för att undersöka hur väl histogrammet stämmer med den teoretiska fördelningen och för att se hur stor andel av gångerna man förkastar nollhypotesen på signifikansnivån 5 procent.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-64" class="exercise"><strong>Uppgift 3.24  (50/50) </strong></span>Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har nollhypotesen att populationsmedelvärdet är 7. Ändra värdet för n och se hur det påverkar andelen gånger man förkastar nollhypotesen.</p>
+<p><span id="exr:unlabeled-div-66" class="exercise"><strong>Uppgift 3.24  (50/50) </strong></span>Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har nollhypotesen att populationsmedelvärdet är 7. Ändra värdet för n och se hur det påverkar andelen gånger man förkastar nollhypotesen.</p>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb162-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb162-2"><a href="ett-stickprov-av-normalfördelad-data.html#cb162-2" tabindex="-1"></a></span>
 <span id="cb162-3"><a href="ett-stickprov-av-normalfördelad-data.html#cb162-3" tabindex="-1"></a>dat_sim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
@@ -628,7 +626,7 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:</p>
 <p>Ungefär hur många observationer behövs för att ha femtio procents sannolikhet att förkasta nollhypotesen?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-65" class="exercise"><strong>Uppgift 3.25  (Konfidensintervallets bredd) </strong></span>Ett konfidensintervall blir smalare och smalare ju större stickprovet är. Koden nedan ger medelvärdet för stickprovsbredden i simulerad data med standardavvikelsen 1.</p>
+<p><span id="exr:unlabeled-div-67" class="exercise"><strong>Uppgift 3.25  (Konfidensintervallets bredd) </strong></span>Ett konfidensintervall blir smalare och smalare ju större stickprovet är. Koden nedan ger medelvärdet för stickprovsbredden i simulerad data med standardavvikelsen 1.</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="ett-stickprov-av-normalfördelad-data.html#cb163-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb163-2"><a href="ett-stickprov-av-normalfördelad-data.html#cb163-2" tabindex="-1"></a></span>
 <span id="cb163-3"><a href="ett-stickprov-av-normalfördelad-data.html#cb163-3" tabindex="-1"></a>dat_sim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>

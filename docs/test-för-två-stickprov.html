@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Test för två stickprov | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="5 Test för två stickprov | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Test för två stickprov | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2024-10-04" />
+<meta name="date" content="2024-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -154,10 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#packages-från-cran"><i class="fa fa-check"></i><b>1.2</b> <em>Packages</em> från CRAN</a></li>
 <li class="chapter" data-level="1.3" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#objekt-och-funktioner"><i class="fa fa-check"></i><b>1.3</b> Objekt och funktioner</a></li>
 <li class="chapter" data-level="1.4" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#sekvenser-av-funktioner"><i class="fa fa-check"></i><b>1.4</b> Sekvenser av funktioner</a></li>
-<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning-och-dataimport-från-web"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning och dataimport från web</a>
-<ul>
-<li class="chapter" data-level="1.5.1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#inskrivning-av-data"><i class="fa fa-check"></i><b>1.5.1</b> Inskrivning av data</a></li>
-</ul></li>
+<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning</a></li>
 <li class="chapter" data-level="1.6" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter"><i class="fa fa-check"></i><b>1.6</b> Urval ur en tabell med <code>select</code> och <code>filter</code></a></li>
 <li class="chapter" data-level="1.7" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#grafer-med-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Grafer med <code>ggplot2</code></a></li>
 <li class="chapter" data-level="1.8" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#ai-uppgift-i"><i class="fa fa-check"></i><b>1.8</b> AI-uppgift I</a></li>
@@ -172,6 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ordna-upp-beskrivande-statistik-och-exportera"><i class="fa fa-check"></i><b>2.6</b> Ordna upp beskrivande statistik och exportera</a></li>
 <li class="chapter" data-level="2.7" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#kumulativt-medelvärde"><i class="fa fa-check"></i><b>2.7</b> Kumulativt medelvärde</a></li>
 <li class="chapter" data-level="2.8" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#bonus.-tredimensionella-grafer-med-plotly"><i class="fa fa-check"></i><b>2.8</b> Bonus. Tredimensionella grafer med <code>plotly</code></a></li>
+<li class="chapter" data-level="2.9" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ai-uppgift-ii"><i class="fa fa-check"></i><b>2.9</b> AI-uppgift II</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html"><i class="fa fa-check"></i><b>3</b> Ett stickprov av normalfördelad data</a>
 <ul>
@@ -324,7 +322,7 @@ Som exempel ges följande data från en studie på äpple, där trädhöjd mätt
 ## 7     4 Before     47
 ## 8     4 After      54</code></pre>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-91" class="exercise"><strong>Uppgift 5.1  (Äppelgraf) </strong></span>Fyll i kodstycket nedan för en graf av äppeldatan. Axlarna ges av <code>Time</code> och <code>Height</code>. Två observationer kan kopplas genom att sätta <code>Tree</code> som grupp.</p>
+<p><span id="exr:unlabeled-div-93" class="exercise"><strong>Uppgift 5.1  (Äppelgraf) </strong></span>Fyll i kodstycket nedan för en graf av äppeldatan. Axlarna ges av <code>Time</code> och <code>Height</code>. Två observationer kan kopplas genom att sätta <code>Tree</code> som grupp.</p>
 <div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="test-för-två-stickprov.html#cb246-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_long, <span class="fu">aes</span>(___, ___, <span class="at">group =</span> ___)) <span class="sc">+</span></span>
 <span id="cb246-2"><a href="test-för-två-stickprov.html#cb246-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb246-3"><a href="test-för-två-stickprov.html#cb246-3" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
@@ -362,17 +360,17 @@ Som exempel ges följande data från en studie på äpple, där trädhöjd mätt
 ##           -5.75</code></pre>
 <p>För bägge alternativen måste datan vara ordnad så att de två vektorerna matchar varandra parvis. Ett p-värde på <span class="math inline">\(0.0987\)</span> ger att man inte förkastar vid en signifikansnivå på fem procent. Vi drar därmed slutsatsen att det inte finns någon signifikant skillnad före och efter behandling.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-92" class="exercise"><strong>Uppgift 5.2  (Ensidigt test) </strong></span>Gör ett tillägg till ett av kodstyckena med <code>t.test()</code> för att beräkna ett ensidigt test med mothypotesen att träden ökar i höjd efter behandling. Hjälpsidan för <code>t.test()</code> kan tas fram genom att köra <code>?t.test()</code>.</p>
+<p><span id="exr:unlabeled-div-94" class="exercise"><strong>Uppgift 5.2  (Ensidigt test) </strong></span>Gör ett tillägg till ett av kodstyckena med <code>t.test()</code> för att beräkna ett ensidigt test med mothypotesen att träden ökar i höjd efter behandling. Hjälpsidan för <code>t.test()</code> kan tas fram genom att köra <code>?t.test()</code>.</p>
 </div>
 <p>Konfidensintervallet beräknas från differenserna på samma sätt som vid ett stickprov med normalfördelad data. Tolkningen liknar den för ett stickprov: med 95 procents konfidens ligger den sanna skillnaden i medelvärden i intervallet.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-93" class="exercise"><strong>Uppgift 5.3  (Lökimport) </strong></span>Åtta monoglukosidmätningar på lök samlas in från fyra konventionella och fyra ekologiska ordlare. Resultatet finns i fliken <em>Lökfärg</em> i excelfilen <em>Uppgiftsdata.xlsx</em> på canvassidan. Ladda ner filen och importera datan genom att fylla i raden nedan.</p>
+<p><span id="exr:unlabeled-div-95" class="exercise"><strong>Uppgift 5.3  (Lökimport) </strong></span>Åtta monoglukosidmätningar på lök samlas in från fyra konventionella och fyra ekologiska ordlare. Resultatet finns i fliken <em>Lökfärg</em> i excelfilen <em>Uppgiftsdata.xlsx</em> på canvassidan. Ladda ner filen och importera datan genom att fylla i raden nedan.</p>
 <div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="test-för-två-stickprov.html#cb251-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb251-2"><a href="test-för-två-stickprov.html#cb251-2" tabindex="-1"></a>dat_onion <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;____&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Lökfärg&quot;</span>)</span>
 <span id="cb251-3"><a href="test-för-två-stickprov.html#cb251-3" tabindex="-1"></a><span class="co"># dat_onion &lt;- read_csv(&quot;https://raw.githubusercontent.com/adamflr/ST0060/main/Data/Uppgiftsdata/Uppgift_L%C3%B6kf%C3%A4rg.csv&quot;) # Alternativ lösning</span></span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-94" class="exercise"><strong>Uppgift 5.4  (Lökgraf) </strong></span>Fyll i stycket nedan för en graf av lökdatan från föregående uppgift.</p>
+<p><span id="exr:unlabeled-div-96" class="exercise"><strong>Uppgift 5.4  (Lökgraf) </strong></span>Fyll i stycket nedan för en graf av lökdatan från föregående uppgift.</p>
 <div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="test-för-två-stickprov.html#cb252-1" tabindex="-1"></a>dat_long <span class="ot">&lt;-</span> dat_onion <span class="sc">%&gt;%</span> </span>
 <span id="cb252-2"><a href="test-för-två-stickprov.html#cb252-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Odlare, <span class="at">names_to =</span> <span class="st">&quot;Odlingstyp&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Utfall&quot;</span>)</span>
 <span id="cb252-3"><a href="test-för-två-stickprov.html#cb252-3" tabindex="-1"></a>dat_long</span>
@@ -383,7 +381,7 @@ Som exempel ges följande data från en studie på äpple, där trädhöjd mätt
 <p>Tyder grafen på någon skillnad mellan odlingstyper?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-95" class="exercise"><strong>Uppgift 5.5  (Löktest) </strong></span>Använd lökdatan i föregående uppgift för att testa om det finns en signifikant skillnad mellan konventionell och ekologisk.
+<p><span id="exr:unlabeled-div-97" class="exercise"><strong>Uppgift 5.5  (Löktest) </strong></span>Använd lökdatan i föregående uppgift för att testa om det finns en signifikant skillnad mellan konventionell och ekologisk.
 Formulera hypoteser och genomför testet med <code>t.test()</code>. Lös gärna uppgiften med miniräknare först.</p>
 </div>
 </div>
@@ -448,11 +446,11 @@ Formulera hypoteser och genomför testet med <code>t.test()</code>. Lös gärna 
 ##    43.825    60.875</code></pre>
 <p>Argumentet <code>var.equal = T</code> används för att beräkna testet där gruppernas varianser antas vara lika. Grundinställningen är testet där varianser inte antas vara lika, så <code>t.test(Vikt ~ Behandling, data = dat)</code> ger ett lite annat resultat.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-96" class="exercise"><strong>Uppgift 5.6  (Ej lika varianser) </strong></span>Vilka resultatvärden ändras i utskriften om man sätter <code>var.equal = F</code>?</p>
+<p><span id="exr:unlabeled-div-98" class="exercise"><strong>Uppgift 5.6  (Ej lika varianser) </strong></span>Vilka resultatvärden ändras i utskriften om man sätter <code>var.equal = F</code>?</p>
 </div>
 <p>Testet ger ett p-värde på <span class="math inline">\(0.0018\)</span>, vilket leder till att nollhypotesen förkastas på enprocentsnivån. Detta tyder på att det finns en viktskillnad mellan behandlingarna. Utskriften ger också ett 95-procentigt konfidensintervall på <span class="math inline">\((-24.898, -9.202)\)</span>. Tolkningen är att skillnaden mellan populationsmedelvärden ligger i intervallet med 95 procents konfidens. Notera att värdet noll inte ligger i intervallet.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-97" class="exercise"><strong>Uppgift 5.7  (Ensidigt test) </strong></span>Gör lämpliga tillägg till kodstycket nedan för att göra ett ensidigt test (om B ger högre vikt än A).</p>
+<p><span id="exr:unlabeled-div-99" class="exercise"><strong>Uppgift 5.7  (Ensidigt test) </strong></span>Gör lämpliga tillägg till kodstycket nedan för att göra ett ensidigt test (om B ger högre vikt än A).</p>
 <div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="test-för-två-stickprov.html#cb260-1" tabindex="-1"></a><span class="fu">t.test</span>(Vikt <span class="sc">~</span> Behandling, <span class="at">data =</span> dat_berry, <span class="at">var.equal =</span> T, <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
 </div>
 <p>Om man har fler än två grupper kan man vilja göra parvisa t-test - alltså ett t-test för varje par av grupper.
@@ -469,24 +467,24 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 ## P value adjustment method: none</code></pre>
 <p><em>Matchade</em> observationer kan också kallas <em>parade</em> (eng. paired) så se upp med terminologin. Funktionen <code>pairwise.t.test()</code> för <em>parvisa jämförelse</em> mellan behandlingar, men testerna är t-test för oberoende stickprov.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-98" class="exercise"><strong>Uppgift 5.8  (Ekorrdata) </strong></span>I en undersökning av hur den europeiska ekorren (Sciurus vulgaris) förändras i vikt under övervintring mäts 7 slumpmässigt valda ekorrar före och 5 slumpmässigt valda ekorrar efter övervintring. Datan finns tillgänglig i excelfilen <em>Uppgiftsdata.xlsx</em> på canvassidan, i fliken <em>Ekorrar</em>. Ladda ner filen och fyll i stycket nedan för att importera datan.</p>
+<p><span id="exr:unlabeled-div-100" class="exercise"><strong>Uppgift 5.8  (Ekorrdata) </strong></span>I en undersökning av hur den europeiska ekorren (Sciurus vulgaris) förändras i vikt under övervintring mäts 7 slumpmässigt valda ekorrar före och 5 slumpmässigt valda ekorrar efter övervintring. Datan finns tillgänglig i excelfilen <em>Uppgiftsdata.xlsx</em> på canvassidan, i fliken <em>Ekorrar</em>. Ladda ner filen och fyll i stycket nedan för att importera datan.</p>
 <div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="test-för-två-stickprov.html#cb263-1" tabindex="-1"></a>dat_sq <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;___&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Ekorrar&quot;</span>)</span>
 <span id="cb263-2"><a href="test-för-två-stickprov.html#cb263-2" tabindex="-1"></a>dat_sq</span>
 <span id="cb263-3"><a href="test-för-två-stickprov.html#cb263-3" tabindex="-1"></a></span>
 <span id="cb263-4"><a href="test-för-två-stickprov.html#cb263-4" tabindex="-1"></a><span class="co"># dat_sq &lt;- read_csv(&quot;https://raw.githubusercontent.com/adamflr/ST0060/main/Data/Uppgiftsdata/Uppgift_Ekorrar.csv&quot;) # Alternativ lösning</span></span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-99" class="exercise"><strong>Uppgift 5.9  (Ekorrgraf) </strong></span>Fyll i följande stycke för en lämplig graf för att jämföra mätningarna före och mätningarna efter.</p>
+<p><span id="exr:unlabeled-div-101" class="exercise"><strong>Uppgift 5.9  (Ekorrgraf) </strong></span>Fyll i följande stycke för en lämplig graf för att jämföra mätningarna före och mätningarna efter.</p>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="test-för-två-stickprov.html#cb264-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_sq, <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___)) <span class="sc">+</span></span>
 <span id="cb264-2"><a href="test-för-två-stickprov.html#cb264-2" tabindex="-1"></a>  <span class="fu">___</span>()</span></code></pre></div>
 <p>Finns det någon synlig viktskillnad?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-100" class="exercise"><strong>Uppgift 5.10  (Ekorrtest) </strong></span>Genomför ett t-test för två oberoende stickprov på ekorrdatan genom att fylla i kodstycket nedan. Formulera tydliga hypoteser och dra en klar slutsats.</p>
+<p><span id="exr:unlabeled-div-102" class="exercise"><strong>Uppgift 5.10  (Ekorrtest) </strong></span>Genomför ett t-test för två oberoende stickprov på ekorrdatan genom att fylla i kodstycket nedan. Formulera tydliga hypoteser och dra en klar slutsats.</p>
 <div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="test-för-två-stickprov.html#cb265-1" tabindex="-1"></a><span class="fu">t.test</span>(___ <span class="sc">~</span> ___, <span class="at">data =</span> dat_sq, <span class="at">var.equal =</span> ___)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-101" class="exercise"><strong>Uppgift 5.11  (Ekorrdesign) </strong></span>Ett problem med att mäta skilda individer före och efter övervintring är att det kan finnas en stor skillnad i vikt mellan individuella ekorrar. Kan man lägga upp försöket på ett sätt som reducerar det problemet?</p>
+<p><span id="exr:unlabeled-div-103" class="exercise"><strong>Uppgift 5.11  (Ekorrdesign) </strong></span>Ett problem med att mäta skilda individer före och efter övervintring är att det kan finnas en stor skillnad i vikt mellan individuella ekorrar. Kan man lägga upp försöket på ett sätt som reducerar det problemet?</p>
 </div>
 </div>
 </div>
@@ -513,10 +511,10 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 <p>Notera att funktionen inte ger ett z-värde utan ett <span class="math inline">\(\chi^2\)</span>-värde (utskrivet <code>X-squared</code>). Det beror på att funktionen beräknar z-testet som ett likvärdigt <span class="math inline">\(\chi^2\)</span>-test. Det z-värde man får om man genomför testet som ett z-test är detsamma som roten ur utskriftens <span class="math inline">\(\chi^2\)</span>-värde. Testet ger ett högt p-värde på 0.32 vilket innebär att nollhypotesen inte förkastas: det finns ingen signifikant skillnad i infektionsproportion.</p>
 <p>Funktionen <code>prop.test()</code> ger också en utskrift av konfidensintervallet. Tolkning är att skillnaden i proportioner mellan populationerna ligger i intervallet med 95 procents konfidens. Notera att nollan ingår i intervallet.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-102" class="exercise"><strong>Uppgift 5.12  (Lämplig approximation?) </strong></span>Z-test bygger på en normalapproximation. Som tumregel för när approximationen är rimlig används ofta att n * p * (1 - p) ska vara större än 10 för bägge stickproven. Gör beräkningen för datan i exemplet (17 av 50 respektive 26 av 60).</p>
+<p><span id="exr:unlabeled-div-104" class="exercise"><strong>Uppgift 5.12  (Lämplig approximation?) </strong></span>Z-test bygger på en normalapproximation. Som tumregel för när approximationen är rimlig används ofta att n * p * (1 - p) ska vara större än 10 för bägge stickproven. Gör beräkningen för datan i exemplet (17 av 50 respektive 26 av 60).</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-103" class="exercise"><strong>Uppgift 5.13  (Burfågel) </strong></span>Det finns en förvånansvärt stor mängd studier på kopplingen mellan innehav av burfågel och lungcancer. En sådan studie (Kohlmeier et al 1992) ger följande antal för burfågelägande och lungcancer.</p>
+<p><span id="exr:unlabeled-div-105" class="exercise"><strong>Uppgift 5.13  (Burfågel) </strong></span>Det finns en förvånansvärt stor mängd studier på kopplingen mellan innehav av burfågel och lungcancer. En sådan studie (Kohlmeier et al 1992) ger följande antal för burfågelägande och lungcancer.</p>
 <div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="test-för-två-stickprov.html#cb268-1" tabindex="-1"></a>dat_bird <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Burfågel <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Burfågel&quot;</span>, <span class="st">&quot;Ej_burfågel&quot;</span>),</span>
 <span id="cb268-2"><a href="test-för-två-stickprov.html#cb268-2" tabindex="-1"></a>              <span class="at">Lungcancer =</span> <span class="fu">c</span>(<span class="dv">98</span>, <span class="dv">141</span>),</span>
 <span id="cb268-3"><a href="test-för-två-stickprov.html#cb268-3" tabindex="-1"></a>              <span class="at">Ej_lungcancer =</span> <span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">328</span>))</span>
@@ -588,7 +586,7 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 ## [4,] 687.2214 174.77864</code></pre>
 <p>Om detta krav inte är uppfyllt skriver funktionen ut en varning.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-104" class="exercise"><strong>Uppgift 5.14  (Ogiltig approximation) </strong></span>Ta följande lilla korstabell och kör <code>chisq.test()</code> för att få ett felmeddelande.</p>
+<p><span id="exr:unlabeled-div-106" class="exercise"><strong>Uppgift 5.14  (Ogiltig approximation) </strong></span>Ta följande lilla korstabell och kör <code>chisq.test()</code> för att få ett felmeddelande.</p>
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="test-för-två-stickprov.html#cb283-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">1</span>), <span class="dv">2</span>)</span>
 <span id="cb283-2"><a href="test-för-två-stickprov.html#cb283-2" tabindex="-1"></a>dat</span></code></pre></div>
 <pre><code>##      [,1] [,2]
@@ -596,7 +594,7 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 ## [2,]    2    1</code></pre>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-105" class="exercise"><strong>Uppgift 5.15  (Burfågeln återvänder) </strong></span>En svensk studie på koppling mellan burfågel och lungcancer (Modigh et al, 1996) ger följande antal (för män).</p>
+<p><span id="exr:unlabeled-div-107" class="exercise"><strong>Uppgift 5.15  (Burfågeln återvänder) </strong></span>En svensk studie på koppling mellan burfågel och lungcancer (Modigh et al, 1996) ger följande antal (för män).</p>
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="test-för-två-stickprov.html#cb285-1" tabindex="-1"></a>dat_bird_swe <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Burfågel <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Burfågel&quot;</span>, <span class="st">&quot;Ej_burfågel&quot;</span>),</span>
 <span id="cb285-2"><a href="test-för-två-stickprov.html#cb285-2" tabindex="-1"></a>              <span class="at">Lungcancer =</span> <span class="fu">c</span>(<span class="dv">108</span>, <span class="dv">144</span>),</span>
 <span id="cb285-3"><a href="test-för-två-stickprov.html#cb285-3" tabindex="-1"></a>              <span class="at">Ej_lungcancer =</span> <span class="fu">c</span>(<span class="dv">171</span>, <span class="dv">256</span>))</span>
@@ -610,14 +608,14 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 </div>
 <p>Chi-två-testet kan tillämpas på korstabeller med godtyckligt antal rader och kolumner.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-106" class="exercise"><strong>Uppgift 5.16  (Po-ta-toes-import) </strong></span>I en undersökning på potatis används fyra behandlingar (a1b1, a1b2, a2b1 och a2b2). 125 potatisar från varje behandling sorteras in i fyra olika färggrupper (A, B, C och D). Datan finns i fliken <em>Po-ta-toes</em> i excelfilen <em>Uppgiftsdata.xlsx</em> på canvassidan. Ladda ned filen och läs in datan genom att fylla i stycket nedan.</p>
+<p><span id="exr:unlabeled-div-108" class="exercise"><strong>Uppgift 5.16  (Po-ta-toes-import) </strong></span>I en undersökning på potatis används fyra behandlingar (a1b1, a1b2, a2b1 och a2b2). 125 potatisar från varje behandling sorteras in i fyra olika färggrupper (A, B, C och D). Datan finns i fliken <em>Po-ta-toes</em> i excelfilen <em>Uppgiftsdata.xlsx</em> på canvassidan. Ladda ned filen och läs in datan genom att fylla i stycket nedan.</p>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="test-för-två-stickprov.html#cb288-1" tabindex="-1"></a>dat_pot <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;___&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Po-ta-toes&quot;</span>)</span>
 <span id="cb288-2"><a href="test-för-två-stickprov.html#cb288-2" tabindex="-1"></a>dat_pot</span>
 <span id="cb288-3"><a href="test-för-två-stickprov.html#cb288-3" tabindex="-1"></a></span>
 <span id="cb288-4"><a href="test-för-två-stickprov.html#cb288-4" tabindex="-1"></a><span class="co"># dat_pot &lt;- read_csv(&quot;https://raw.githubusercontent.com/adamflr/ST0060/main/Data/Uppgiftsdata/Uppgift_Po-ta-toes.csv&quot;)</span></span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-107" class="exercise"><strong>Uppgift 5.17  (Po-ta-toes-graf) </strong></span>För att göra en graf kan man pivotera datan till lång form.</p>
+<p><span id="exr:unlabeled-div-109" class="exercise"><strong>Uppgift 5.17  (Po-ta-toes-graf) </strong></span>För att göra en graf kan man pivotera datan till lång form.</p>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="test-för-två-stickprov.html#cb289-1" tabindex="-1"></a>dat_long <span class="ot">&lt;-</span> dat_pot <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="sc">-</span>Färg, <span class="at">values_to =</span> <span class="st">&quot;Antal&quot;</span>, <span class="at">names_to =</span> <span class="st">&quot;Behandling&quot;</span>)</span>
 <span id="cb289-2"><a href="test-för-två-stickprov.html#cb289-2" tabindex="-1"></a>dat_long</span></code></pre></div>
 <p>Skapa ett stapeldiagram med uppdelade staplar genom att fylla i kodstycket nedan. Behandling ska vara på x-axeln och ifylld färg ska ges av <code>Färg</code>.</p>
@@ -627,12 +625,12 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 <p>Finns det några synbara skillnader mellan behandlingar?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-108" class="exercise"><strong>Uppgift 5.18  (Po-ta-toes-test) </strong></span>Beräkna ett chi-två-test på potatisdatan för att se om det finns färgskillnader mellan behandlingarna. Formulera tydliga hypoteser och ge ett tydligt svar.</p>
+<p><span id="exr:unlabeled-div-110" class="exercise"><strong>Uppgift 5.18  (Po-ta-toes-test) </strong></span>Beräkna ett chi-två-test på potatisdatan för att se om det finns färgskillnader mellan behandlingarna. Formulera tydliga hypoteser och ge ett tydligt svar.</p>
 <div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="test-för-två-stickprov.html#cb291-1" tabindex="-1"></a>dat_pot[,<span class="sc">-</span><span class="dv">1</span>]</span>
 <span id="cb291-2"><a href="test-för-två-stickprov.html#cb291-2" tabindex="-1"></a><span class="fu">chisq.test</span>(___)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-109" class="exercise"><strong>Uppgift 5.19  (Hemmasegrar över årtionden) </strong></span>Vi vill undersöka om andelen hemmasegrar i herrallsvenskan förändrats över tid. Vi importerar data över matchresultat sedan 1920-talet.</p>
+<p><span id="exr:unlabeled-div-111" class="exercise"><strong>Uppgift 5.19  (Hemmasegrar över årtionden) </strong></span>Vi vill undersöka om andelen hemmasegrar i herrallsvenskan förändrats över tid. Vi importerar data över matchresultat sedan 1920-talet.</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="test-för-två-stickprov.html#cb292-1" tabindex="-1"></a>dat_alls <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/adamflr/ST0060/main/Data/Allsvenskan%2C%20herrar%2C%201924-2020.csv&quot;</span>)</span>
 <span id="cb292-2"><a href="test-för-två-stickprov.html#cb292-2" tabindex="-1"></a>dat_alls</span></code></pre></div>
 <pre><code>## # A tibble: 15,236 × 9
@@ -664,7 +662,7 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 <span id="cb295-2"><a href="test-för-två-stickprov.html#cb295-2" tabindex="-1"></a>  <span class="fu">___</span>()</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-110" class="exercise"><strong>Uppgift 5.20  (1920-talet mot 1960-talet) </strong></span>Använd ett z-test för att se om proportionen hemmasegrar under 1920-talet (371 av 738) är skild från 1960-talet (590 av 1320).</p>
+<p><span id="exr:unlabeled-div-112" class="exercise"><strong>Uppgift 5.20  (1920-talet mot 1960-talet) </strong></span>Använd ett z-test för att se om proportionen hemmasegrar under 1920-talet (371 av 738) är skild från 1960-talet (590 av 1320).</p>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="test-för-två-stickprov.html#cb296-1" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="fu">c</span>(___, ___), <span class="at">n =</span> <span class="fu">c</span>(___, ___), <span class="at">correct =</span> F)</span></code></pre></div>
 </div>
 </div>
@@ -678,14 +676,14 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 <span id="cb298-2"><a href="test-för-två-stickprov.html#cb298-2" tabindex="-1"></a>img <span class="ot">&lt;-</span> <span class="fu">image_read</span>(url)</span>
 <span id="cb298-3"><a href="test-för-två-stickprov.html#cb298-3" tabindex="-1"></a>img</span></code></pre></div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-111" class="exercise"><strong>Uppgift 5.21  (Någon annan bild) </strong></span>Hitta någon annan bild online, vad som helst. Gör lämplig ändring i stycken ovan för att läsa in bilden med <code>image_read()</code>.</p>
+<p><span id="exr:unlabeled-div-113" class="exercise"><strong>Uppgift 5.21  (Någon annan bild) </strong></span>Hitta någon annan bild online, vad som helst. Gör lämplig ändring i stycken ovan för att läsa in bilden med <code>image_read()</code>.</p>
 </div>
 <p>Låt oss börja med att ändra storleken med <code>image_resize()</code>. Följande ger en bild där den kortaste av höjd och bredd är 500 pixlar.</p>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="test-för-två-stickprov.html#cb299-1" tabindex="-1"></a>img <span class="ot">&lt;-</span> img <span class="sc">%&gt;%</span> </span>
 <span id="cb299-2"><a href="test-för-två-stickprov.html#cb299-2" tabindex="-1"></a>  <span class="fu">image_resize</span>(<span class="st">&quot;500&quot;</span>)</span>
 <span id="cb299-3"><a href="test-för-två-stickprov.html#cb299-3" tabindex="-1"></a>img</span></code></pre></div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-112" class="exercise"><strong>Uppgift 5.22  (Storlek) </strong></span>Vad kan vara koden för att sätta en bild till halva storleken, alltså 50% av den ursprungliga bilden?</p>
+<p><span id="exr:unlabeled-div-114" class="exercise"><strong>Uppgift 5.22  (Storlek) </strong></span>Vad kan vara koden för att sätta en bild till halva storleken, alltså 50% av den ursprungliga bilden?</p>
 </div>
 <p>Man kan också manipulera egenskaper som kontrast, mättnad och färgton.</p>
 <div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="test-för-två-stickprov.html#cb300-1" tabindex="-1"></a>img <span class="sc">%&gt;%</span> </span>
@@ -695,7 +693,7 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 <p>En enkel vetenskaplig tillämpning av bildanalys kan baseras på de relativa andelarna av olika färger. Det kan till exempel användas för att beräkna skadegrad på löv (som efter färgning kan ha specifika färger för skadade delar) eller storlek på trädkronor. Funktionen <code>image_quantize()</code> kan minska antalet färger i en bild till ett mer hanterbart antal.</p>
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="test-för-två-stickprov.html#cb301-1" tabindex="-1"></a>img <span class="sc">%&gt;%</span> <span class="fu">image_quantize</span>(<span class="at">max =</span> <span class="dv">10</span>)</span></code></pre></div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-113" class="exercise"><strong>Uppgift 5.23  (Antal färger) </strong></span>Med 50 enskilda färger blir <em>Den döende dandyn</em> något mattare, men karaktärernas klädsel har klara färger. Hur få måste det totala antalet färger bli innan <em>du</em> ser en klar försämring av bilden?</p>
+<p><span id="exr:unlabeled-div-115" class="exercise"><strong>Uppgift 5.23  (Antal färger) </strong></span>Med 50 enskilda färger blir <em>Den döende dandyn</em> något mattare, men karaktärernas klädsel har klara färger. Hur få måste det totala antalet färger bli innan <em>du</em> ser en klar försämring av bilden?</p>
 </div>
 <p>Funktionen <code>image_data()</code> kan användas för att ta ut färgvärdet för varje pixel. Därefter kan man enkelt beräkna andelen för olika färger. Följande stycke förenklar bilden till tio färger, extraherar datan och beräknar antalet pixlar med respektive färg. Den exakta koden är inte så viktig här och kan läsas kursivt.</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="test-för-två-stickprov.html#cb302-1" tabindex="-1"></a>img <span class="ot">&lt;-</span> img <span class="sc">%&gt;%</span> <span class="fu">image_quantize</span>(<span class="at">max =</span> <span class="dv">10</span>)</span>
@@ -713,7 +711,7 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 <span id="cb303-2"><a href="test-för-två-stickprov.html#cb303-2" tabindex="-1"></a>  <span class="fu">geom_raster</span>(<span class="at">fill =</span> dat_pix<span class="sc">$</span>hex)</span></code></pre></div>
 <p>Notera att vi sätter <code>fill</code> i geom-funktionen, eftersom målet är att sätta färgen till den som anges i kolumnen hex.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-114" class="exercise"><strong>Uppgift 5.24  (Färg som aesthetic) </strong></span>Vad händer om man sätter <code>fill = hex</code> inom <code>aes()</code>-funktionen istället?</p>
+<p><span id="exr:unlabeled-div-116" class="exercise"><strong>Uppgift 5.24  (Färg som aesthetic) </strong></span>Vad händer om man sätter <code>fill = hex</code> inom <code>aes()</code>-funktionen istället?</p>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="test-för-två-stickprov.html#cb304-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_pix, <span class="fu">aes</span>(x, y, <span class="at">fill =</span> ___)) <span class="sc">+</span></span>
 <span id="cb304-2"><a href="test-för-två-stickprov.html#cb304-2" tabindex="-1"></a>  <span class="fu">geom_raster</span>()</span></code></pre></div>
 <p>Funktionen <code>scale_fill_manual()</code> kan styra färgvalet i det fallet.</p>
@@ -735,7 +733,7 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 <span id="cb306-5"><a href="test-för-två-stickprov.html#cb306-5" tabindex="-1"></a><span class="fu">ggplot</span>(dat_pix_count, (<span class="fu">aes</span>(n, hex))) <span class="sc">+</span></span>
 <span id="cb306-6"><a href="test-för-två-stickprov.html#cb306-6" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> dat_pix_count<span class="sc">$</span>hex)</span></code></pre></div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-115" class="exercise"><strong>Uppgift 5.25  (Avslutande proportionstest) </strong></span>Låt oss ta ett mindre stickprov från bilden. Funktionen <code>set.seed()</code> sätter ett startvärde för slumtalsgeneratorn, vilket är bra om man vill reproducera ett visst utfall.</p>
+<p><span id="exr:unlabeled-div-117" class="exercise"><strong>Uppgift 5.25  (Avslutande proportionstest) </strong></span>Låt oss ta ett mindre stickprov från bilden. Funktionen <code>set.seed()</code> sätter ett startvärde för slumtalsgeneratorn, vilket är bra om man vill reproducera ett visst utfall.</p>
 <div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="test-för-två-stickprov.html#cb307-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1573</span>)</span>
 <span id="cb307-2"><a href="test-för-två-stickprov.html#cb307-2" tabindex="-1"></a>dat_sample <span class="ot">&lt;-</span> dat_pix <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">100</span>)</span>
 <span id="cb307-3"><a href="test-för-två-stickprov.html#cb307-3" tabindex="-1"></a>dat_sample <span class="sc">%&gt;%</span> <span class="fu">count</span>(hex)</span>

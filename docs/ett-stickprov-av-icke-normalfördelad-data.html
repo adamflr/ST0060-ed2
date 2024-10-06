@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Ett stickprov av icke-normalfördelad data | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="4 Ett stickprov av icke-normalfördelad data | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Ett stickprov av icke-normalfördelad data | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2024-10-04" />
+<meta name="date" content="2024-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -154,10 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#packages-från-cran"><i class="fa fa-check"></i><b>1.2</b> <em>Packages</em> från CRAN</a></li>
 <li class="chapter" data-level="1.3" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#objekt-och-funktioner"><i class="fa fa-check"></i><b>1.3</b> Objekt och funktioner</a></li>
 <li class="chapter" data-level="1.4" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#sekvenser-av-funktioner"><i class="fa fa-check"></i><b>1.4</b> Sekvenser av funktioner</a></li>
-<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning-och-dataimport-från-web"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning och dataimport från web</a>
-<ul>
-<li class="chapter" data-level="1.5.1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#inskrivning-av-data"><i class="fa fa-check"></i><b>1.5.1</b> Inskrivning av data</a></li>
-</ul></li>
+<li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning</a></li>
 <li class="chapter" data-level="1.6" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter"><i class="fa fa-check"></i><b>1.6</b> Urval ur en tabell med <code>select</code> och <code>filter</code></a></li>
 <li class="chapter" data-level="1.7" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#grafer-med-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Grafer med <code>ggplot2</code></a></li>
 <li class="chapter" data-level="1.8" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#ai-uppgift-i"><i class="fa fa-check"></i><b>1.8</b> AI-uppgift I</a></li>
@@ -172,6 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ordna-upp-beskrivande-statistik-och-exportera"><i class="fa fa-check"></i><b>2.6</b> Ordna upp beskrivande statistik och exportera</a></li>
 <li class="chapter" data-level="2.7" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#kumulativt-medelvärde"><i class="fa fa-check"></i><b>2.7</b> Kumulativt medelvärde</a></li>
 <li class="chapter" data-level="2.8" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#bonus.-tredimensionella-grafer-med-plotly"><i class="fa fa-check"></i><b>2.8</b> Bonus. Tredimensionella grafer med <code>plotly</code></a></li>
+<li class="chapter" data-level="2.9" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ai-uppgift-ii"><i class="fa fa-check"></i><b>2.9</b> AI-uppgift II</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html"><i class="fa fa-check"></i><b>3</b> Ett stickprov av normalfördelad data</a>
 <ul>
@@ -299,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb169-5"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb169-5" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">size =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-129-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-66" class="exercise"><strong>Uppgift 4.1  (En interaktiv målgraf) </strong></span>Kör stycket nedan för en interaktiv målgraf. Vilken match gav det högsta antalet gjorda bortamål?</p>
+<p><span id="exr:unlabeled-div-68" class="exercise"><strong>Uppgift 4.1  (En interaktiv målgraf) </strong></span>Kör stycket nedan för en interaktiv målgraf. Vilken match gav det högsta antalet gjorda bortamål?</p>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb170-1" tabindex="-1"></a><span class="co"># install.packages(plotly)</span></span>
 <span id="cb170-2"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb170-2" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
 <span id="cb170-3"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb170-3" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_alls, <span class="fu">aes</span>(hemmamal, bortamal, <span class="at">text =</span> <span class="fu">paste</span>(sasong, hemma, <span class="st">&quot;-&quot;</span>, borta))) <span class="sc">+</span></span>
@@ -382,34 +380,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb188-1" tabindex="-1"></a>z_value<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 2.566095</code></pre>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-67" class="exercise"><strong>Uppgift 4.2  (Ensidigt test) </strong></span>Titta på hjälpsidan med <code>?prop.test</code>. Hur genomför man ett ensidigt test? Gör lämpligt tillägg för att testa om andelen bortasegrar är större än 0.33.</p>
+<p><span id="exr:unlabeled-div-69" class="exercise"><strong>Uppgift 4.2  (Ensidigt test) </strong></span>Titta på hjälpsidan med <code>?prop.test</code>. Hur genomför man ett ensidigt test? Gör lämpligt tillägg för att testa om andelen bortasegrar är större än 0.33.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-68" class="exercise"><strong>Uppgift 4.3  (Test för proportionen oavgjorda) </strong></span>Samma gamla bollkunskap säger att 20 procent av matcher blir oavgjorda. I datan är 518 av 2750 matcher oavgjorda. Ställ upp hypoteser och fyll i koden nedan för att testa om bollkunskapen stämmer.</p>
+<p><span id="exr:unlabeled-div-70" class="exercise"><strong>Uppgift 4.3  (Test för proportionen oavgjorda) </strong></span>Samma gamla bollkunskap säger att 20 procent av matcher blir oavgjorda. I datan är 518 av 2750 matcher oavgjorda. Ställ upp hypoteser och fyll i koden nedan för att testa om bollkunskapen stämmer.</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb190-1" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="at">x =</span> ___, <span class="at">n =</span> ___, <span class="at">p =</span> ___, <span class="at">correct =</span> F)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-69" class="exercise"><strong>Uppgift 4.4  (Test för proportionen hemmasegrar) </strong></span>Slutligen är då resten av matcherna, 1285 av 2750, hemmasegrar. Gammal bollkunskap säger: <em>47 procent av alla matcher är hemmasegrar</em>. Genomför ett z-test för att testa det påstående.</p>
+<p><span id="exr:unlabeled-div-71" class="exercise"><strong>Uppgift 4.4  (Test för proportionen hemmasegrar) </strong></span>Slutligen är då resten av matcherna, 1285 av 2750, hemmasegrar. Gammal bollkunskap säger: <em>47 procent av alla matcher är hemmasegrar</em>. Genomför ett z-test för att testa det påstående.</p>
 <div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb191-1" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="at">x =</span> ___, <span class="at">n =</span> ___, <span class="at">p =</span> ___, <span class="at">correct =</span> F)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-70" class="exercise"><strong>Uppgift 4.5  (Population och stickprov) </strong></span>Ett hypotestest bygger på en underliggande tanke med en population (med någon för oss okänd proportion positiva utfall) och ett stickprov (i vilket vi kan observera andelen positiva utfall). Det är inte alltid uppenbart vad som egentligen är populationen. I fallet med fotbollsdatan, vad kan ses som populationen? Hur långt skulle man kunna generalisera de slutsatser man kan dra från datan?</p>
+<p><span id="exr:unlabeled-div-72" class="exercise"><strong>Uppgift 4.5  (Population och stickprov) </strong></span>Ett hypotestest bygger på en underliggande tanke med en population (med någon för oss okänd proportion positiva utfall) och ett stickprov (i vilket vi kan observera andelen positiva utfall). Det är inte alltid uppenbart vad som egentligen är populationen. I fallet med fotbollsdatan, vad kan ses som populationen? Hur långt skulle man kunna generalisera de slutsatser man kan dra från datan?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-71" class="exercise"><strong>Uppgift 4.6  (Guldfiskgenetik) </strong></span>(Fråga från Olsson, <em>Biometri</em>) En teori inom genetik förutsäger att tre fjärdedelar i en grupp guldfiskar ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test med <code>prop.test()</code> för att se om den faktiska proportionen skiljer sig från 0.75. Lös gärna först uppgiften för hand eller med miniräknare.</p>
+<p><span id="exr:unlabeled-div-73" class="exercise"><strong>Uppgift 4.6  (Guldfiskgenetik) </strong></span>(Fråga från Olsson, <em>Biometri</em>) En teori inom genetik förutsäger att tre fjärdedelar i en grupp guldfiskar ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test med <code>prop.test()</code> för att se om den faktiska proportionen skiljer sig från 0.75. Lös gärna först uppgiften för hand eller med miniräknare.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-72" class="exercise"><strong>Uppgift 4.7  (Mer guldfiskgenetik) </strong></span>(Fråga från Olsson, <em>Biometri</em>) En konkurrerande teori inom genetik förutsäger att femton sextondelar (proportionen 0.9375) ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test med <code>prop.test()</code> för att se om proportionen skiljer sig från 0.9375. Lös gärna först uppgiften för hand eller med miniräknare.</p>
+<p><span id="exr:unlabeled-div-74" class="exercise"><strong>Uppgift 4.7  (Mer guldfiskgenetik) </strong></span>(Fråga från Olsson, <em>Biometri</em>) En konkurrerande teori inom genetik förutsäger att femton sextondelar (proportionen 0.9375) ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test med <code>prop.test()</code> för att se om proportionen skiljer sig från 0.9375. Lös gärna först uppgiften för hand eller med miniräknare.</p>
 </div>
 <p>Hypotestestet för proportioner som används här, <em>z-testet</em>, bygger på en normalapproximation av en binomialfördelning. Approximation blir bättre när antalet observationer är stort och nollhypotesens värde p0 ligger nära 0.5. En vanlig tumregel för när approximationen är giltig är att n gånger p0 gånger (1 - p0) ska vara större än 10. För fotbollsdatan över oavgjorda matcher ger det 2750 * 0.2 * 0.8 vilket är klart större än 10.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-73" class="exercise"><strong>Uppgift 4.8  (Giltig approximation) </strong></span>I det andra guldfiskexemplet är antalet observationer 100 och nollhypotesens värde 0.9375. Är normalapproximationen <em>giltig</em> i det fallet?</p>
+<p><span id="exr:unlabeled-div-75" class="exercise"><strong>Uppgift 4.8  (Giltig approximation) </strong></span>I det andra guldfiskexemplet är antalet observationer 100 och nollhypotesens värde 0.9375. Är normalapproximationen <em>giltig</em> i det fallet?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-74" class="exercise"><strong>Uppgift 4.9  (Fågelproportioner) </strong></span>I ett naturreservat tror man fördelningen av tre fåglar (tärnmås, fiskmås och fisktärna) är 50, 30 respektive 20 procent. En studie ger antalen 115, 54 respektive 31. Genomför tre z-test för att testa den antagna andelarna. För tärnmås får man till exempel <code>prop.test(115, 200, p = 0.5, correct = F)</code>.</p>
+<p><span id="exr:unlabeled-div-76" class="exercise"><strong>Uppgift 4.9  (Fågelproportioner) </strong></span>I ett naturreservat tror man fördelningen av tre fåglar (tärnmås, fiskmås och fisktärna) är 50, 30 respektive 20 procent. En studie ger antalen 115, 54 respektive 31. Genomför tre z-test för att testa den antagna andelarna. För tärnmås får man till exempel <code>prop.test(115, 200, p = 0.5, correct = F)</code>.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-75" class="exercise"><strong>Uppgift 4.10  (Förbestämd signifikans) </strong></span>En intressant egenskap hos proportionstest är att man redan i förväg kan beräkna vilka utfall som ger signifikanta resulat. Säg att man har möjlighet att göra 100 replikat. Ändra i stycket nedan för att hitta det högsta värde på x som ger ett <em>icke</em>-signifikant utfall.</p>
+<p><span id="exr:unlabeled-div-77" class="exercise"><strong>Uppgift 4.10  (Förbestämd signifikans) </strong></span>En intressant egenskap hos proportionstest är att man redan i förväg kan beräkna vilka utfall som ger signifikanta resulat. Säg att man har möjlighet att göra 100 replikat. Ändra i stycket nedan för att hitta det högsta värde på x som ger ett <em>icke</em>-signifikant utfall.</p>
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb192-1" tabindex="-1"></a><span class="fu">prop.test</span>(x, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">p =</span> <span class="fl">0.5</span>, <span class="at">correct =</span> F)</span></code></pre></div>
 <p>Det är möjligt att göra liknande beräkningar för ett t-test för normalfördelad data, men då måste man göra antaganden om standardavvikelsens storlek.</p>
 </div>
@@ -431,14 +429,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>##       method   x    n      mean     lower     upper
 ## 1 asymptotic 947 2750 0.3443636 0.3266045 0.3621228</code></pre>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-76" class="exercise"><strong>Uppgift 4.11  (99-procentigt konfidensintervall) </strong></span>Gör lämplig ändring i koden nedan för att beräkna ett 99-procentigt konfidensintervall för andelen bortasegrar.</p>
+<p><span id="exr:unlabeled-div-78" class="exercise"><strong>Uppgift 4.11  (99-procentigt konfidensintervall) </strong></span>Gör lämplig ändring i koden nedan för att beräkna ett 99-procentigt konfidensintervall för andelen bortasegrar.</p>
 <div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb199-1" tabindex="-1"></a><span class="fu">binom.asymp</span>(<span class="at">x =</span> <span class="dv">947</span>, <span class="at">n =</span> <span class="dv">2750</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-77" class="exercise"><strong>Uppgift 4.12  (Perfekta utfall) </strong></span>Vad händer om man försöker räkna ut ett konfidensintervall för ett perfekt utfall - t.ex. om man får 100 av 100 positiva utfall?</p>
+<p><span id="exr:unlabeled-div-79" class="exercise"><strong>Uppgift 4.12  (Perfekta utfall) </strong></span>Vad händer om man försöker räkna ut ett konfidensintervall för ett perfekt utfall - t.ex. om man får 100 av 100 positiva utfall?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-78" class="exercise"><strong>Uppgift 4.13  (Konfidensintervall för guldfiskar) </strong></span>Använd funktionen <code>binom.asymp()</code> för att ta fram konfidensintervallet för andelen guldfiskar från den tidigare uppgiften. Hur förhåller sig resultatet till nollhypotesernas värden (0.75 respektive 0.9375)? Gör motsvarande beräkning med miniräknare.</p>
+<p><span id="exr:unlabeled-div-80" class="exercise"><strong>Uppgift 4.13  (Konfidensintervall för guldfiskar) </strong></span>Använd funktionen <code>binom.asymp()</code> för att ta fram konfidensintervallet för andelen guldfiskar från den tidigare uppgiften. Hur förhåller sig resultatet till nollhypotesernas värden (0.75 respektive 0.9375)? Gör motsvarande beräkning med miniräknare.</p>
 </div>
 </div>
 <div id="chi-två-test-för-goodness-of-fit" class="section level2 hasAnchor" number="4.4">
@@ -451,7 +449,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb200-1" tabindex="-1"></a>O <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">947</span>, <span class="dv">518</span>, <span class="dv">1285</span>)</span>
 <span id="cb200-2"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb200-2" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.33</span>,<span class="fl">0.20</span>,<span class="fl">0.47</span>) <span class="sc">*</span> <span class="dv">2750</span></span></code></pre></div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-79" class="exercise"><strong>Uppgift 4.14  (Granska E) </strong></span>Skriv ut objektet <code>E</code> och jämför med de observerade värdena. Notera att de förväntade värdena inte måste vara heltal, trots att de observerade värdena förstås alltid kommer vara det.</p>
+<p><span id="exr:unlabeled-div-81" class="exercise"><strong>Uppgift 4.14  (Granska E) </strong></span>Skriv ut objektet <code>E</code> och jämför med de observerade värdena. Notera att de förväntade värdena inte måste vara heltal, trots att de observerade värdena förstås alltid kommer vara det.</p>
 </div>
 <p>Testvärdet beräknas genom formeln för varje term följt av summan.</p>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb201-1" tabindex="-1"></a>chisq_value <span class="ot">&lt;-</span> <span class="fu">sum</span>((O <span class="sc">-</span> E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> E)</span></code></pre></div>
@@ -479,7 +477,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## X-squared = 3.6246, df = 2, p-value = 0.1633</code></pre>
 <p>Testet ger samma chi-två-värde och p-värde som beräknats ovan.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-80" class="exercise"><strong>Uppgift 4.15  (Chi-två med två klasser) </strong></span>Situationen med flera klasser kan som sagt ses som en generalisering av fallet med två klasser. Det är alltså logiskt att chi-två-test kan användas även när man har två klasser. Följande exempel ger samma test som vi sett tidigare av andelen bortasegrar.</p>
+<p><span id="exr:unlabeled-div-82" class="exercise"><strong>Uppgift 4.15  (Chi-två med två klasser) </strong></span>Situationen med flera klasser kan som sagt ses som en generalisering av fallet med två klasser. Det är alltså logiskt att chi-två-test kan användas även när man har två klasser. Följande exempel ger samma test som vi sett tidigare av andelen bortasegrar.</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb209-1" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">947</span>, <span class="dv">1803</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="fl">0.33</span>, <span class="fl">0.67</span>), <span class="at">correct =</span> F)</span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
@@ -497,7 +495,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## data:  c(6, 4)
 ## X-squared = 0.32413, df = 1, p-value = 0.5691</code></pre>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-81" class="exercise"><strong>Uppgift 4.16  (Chi-två med lika sannolikheter) </strong></span>En vanlig tillämpning av goodness-of-fit-testet är för att testa om alla klasser är lika sannolika. En jämn fördelning är grundinställning i <code>chisq.test()</code> så i det fallet behöver man bara ange de observerade värdena. En datainsamling om M&amp;M-godis gav följande antal.</p>
+<p><span id="exr:unlabeled-div-83" class="exercise"><strong>Uppgift 4.16  (Chi-två med lika sannolikheter) </strong></span>En vanlig tillämpning av goodness-of-fit-testet är för att testa om alla klasser är lika sannolika. En jämn fördelning är grundinställning i <code>chisq.test()</code> så i det fallet behöver man bara ange de observerade värdena. En datainsamling om M&amp;M-godis gav följande antal.</p>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb213-1" tabindex="-1"></a>dat_mnm <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Color =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;brown&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;yellow&quot;</span>),</span>
 <span id="cb213-2"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb213-2" tabindex="-1"></a>                      <span class="at">Count =</span> <span class="fu">c</span>(<span class="dv">180</span>, <span class="dv">80</span>, <span class="dv">88</span>, <span class="dv">160</span>, <span class="dv">134</span>, <span class="dv">166</span>))</span>
 <span id="cb213-3"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb213-3" tabindex="-1"></a></span>
@@ -517,13 +515,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 1.71928375 1.86181818 0.04352031</code></pre>
 <p>Antalet hemmavinster (det tredje värdet) ligger när den teoretiska sannolikheten medan de övriga två utfallen ligger längre från.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-82" class="exercise"><strong>Uppgift 4.17  (Udda färger) </strong></span>Spara testobjektet från testet på M&amp;M-färger för att se vilka färger som avviker mest från det väntade utfallet.</p>
+<p><span id="exr:unlabeled-div-84" class="exercise"><strong>Uppgift 4.17  (Udda färger) </strong></span>Spara testobjektet från testet på M&amp;M-färger för att se vilka färger som avviker mest från det väntade utfallet.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-83" class="exercise"><strong>Uppgift 4.18  (Fågelproportioner som chi-två) </strong></span>I naturreservatet från en tidigare uppgift tror man fördelningen av tre fåglar (tärnmås, fiskmås och fisktärna) är 50, 30 respektive 20 procent. En studie ger antalen 115, 54 respektive 31. Genomför ett chi-två-test för att testa de antagna andelarna. Är resultatet i linje med de separata testen från den tidigare uppgiften?</p>
+<p><span id="exr:unlabeled-div-85" class="exercise"><strong>Uppgift 4.18  (Fågelproportioner som chi-två) </strong></span>I naturreservatet från en tidigare uppgift tror man fördelningen av tre fåglar (tärnmås, fiskmås och fisktärna) är 50, 30 respektive 20 procent. En studie ger antalen 115, 54 respektive 31. Genomför ett chi-två-test för att testa de antagna andelarna. Är resultatet i linje med de separata testen från den tidigare uppgiften?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-84" class="exercise"><strong>Uppgift 4.19  (Udda fåglar) </strong></span>Spara testobjektet från chi-två-testet för fåglarna för att se vilka fågelarter som avviker mest från det väntade utfallet.</p>
+<p><span id="exr:unlabeled-div-86" class="exercise"><strong>Uppgift 4.19  (Udda fåglar) </strong></span>Spara testobjektet från chi-två-testet för fåglarna för att se vilka fågelarter som avviker mest från det väntade utfallet.</p>
 </div>
 </div>
 <div id="chi-två-test-när-någon-parameter-skattas-från-datan" class="section level2 hasAnchor" number="4.5">
@@ -559,7 +557,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 13    12     5 0.000125   0.344</code></pre>
 <p>En graf kan illustrera faktiska antal (som punkter) och den skattade poissonfördelningen (som linje).</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-85" class="exercise"><strong>Uppgift 4.20  (Målgraf) </strong></span>Fyll i de saknade delarna i koden nedan för en graf med faktiska antal <code>O</code> som punkter och förväntade antal <code>E</code> som en linje.</p>
+<p><span id="exr:unlabeled-div-87" class="exercise"><strong>Uppgift 4.20  (Målgraf) </strong></span>Fyll i de saknade delarna i koden nedan för en graf med faktiska antal <code>O</code> som punkter och förväntade antal <code>E</code> som en linje.</p>
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb224-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_goals) <span class="sc">+</span></span>
 <span id="cb224-2"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb224-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Mål, <span class="at">y =</span> ___)) <span class="sc">+</span></span>
 <span id="cb224-3"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb224-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Mål, <span class="at">y =</span> ___))</span></code></pre></div>
@@ -597,7 +595,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.6</span> Bonus. Interaktiva kartor med leaflet<a href="ett-stickprov-av-icke-normalfördelad-data.html#bonus.-interaktiva-kartor-med-leaflet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Paketet <code>leaflet</code> (<a href="https://rstudio.github.io/leaflet/" class="uri">https://rstudio.github.io/leaflet/</a>) kopplar R till leaflet - ett verktyg för interaktiva kartor som ofta använd för kartor online.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-86" class="exercise"><strong>Uppgift 4.21  (Installera leaflet) </strong></span>Installera och ladda `leaflet genom att fylla i och köra raden nedan.</p>
+<p><span id="exr:unlabeled-div-88" class="exercise"><strong>Uppgift 4.21  (Installera leaflet) </strong></span>Installera och ladda `leaflet genom att fylla i och köra raden nedan.</p>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb229-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;leaflet&quot;</span>)</span>
 <span id="cb229-2"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb229-2" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span></code></pre></div>
 </div>
@@ -608,7 +606,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb230-4"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb230-4" tabindex="-1"></a>m</span></code></pre></div>
 <p>På canvassidan finns en excelfil med data tillgänglig på Artportalen - <em>Artportalen, feromoninventering, 2011-2013.xlsx</em>. Datan kommer från från ett inventeringsprojekt vid SLU.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-87" class="exercise"><strong>Uppgift 4.22  (Importera datan) </strong></span>Ladda ner excelfilen och läs in datan med <code>read_excel()</code> från paketet <code>readxl</code>.</p>
+<p><span id="exr:unlabeled-div-89" class="exercise"><strong>Uppgift 4.22  (Importera datan) </strong></span>Ladda ner excelfilen och läs in datan med <code>read_excel()</code> från paketet <code>readxl</code>.</p>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb231-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb231-2"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb231-2" tabindex="-1"></a>dat_leaf <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;___&quot;</span>)</span></code></pre></div>
 </div>
@@ -617,21 +615,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb232-2"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb232-2" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb232-3"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb232-3" tabindex="-1"></a>  <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>Stamen.Toner)</span></code></pre></div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-88" class="exercise"><strong>Uppgift 4.23  (Baskarta) </strong></span>Skriv ut tillgängliga baskartor med <code>providers</code>. Välj ett alternativ slumpmässigt och ändra koden ovan för att se hur det ser ut.</p>
+<p><span id="exr:unlabeled-div-90" class="exercise"><strong>Uppgift 4.23  (Baskarta) </strong></span>Skriv ut tillgängliga baskartor med <code>providers</code>. Välj ett alternativ slumpmässigt och ändra koden ovan för att se hur det ser ut.</p>
 </div>
 <p>För att lägga till datapunkter kan man använda <code>addCircleMarkers()</code>.</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb233-1" tabindex="-1"></a><span class="fu">leaflet</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb233-2"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb233-2" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb233-3"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb233-3" tabindex="-1"></a>  <span class="fu">addCircleMarkers</span>(<span class="at">lng =</span> dat_leaf<span class="sc">$</span>lng, <span class="at">lat =</span> dat_leaf<span class="sc">$</span>lat, <span class="at">radius =</span> <span class="dv">10</span>)</span></code></pre></div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-89" class="exercise"><strong>Uppgift 4.24  (Cirkelstorlek) </strong></span>Ändra storleken på cirklarna från <code>addCircleMarkers()</code> genom argumentet <code>radius</code>.</p>
+<p><span id="exr:unlabeled-div-91" class="exercise"><strong>Uppgift 4.24  (Cirkelstorlek) </strong></span>Ändra storleken på cirklarna från <code>addCircleMarkers()</code> genom argumentet <code>radius</code>.</p>
 </div>
 <p>Slutligen kan vi lägga till en etikett för år med argumentet <code>popup</code>. Texten kommer upp när man klickar på en punkt.</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb234-1" tabindex="-1"></a><span class="fu">leaflet</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb234-2"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb234-2" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb234-3"><a href="ett-stickprov-av-icke-normalfördelad-data.html#cb234-3" tabindex="-1"></a>  <span class="fu">addCircleMarkers</span>(<span class="at">lng =</span> dat_leaf<span class="sc">$</span>lng, <span class="at">lat =</span> dat_leaf<span class="sc">$</span>lat, <span class="at">radius =</span> <span class="dv">10</span>, <span class="at">popup =</span> dat_leaf<span class="sc">$</span>Rödlistade)</span></code></pre></div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-90" class="exercise"><strong>Uppgift 4.25  (Artnamn) </strong></span>Ändra i koden ovan för att ange artnamn som popup-text istället för rödlistestatus. Funktionen <code>paste()</code> kan också vara intressant för att ta med mer information i texten: <code>paste(dat_leaf$Rödlistade, dat_leaf$Antal)</code> skulle exempelvis ge både status och antal individer vid den specifika observationen.</p>
+<p><span id="exr:unlabeled-div-92" class="exercise"><strong>Uppgift 4.25  (Artnamn) </strong></span>Ändra i koden ovan för att ange artnamn som popup-text istället för rödlistestatus. Funktionen <code>paste()</code> kan också vara intressant för att ta med mer information i texten: <code>paste(dat_leaf$Rödlistade, dat_leaf$Antal)</code> skulle exempelvis ge både status och antal individer vid den specifika observationen.</p>
 </div>
 
 </div>
