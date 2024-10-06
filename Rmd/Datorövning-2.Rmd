@@ -32,7 +32,7 @@ library(gapminder)
 gapminder                       # Skriv ut objektet gapminder
 ```
 
-Funktioner agerar på objekt och ger något utfall. Här beräknas medeltempot med funktionen `mean()`. Dollartecknet används för att ange en specifik kolumn i dataobjektet. Funktioner styrs av möjliga argument - här används `na.rm` för att ange att saknade värden inte ska tas med i beräkningen
+Funktioner agerar på objekt och ger något utfall. Här nedan beräknas medelvärdet av livslängd med funktionen `mean()`. Dollartecknet används för att ange en specifik kolumn i dataobjektet. Funktioner styrs av möjliga argument - här används `na.rm` för att ange att saknade värden inte ska tas med i beräkningen
 
 ```{r}
 mean(gapminder$lifeExp, na.rm = T) # Beräkna medel av lifeExp
@@ -50,7 +50,7 @@ Slutligen tittade vi på grafer med ggplot2-paketet. En ggplot byggs upp med tre
 
 ```{r, results='hide', fig.show='hide'}
 dat_small <- gapminder %>% filter(year == 2007)
-ggplot(dat_small, aes(gdpPercap, lifeExp, 
+ggplot(dat_small, aes(x = gdpPercap, y = lifeExp, 
                       size = pop, color = continent)) +
   geom_point()
 ```
@@ -127,8 +127,9 @@ gapminder
 Om man vill skapa en kolumn med mellanrum i namnet måste man skriva namnet inom *backticks* \` för att ange att namnet ska tolkas som en enhet. Jag rekommenderar att undvika mellanrum i kolumnnamn och istället använda stora bokstäver eller understreck för ett nytt ord (`NationalGDP` eller `National_GDP`).
 
 ```{r, results='hide'}
-gapminder %>% 
+gapminder <- gapminder %>% 
   mutate(`National GDP` = gdpPercap * pop)
+gapminder
 ```
 
 ## Sammanfattande lägesmått
@@ -136,7 +137,7 @@ gapminder %>%
 Den importerade datan anger medellivslängd, populationsstorlek och bnp per capita per land och år. Vi kan börja med att producera en bubbelgraf över datan - en av de presentationer Gapminder ofta använder. En bubbelgraf är ett spridningsdiagram där punktens storlek beror på en tredje variabel.
 
 ```{r, fig.height = 8, fig.show='hide'}
-ggplot(gapminder, aes(gdpPercap, lifeExp, 
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, 
                       size = pop, color = continent)) +
   geom_point() +
   facet_wrap(~ year)
@@ -145,22 +146,22 @@ ggplot(gapminder, aes(gdpPercap, lifeExp,
 En interaktiv version kan vara bra om man vill identifiera någon specifik punkt.
 
 ```{r, eval = F, fig.height = 8}
-g <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, 
+g <- ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, size = pop, 
                            color = continent, text = country)) +
   geom_point() +
   facet_wrap(~ year)
 
-# install.packages("plotly")
-library(plotly)                        # Ladda paketet plotly
-ggplotly(g)                            # Interaktiv graf g
+# install.packages("plotly")  # Kör om ej installerat tidigare
+library(plotly)               # Ladda paketet plotly
+ggplotly(g)                   # Interaktiv graf g
 ```
 
 Under föreläsningen såg vi exempel på två lägesmått: medelvärdet (egentligen det *aritmetiska* medelvärdet) och medianen. De har bägge enkla funktioner i R: `mean()` respektive `median()`. Vi plockar ut en variabel ur datan och beräknar bägge.
 
 ```{r}
-gdpPercap <- gapminder$gdpPercap # Skapa en vektor gdpPercap
-mean(gdpPercap)                  # Beräkna medelvärdet
-median(gdpPercap)                # Beräkna medianen
+gapminder$gdpPercap         # Vektorn med data
+mean(gapminder$gdpPercap)   # Beräkna medelvärdet
+median(gapminder$gdpPercap) # Beräkna medianen
 ```
 
 Samma sak kan göras med en pipe `%>%` och `summarise()`.
@@ -243,20 +244,21 @@ gapminder %>%
 Gör lämpliga ändringar i det sista exempel för att istället beräkna spridningsmått för livslängd.
 :::
 
-Vi avslutar med tre vanliga illustrationer av vetenskaplig data - ett linjediagram med felstaplar, ett stapeldiagram med felstaplar, och ett lådagram. För linjediagrammet beräknar vi medelvärdet och spridningsmått för bnp över år och kontinent. Som spridningsmått använder vi *medelfelet*, vilket beräknas som standardavvikelse delat på roten ur antalet observationer.
+Vi avslutar med tre vanliga illustrationer av vetenskaplig data - ett linjediagram med felstaplar, ett stapeldiagram med felstaplar, och ett lådagram. För linjediagrammet beräknar vi medelvärdet och spridningsmått för bnp över år och kontinent. Som spridningsmått använder vi standard error (sv. *medelfel*), vilket beräknas som standardavvikelse delat på roten ur antalet observationer. Funktionen `n()` ger antalet observationer per kontinent och år.
 
 ```{r, results='hide'}
-dat_sum <- gapminder %>%
+dat_year_continent <- gapminder %>%
   group_by(year, continent) %>%
   summarise(Mean = mean(gdpPercap),
             SE = sd(gdpPercap) / sqrt(n()))
-dat_sum
+dat_year_continent
 ```
 
 Med `ggplot2` kan vi bygga ett linjediagram med `geom_line()` och lägga till felstaplar med `geom_errorbar()`. Den senare behöver `aes()`-argument för `ymin` och `ymax` - nedre och övre del av felstapeln. Vi sätter dem till medelvärdet minus respektive plus ett medelfel.
 
 ```{r, fig.show='hide'}
-ggplot(dat_sum, aes(year, Mean, color = continent)) +
+ggplot(dat_year_continent, aes(x = year, y = Mean, 
+                               color = continent)) +
   geom_line() +
   geom_errorbar(aes(ymin = Mean - SE, ymax = Mean + SE))
 ```
@@ -268,18 +270,18 @@ Felstaplarna från `geom_errorbar()` har väldigt breda ändar. Använd hjälpsi
 En graf med staplar och felstaplar kan konstrueras på ett liknande sätt. Följande exempel visar staplar över livslängd per kontinent. Felstapeln ges av standardavvikelsen.
 
 ```{r, results='hide'}
-dat_sum <- gapminder %>%          # Ta datan, och sen
+dat_2007 <- gapminder %>%          # Ta datan, och sen
   filter(year == 2007) %>%        # filtrera på år, och sen
   group_by(continent) %>%         # gruppera efter kontinent,
   summarise(Mean = mean(lifeExp), # summera med medelvärde,
             SD = sd(lifeExp))     # och standardavvikelse
-dat_sum
+dat_2007
 ```
 
 Vi bygger en ggplot med `geom_col()` och `geom_errorbar()`. Felstapels konstruktion kan anges i en notis med funktionen `labs()`.
 
 ```{r, fig.show='hide'}
-ggplot(dat_sum, aes(continent, Mean, fill = continent)) +
+ggplot(dat_2007, aes(continent, Mean, fill = continent)) +
   geom_col()+                                            
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD)) +
   labs(title = "Average life expectancy by continent, 2007",
@@ -288,7 +290,7 @@ ggplot(dat_sum, aes(continent, Mean, fill = continent)) +
 ```
 
 ::: {.exercise name="Staplar för 1982"}
-Gör lämpliga ändringar i exempel ovan för att konstruera ett stapeldiagram med felstaplar för året 1982 och variabeln gdpPercap.
+Gör lämpliga ändringar i exempel ovan för att konstruera ett stapeldiagram med felstaplar för året 1982 och variabeln medellivslängd.
 :::
 
 Ett lådagram anger fördelningen av en variabel genom att illustrera minimum, maximum och kvartiler. Kvartiler är mått som delar en datamängd i fyra lika stora delar (så att en fjärdedel ligger under första kvartilen, en fjärdedel mellan första och andra kvartil, och så vidare). Med `ggplot2` kan vi bygga ett lådagram med `geom_boxplot()`. Exempel ger en låda per år och kontinent.
@@ -304,43 +306,26 @@ ggplot(gapminder, aes(year, lifeExp, fill = continent,
 I lådagrammet används argumentet `group`. Vad gör det? Vad händer om man tar bort det?
 :::
 
-Om man vill ha med både data på observationsnivån och summerad data i en graf kan man ange olika data till olika geom. Vi kan t.ex. lägga till en markör för medelvärdet i en boxplot.
-
-```{r, results='hide', fig.show='hide'}
-gapminder_2007 <- gapminder %>% filter(year == 2007)
-gapminder_agg <- gapminder_2007 %>% 
-  group_by(continent) %>% 
-  summarise(lifeExp = mean(lifeExp))
-gapminder_agg
-
-ggplot() +
-  geom_boxplot(aes(lifeExp, continent), data = gapminder_2007) +
-  geom_point(aes(lifeExp, continent), data = gapminder_agg, 
-             color = "red", shape = "X", size = 6)
-```
-
-Här byggs boxarna med datan `gapminder` och punkterna med den aggregerade datan.
-
 ## Ordna upp beskrivande statistik och exportera
 
 Efter att ha beräknat någon beskrivande statistik kan det vara bra att titta på hur resultaten kan snyggas upp och exporteras i något lämpligt format. Ta den tabell med medelvärden vi producerade i ett tidigare exempel.
 
 ```{r, results='hide'}
-dat_sum <- gapminder %>%          # Ta datan, och sen
+dat_2007 <- gapminder %>%          # Ta datan, och sen
   filter(year == 2007) %>%        # filtrera på år, och sen
   group_by(continent) %>%         # gruppera efter kontinent,
   summarise(Mean = mean(lifeExp), # summera med medelvärde,
             SD = sd(lifeExp))     # och standardavvikelse
-dat_sum
+dat_2007
 ```
 
 Objekt kan exporteras från R på liknande som det importeras - med särskilda exportfunktioner (*write*-funktioner) beroende på filtyp. För att exportera till en csv-fil man man använda `write_csv()`. Ingående argument är det objekt man vill exportera och den fil man vill exportera till. R ger ingen varning om man skriver över en existerande fil, så var lite försiktiga här.
 
-Precis som vid import använder R *working directory* om inget annat anges. Följande exporterar objektet `dat_sum` till en csv-fil *Exporterad data från R.csv* i *working directory*.
+Precis som vid import använder R *working directory* om inget annat anges. Följande exporterar objektet `dat_2007` till en csv-fil *Exporterad data från R.csv* i *working directory*.
 
 ```{r, eval = F}
 getwd()                          # Se nuvarande working directory
-write_csv(dat_sum, "Exporterad data från R.csv") # Exportera data
+write_csv(dat_2007, "Exporterad data från R.csv") # Exportera data
 ```
 
 Därifrån skulle man kunna öppna filen i något kalkylprogram, snygga till layouten, och sedan klippa in i ett textdokument.
@@ -372,13 +357,13 @@ ggplot(dat_dice, aes(x = Kast, y = ___)) +
 :::
 
 ::: {.exercise name="Fler tärningskast"}
-Kasta din tärning ytterligare några gånger, gärna på en mjuk yta. Fyll i dina utfall och gör grafen från föregående uppgift. Kan man se en tendens för medelvärdet att minska i varians vid fler kast?
+Kasta din tärning ytterligare några gånger, gärna på en mjuk yta. Fyll i dina utfall och gör grafen från föregående uppgift. Kan man se en tendens för medelvärdet att minska i varians vid fler kast? Svänger kurvan in mot något specifikt värde?
 
 ```{r, eval = F}
 dat_dice <- data.frame(Utfall = c(___)) %>% 
   mutate(Kast = 1:n(),                                 
-         `Kumulativ summa` = cumsum(Utfall),           
-         `Kumulativt medelvärde` = `Kumulativ summa` / Kast)
+         kumulativ_summa = cumsum(Utfall),           
+         kumulativt_medelvärde = `Kumulativ summa` / Kast)
 dat_dice
 ```
 :::
@@ -399,7 +384,9 @@ ggplot(dat_dice, aes(x = Kast, y = kumulativ_frekvens)) +
 ```
 :::
 
-## Bonus. Tredimensionella grafer med `plotly`
+## Tredimensionella grafer med `plotly`
+
+De två avslutande avsnitten är mindre viktiga och kan läsas i mån av tid.
 
 Paketet `plotly` kan användas för att göra interaktiva graf och grafer med tre dimensioner. Börja med att ladda paketet.
 
