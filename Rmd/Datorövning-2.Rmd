@@ -158,7 +158,7 @@ ggplotly(g)                   # Interaktiv graf g
 
 Under föreläsningen såg vi exempel på två lägesmått: medelvärdet (egentligen det *aritmetiska* medelvärdet) och medianen. De har bägge enkla funktioner i R: `mean()` respektive `median()`. Vi plockar ut en variabel ur datan och beräknar bägge.
 
-```{r}
+```{r, results='hide'}
 gapminder$gdpPercap         # Vektorn med data
 mean(gapminder$gdpPercap)   # Beräkna medelvärdet
 median(gapminder$gdpPercap) # Beräkna medianen
@@ -199,7 +199,7 @@ I vetenskapliga publikationer redovisas medelvärden ofta med ett stapeldiagram.
 dat_gdp_2007 <- gapminder %>%       # Ta datan, och sen
   filter(year == 2007) %>%          # filtrera för 2007, och sen
   group_by(continent) %>%           # gruppera kontinenter, och
-  summarise(Mean = mean(gdpPercap)) # summera med medelvärdet
+  summarise(Mean = mean(gdpPercap)) # beräkna medelvärdet
 
 ggplot(dat_gdp_2007, aes(continent, Mean)) +
   geom_col()                  # Illustrera med kolumner (columns)
@@ -214,11 +214,11 @@ Gör om stapeldiagrammet. Denna gång med livslängd (`lifeExp`) istället för 
 Under föreläsningarna såg vi några mått på spridning: varians, standardavvikelse och kvartilavstånd (IQR, *inter-quartile range*). De har alla motsvarande funktioner i R (`var()`, `sd()`, och `IQR()`) som kan användas på samma sätt som funktionerna för lägesmått.
 
 ```{r, results='hide'}
-gdpPercap <- gapminder$gdpPercap # Skapa en vektor gdpPercap
+gapminder$gdpPercap      # Vektorn med data
 
-var(gdpPercap)                   # Beräkna varians
-sd(gdpPercap)                    # Beräkna standardavvikelse
-IQR(gdpPercap)                   # Beräkna kvartilavstånd
+var(gapminder$gdpPercap) # Beräkna varians
+sd(gapminder$gdpPercap)  # Beräkna standardavvikelse
+IQR(gapminder$gdpPercap) # Beräkna kvartilavstånd
 ```
 
 Alternativt med en pipe och `summarise()`.
@@ -311,7 +311,7 @@ I lådagrammet används argumentet `group`. Vad gör det? Vad händer om man tar
 Efter att ha beräknat någon beskrivande statistik kan det vara bra att titta på hur resultaten kan snyggas upp och exporteras i något lämpligt format. Ta den tabell med medelvärden vi producerade i ett tidigare exempel.
 
 ```{r, results='hide'}
-dat_2007 <- gapminder %>%          # Ta datan, och sen
+dat_2007 <- gapminder %>%         # Ta datan, och sen
   filter(year == 2007) %>%        # filtrera på år, och sen
   group_by(continent) %>%         # gruppera efter kontinent,
   summarise(Mean = mean(lifeExp), # summera med medelvärde,
@@ -363,7 +363,7 @@ Kasta din tärning ytterligare några gånger, gärna på en mjuk yta. Fyll i di
 dat_dice <- data.frame(Utfall = c(___)) %>% 
   mutate(Kast = 1:n(),                                 
          kumulativ_summa = cumsum(Utfall),           
-         kumulativt_medelvärde = `Kumulativ summa` / Kast)
+         kumulativt_medelvärde = kumulativ_summa / Kast)
 dat_dice
 ```
 :::
@@ -461,5 +461,5 @@ Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att f
 :::
 
 ::: {.exercise name="3d-graf återigen"}
-Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att få kod som skapar en 3d-graf lik den vi skapade ovan. Se om det går att utveckla grafen ytterligare, t.ex. med en linje som går ner till grafen *botten*, eller linjer som kopplar samma länder till kontinentens medelvärde.
+Använd en chatbot för att få kod som skapar en 3d-graf lik den vi skapade ovan. Se om det går att utveckla grafen ytterligare, t.ex. med en linje som går ner till grafens *botten*, eller linjer som kopplar samma länder till kontinentens medelvärde.
 :::

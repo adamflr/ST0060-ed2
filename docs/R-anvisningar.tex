@@ -137,7 +137,7 @@
 
 \title{R-anvisningar till \emph{Grundläggande statistik}}
 \author{}
-\date{\vspace{-2.5em}2024-10-04}
+\date{\vspace{-2.5em}2024-10-07}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Sats}[chapter]
@@ -607,9 +607,7 @@ Fyll i de saknade funktionerna och kör följande rader för att ta varje värde
 
 \end{exercise}
 
-\section{Datainskrivning och dataimport från web}\label{datainskrivning-och-dataimport-fruxe5n-web}
-
-\subsection{Inskrivning av data}\label{inskrivning-av-data}
+\section{Datainskrivning}\label{datainskrivning}
 
 Det första praktiska steget i en statistisk analys är att importera data. I R kan det göras genom att direkt skriva in sin data och spara som ett nytt objekt, men ett bättre och vanligare sätt är att importera sin data från en extern fil eller databas.
 
@@ -975,7 +973,7 @@ Vi arbetar nästan alltid med data på tabellformat där variablerna är kolumne
 \end{Highlighting}
 \end{Shaded}
 
-Funktioner agerar på objekt och ger något utfall. Här beräknas medeltempot med funktionen \texttt{mean()}. Dollartecknet används för att ange en specifik kolumn i dataobjektet. Funktioner styrs av möjliga argument - här används \texttt{na.rm} för att ange att saknade värden inte ska tas med i beräkningen
+Funktioner agerar på objekt och ger något utfall. Här nedan beräknas medelvärdet av livslängd med funktionen \texttt{mean()}. Dollartecknet används för att ange en specifik kolumn i dataobjektet. Funktioner styrs av möjliga argument - här används \texttt{na.rm} för att ange att saknade värden inte ska tas med i beräkningen
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1002,7 +1000,7 @@ Slutligen tittade vi på grafer med ggplot2-paketet. En ggplot byggs upp med tre
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dat\_small }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2007}\NormalTok{)}
-\FunctionTok{ggplot}\NormalTok{(dat\_small, }\FunctionTok{aes}\NormalTok{(gdpPercap, lifeExp, }
+\FunctionTok{ggplot}\NormalTok{(dat\_small, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gdpPercap, }\AttributeTok{y =}\NormalTok{ lifeExp, }
                       \AttributeTok{size =}\NormalTok{ pop, }\AttributeTok{color =}\NormalTok{ continent)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{()}
 \end{Highlighting}
@@ -1094,8 +1092,9 @@ Om man vill skapa en kolumn med mellanrum i namnet måste man skriva namnet inom
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{gapminder }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{National GDP}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ gdpPercap }\SpecialCharTok{*}\NormalTok{ pop)}
+\NormalTok{gapminder}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1105,7 +1104,7 @@ Den importerade datan anger medellivslängd, populationsstorlek och bnp per capi
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(gapminder, }\FunctionTok{aes}\NormalTok{(gdpPercap, lifeExp, }
+\FunctionTok{ggplot}\NormalTok{(gapminder, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gdpPercap, }\AttributeTok{y =}\NormalTok{ lifeExp, }
                       \AttributeTok{size =}\NormalTok{ pop, }\AttributeTok{color =}\NormalTok{ continent)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ year)}
@@ -1116,14 +1115,14 @@ En interaktiv version kan vara bra om man vill identifiera någon specifik punkt
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{g }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder, }\FunctionTok{aes}\NormalTok{(gdpPercap, lifeExp, }\AttributeTok{size =}\NormalTok{ pop, }
+\NormalTok{g }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gdpPercap, }\AttributeTok{y =}\NormalTok{ lifeExp, }\AttributeTok{size =}\NormalTok{ pop, }
                            \AttributeTok{color =}\NormalTok{ continent, }\AttributeTok{text =}\NormalTok{ country)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ year)}
 
-\CommentTok{\# install.packages("plotly")}
-\FunctionTok{library}\NormalTok{(plotly)                        }\CommentTok{\# Ladda paketet plotly}
-\FunctionTok{ggplotly}\NormalTok{(g)                            }\CommentTok{\# Interaktiv graf g}
+\CommentTok{\# install.packages("plotly")  \# Kör om ej installerat tidigare}
+\FunctionTok{library}\NormalTok{(plotly)               }\CommentTok{\# Ladda paketet plotly}
+\FunctionTok{ggplotly}\NormalTok{(g)                   }\CommentTok{\# Interaktiv graf g}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1131,24 +1130,11 @@ Under föreläsningen såg vi exempel på två lägesmått: medelvärdet (egentl
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gdpPercap }\OtherTok{\textless{}{-}}\NormalTok{ gapminder}\SpecialCharTok{$}\NormalTok{gdpPercap }\CommentTok{\# Skapa en vektor gdpPercap}
-\FunctionTok{mean}\NormalTok{(gdpPercap)                  }\CommentTok{\# Beräkna medelvärdet}
+\NormalTok{gapminder}\SpecialCharTok{$}\NormalTok{gdpPercap         }\CommentTok{\# Vektorn med data}
+\FunctionTok{mean}\NormalTok{(gapminder}\SpecialCharTok{$}\NormalTok{gdpPercap)   }\CommentTok{\# Beräkna medelvärdet}
+\FunctionTok{median}\NormalTok{(gapminder}\SpecialCharTok{$}\NormalTok{gdpPercap) }\CommentTok{\# Beräkna medianen}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [1] 7215.327
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{median}\NormalTok{(gdpPercap)                }\CommentTok{\# Beräkna medianen}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 3531.847
-\end{verbatim}
 
 Samma sak kan göras med en pipe \texttt{\%\textgreater{}\%} och \texttt{summarise()}.
 
@@ -1190,7 +1176,7 @@ I vetenskapliga publikationer redovisas medelvärden ofta med ett stapeldiagram.
 \NormalTok{dat\_gdp\_2007 }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%}       \CommentTok{\# Ta datan, och sen}
   \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2007}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}          \CommentTok{\# filtrera för 2007, och sen}
   \FunctionTok{group\_by}\NormalTok{(continent) }\SpecialCharTok{\%\textgreater{}\%}           \CommentTok{\# gruppera kontinenter, och}
-  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(gdpPercap)) }\CommentTok{\# summera med medelvärdet}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(gdpPercap)) }\CommentTok{\# beräkna medelvärdet}
 
 \FunctionTok{ggplot}\NormalTok{(dat\_gdp\_2007, }\FunctionTok{aes}\NormalTok{(continent, Mean)) }\SpecialCharTok{+}
   \FunctionTok{geom\_col}\NormalTok{()                  }\CommentTok{\# Illustrera med kolumner (columns)}
@@ -1207,11 +1193,11 @@ Under föreläsningarna såg vi några mått på spridning: varians, standardavv
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gdpPercap }\OtherTok{\textless{}{-}}\NormalTok{ gapminder}\SpecialCharTok{$}\NormalTok{gdpPercap }\CommentTok{\# Skapa en vektor gdpPercap}
+\NormalTok{gapminder}\SpecialCharTok{$}\NormalTok{gdpPercap      }\CommentTok{\# Vektorn med data}
 
-\FunctionTok{var}\NormalTok{(gdpPercap)                   }\CommentTok{\# Beräkna varians}
-\FunctionTok{sd}\NormalTok{(gdpPercap)                    }\CommentTok{\# Beräkna standardavvikelse}
-\FunctionTok{IQR}\NormalTok{(gdpPercap)                   }\CommentTok{\# Beräkna kvartilavstånd}
+\FunctionTok{var}\NormalTok{(gapminder}\SpecialCharTok{$}\NormalTok{gdpPercap) }\CommentTok{\# Beräkna varians}
+\FunctionTok{sd}\NormalTok{(gapminder}\SpecialCharTok{$}\NormalTok{gdpPercap)  }\CommentTok{\# Beräkna standardavvikelse}
+\FunctionTok{IQR}\NormalTok{(gapminder}\SpecialCharTok{$}\NormalTok{gdpPercap) }\CommentTok{\# Beräkna kvartilavstånd}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1242,15 +1228,15 @@ Lösningen med pipe och \texttt{summarise()} kan som tidigare utvecklas med \tex
 Gör lämpliga ändringar i det sista exempel för att istället beräkna spridningsmått för livslängd.
 \end{exercise}
 
-Vi avslutar med tre vanliga illustrationer av vetenskaplig data - ett linjediagram med felstaplar, ett stapeldiagram med felstaplar, och ett lådagram. För linjediagrammet beräknar vi medelvärdet och spridningsmått för bnp över år och kontinent. Som spridningsmått använder vi \emph{medelfelet}, vilket beräknas som standardavvikelse delat på roten ur antalet observationer.
+Vi avslutar med tre vanliga illustrationer av vetenskaplig data - ett linjediagram med felstaplar, ett stapeldiagram med felstaplar, och ett lådagram. För linjediagrammet beräknar vi medelvärdet och spridningsmått för bnp över år och kontinent. Som spridningsmått använder vi standard error (sv. \emph{medelfel}), vilket beräknas som standardavvikelse delat på roten ur antalet observationer. Funktionen \texttt{n()} ger antalet observationer per kontinent och år.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat\_sum }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{dat\_year\_continent }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(year, continent) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(gdpPercap),}
             \AttributeTok{SE =} \FunctionTok{sd}\NormalTok{(gdpPercap) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{n}\NormalTok{()))}
-\NormalTok{dat\_sum}
+\NormalTok{dat\_year\_continent}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1258,7 +1244,8 @@ Med \texttt{ggplot2} kan vi bygga ett linjediagram med \texttt{geom\_line()} och
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dat\_sum, }\FunctionTok{aes}\NormalTok{(year, Mean, }\AttributeTok{color =}\NormalTok{ continent)) }\SpecialCharTok{+}
+\FunctionTok{ggplot}\NormalTok{(dat\_year\_continent, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ Mean, }
+                               \AttributeTok{color =}\NormalTok{ continent)) }\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{geom\_errorbar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ Mean }\SpecialCharTok{{-}}\NormalTok{ SE, }\AttributeTok{ymax =}\NormalTok{ Mean }\SpecialCharTok{+}\NormalTok{ SE))}
 \end{Highlighting}
@@ -1272,12 +1259,12 @@ En graf med staplar och felstaplar kan konstrueras på ett liknande sätt. Följ
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat\_sum }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%}          \CommentTok{\# Ta datan, och sen}
+\NormalTok{dat\_2007 }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%}          \CommentTok{\# Ta datan, och sen}
   \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2007}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}        \CommentTok{\# filtrera på år, och sen}
   \FunctionTok{group\_by}\NormalTok{(continent) }\SpecialCharTok{\%\textgreater{}\%}         \CommentTok{\# gruppera efter kontinent,}
   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(lifeExp), }\CommentTok{\# summera med medelvärde,}
             \AttributeTok{SD =} \FunctionTok{sd}\NormalTok{(lifeExp))     }\CommentTok{\# och standardavvikelse}
-\NormalTok{dat\_sum}
+\NormalTok{dat\_2007}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1285,7 +1272,7 @@ Vi bygger en ggplot med \texttt{geom\_col()} och \texttt{geom\_errorbar()}. Fels
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dat\_sum, }\FunctionTok{aes}\NormalTok{(continent, Mean, }\AttributeTok{fill =}\NormalTok{ continent)) }\SpecialCharTok{+}
+\FunctionTok{ggplot}\NormalTok{(dat\_2007, }\FunctionTok{aes}\NormalTok{(continent, Mean, }\AttributeTok{fill =}\NormalTok{ continent)) }\SpecialCharTok{+}
   \FunctionTok{geom\_col}\NormalTok{()}\SpecialCharTok{+}                                            
   \FunctionTok{geom\_errorbar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ Mean }\SpecialCharTok{{-}}\NormalTok{ SD, }\AttributeTok{ymax =}\NormalTok{ Mean }\SpecialCharTok{+}\NormalTok{ SD)) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average life expectancy by continent, 2007"}\NormalTok{,}
@@ -1295,7 +1282,7 @@ Vi bygger en ggplot med \texttt{geom\_col()} och \texttt{geom\_errorbar()}. Fels
 \end{Shaded}
 
 \begin{exercise}[Staplar för 1982]
-Gör lämpliga ändringar i exempel ovan för att konstruera ett stapeldiagram med felstaplar för året 1982 och variabeln gdpPercap.
+Gör lämpliga ändringar i exempel ovan för att konstruera ett stapeldiagram med felstaplar för året 1982 och variabeln medellivslängd.
 \end{exercise}
 
 Ett lådagram anger fördelningen av en variabel genom att illustrera minimum, maximum och kvartiler. Kvartiler är mått som delar en datamängd i fyra lika stora delar (så att en fjärdedel ligger under första kvartilen, en fjärdedel mellan första och andra kvartil, och så vidare). Med \texttt{ggplot2} kan vi bygga ett lådagram med \texttt{geom\_boxplot()}. Exempel ger en låda per år och kontinent.
@@ -1313,48 +1300,29 @@ Ett lådagram anger fördelningen av en variabel genom att illustrera minimum, m
 I lådagrammet används argumentet \texttt{group}. Vad gör det? Vad händer om man tar bort det?
 \end{exercise}
 
-Om man vill ha med både data på observationsnivån och summerad data i en graf kan man ange olika data till olika geom. Vi kan t.ex. lägga till en markör för medelvärdet i en boxplot.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{gapminder\_2007 }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2007}\NormalTok{)}
-\NormalTok{gapminder\_agg }\OtherTok{\textless{}{-}}\NormalTok{ gapminder\_2007 }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(continent) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{lifeExp =} \FunctionTok{mean}\NormalTok{(lifeExp))}
-\NormalTok{gapminder\_agg}
-
-\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(lifeExp, continent), }\AttributeTok{data =}\NormalTok{ gapminder\_2007) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(lifeExp, continent), }\AttributeTok{data =}\NormalTok{ gapminder\_agg, }
-             \AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{shape =} \StringTok{"X"}\NormalTok{, }\AttributeTok{size =} \DecValTok{6}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Här byggs boxarna med datan \texttt{gapminder} och punkterna med den aggregerade datan.
-
 \section{Ordna upp beskrivande statistik och exportera}\label{ordna-upp-beskrivande-statistik-och-exportera}
 
 Efter att ha beräknat någon beskrivande statistik kan det vara bra att titta på hur resultaten kan snyggas upp och exporteras i något lämpligt format. Ta den tabell med medelvärden vi producerade i ett tidigare exempel.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat\_sum }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%}          \CommentTok{\# Ta datan, och sen}
+\NormalTok{dat\_2007 }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%}         \CommentTok{\# Ta datan, och sen}
   \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2007}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}        \CommentTok{\# filtrera på år, och sen}
   \FunctionTok{group\_by}\NormalTok{(continent) }\SpecialCharTok{\%\textgreater{}\%}         \CommentTok{\# gruppera efter kontinent,}
   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(lifeExp), }\CommentTok{\# summera med medelvärde,}
             \AttributeTok{SD =} \FunctionTok{sd}\NormalTok{(lifeExp))     }\CommentTok{\# och standardavvikelse}
-\NormalTok{dat\_sum}
+\NormalTok{dat\_2007}
 \end{Highlighting}
 \end{Shaded}
 
 Objekt kan exporteras från R på liknande som det importeras - med särskilda exportfunktioner (\emph{write}-funktioner) beroende på filtyp. För att exportera till en csv-fil man man använda \texttt{write\_csv()}. Ingående argument är det objekt man vill exportera och den fil man vill exportera till. R ger ingen varning om man skriver över en existerande fil, så var lite försiktiga här.
 
-Precis som vid import använder R \emph{working directory} om inget annat anges. Följande exporterar objektet \texttt{dat\_sum} till en csv-fil \emph{Exporterad data från R.csv} i \emph{working directory}.
+Precis som vid import använder R \emph{working directory} om inget annat anges. Följande exporterar objektet \texttt{dat\_2007} till en csv-fil \emph{Exporterad data från R.csv} i \emph{working directory}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{getwd}\NormalTok{()                          }\CommentTok{\# Se nuvarande working directory}
-\FunctionTok{write\_csv}\NormalTok{(dat\_sum, }\StringTok{"Exporterad data från R.csv"}\NormalTok{) }\CommentTok{\# Exportera data}
+\FunctionTok{write\_csv}\NormalTok{(dat\_2007, }\StringTok{"Exporterad data från R.csv"}\NormalTok{) }\CommentTok{\# Exportera data}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1379,8 +1347,6 @@ Med de tärningsvärden vi hade innan kan vi beräkna ett kumulativt medelvärde
 \end{Highlighting}
 \end{Shaded}
 
-Om beräkning inte är uppenbar här, ta någon minut för att förstå den.
-
 \begin{exercise}[Kumulativt medelvärde]
 
 Vad ska läggas till för att stycket nedan ska ge en linjegraf över medelvärdet?
@@ -1396,14 +1362,14 @@ Vad ska läggas till för att stycket nedan ska ge en linjegraf över medelvärd
 
 \begin{exercise}[Fler tärningskast]
 
-Kasta din tärning ytterligare några gånger, gärna på en mjuk yta. Fyll i dina utfall och gör grafen från föregående uppgift. Kan man se en tendens för medelvärdet att minska i varians vid fler kast?
+Kasta din tärning ytterligare några gånger, gärna på en mjuk yta. Fyll i dina utfall och gör grafen från föregående uppgift. Kan man se en tendens för medelvärdet att minska i varians vid fler kast? Svänger kurvan in mot något specifikt värde?
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dat\_dice }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Utfall =} \FunctionTok{c}\NormalTok{(\_\_\_)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Kast =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{n}\NormalTok{(),                                 }
-         \StringTok{\textasciigrave{}}\AttributeTok{Kumulativ summa}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{cumsum}\NormalTok{(Utfall),           }
-         \StringTok{\textasciigrave{}}\AttributeTok{Kumulativt medelvärde}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{\textasciigrave{}}\AttributeTok{Kumulativ summa}\StringTok{\textasciigrave{}} \SpecialCharTok{/}\NormalTok{ Kast)}
+         \AttributeTok{kumulativ\_summa =} \FunctionTok{cumsum}\NormalTok{(Utfall),           }
+\NormalTok{         kumulativt\_medelvärde }\OtherTok{=}\NormalTok{ kumulativ\_summa }\SpecialCharTok{/}\NormalTok{ Kast)}
 \NormalTok{dat\_dice}
 \end{Highlighting}
 \end{Shaded}
@@ -1430,7 +1396,9 @@ Om man vill titta på andelen gånger ett visst utfall inträffat talar man om \
 
 \end{exercise}
 
-\section{\texorpdfstring{Bonus. Tredimensionella grafer med \texttt{plotly}}{Bonus. Tredimensionella grafer med plotly}}\label{bonus.-tredimensionella-grafer-med-plotly}
+\section{\texorpdfstring{Tredimensionella grafer med \texttt{plotly}}{Tredimensionella grafer med plotly}}\label{tredimensionella-grafer-med-plotly}
+
+De två avslutande avsnitten är mindre viktiga och kan läsas i mån av tid.
 
 Paketet \texttt{plotly} kan användas för att göra interaktiva graf och grafer med tre dimensioner. Börja med att ladda paketet.
 
@@ -1465,7 +1433,7 @@ Vad måste läggas till i funktionen nedan för att filtrera för data där åre
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dat\_2007 }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{\_\_\_}\NormalTok{(year }\SpecialCharTok{==}\NormalTok{ \_\_\_)}
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==}\NormalTok{ \_\_\_)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1479,8 +1447,8 @@ Vad måste läggas till i funktionen nedan för en 3d-graf med befolkningsmängd
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot\_ly}\NormalTok{(\_\_\_, }\AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{y =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{z =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }
-        \AttributeTok{color =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{text =} \SpecialCharTok{\textasciitilde{}}\NormalTok{country) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{plot\_ly}\NormalTok{(data\_2007, }\AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\NormalTok{pop, }\AttributeTok{y =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{z =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }
+        \AttributeTok{color =} \SpecialCharTok{\textasciitilde{}}\NormalTok{continent, }\AttributeTok{text =} \SpecialCharTok{\textasciitilde{}}\NormalTok{country) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{add\_markers}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -1495,7 +1463,7 @@ Grafen i uppgiften ovan präglas mycket av skillnader i bnp och befolkningsstorl
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot\_ly}\NormalTok{(\_\_\_, }\AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(\_\_\_), }\AttributeTok{y =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(\_\_\_), }
+\FunctionTok{plot\_ly}\NormalTok{(dat\_2007, }\AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(pop), }\AttributeTok{y =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(\_\_\_), }
         \AttributeTok{z =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{color =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{text =} \SpecialCharTok{\textasciitilde{}}\NormalTok{country) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{add\_markers}\NormalTok{()}
 \end{Highlighting}
@@ -1509,8 +1477,8 @@ Likt en ggplot kan man lägga till graf-element. Här använder man dock en pipe
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot\_ly}\NormalTok{(\_\_\_, }\AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(\_\_\_), }\AttributeTok{y =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(\_\_\_), }
-        \AttributeTok{z =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{color =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{text =} \SpecialCharTok{\textasciitilde{}}\NormalTok{country) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{plot\_ly}\NormalTok{(dat\_2007, }\AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(pop), }\AttributeTok{y =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(\_\_\_), }
+        \AttributeTok{z =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{color =} \SpecialCharTok{\textasciitilde{}}\NormalTok{continent, }\AttributeTok{text =} \SpecialCharTok{\textasciitilde{}}\NormalTok{country) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{add\_markers}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{add\_lines}\NormalTok{(}\AttributeTok{data =}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(country }\SpecialCharTok{==} \StringTok{"Costa Rica"}\NormalTok{))}
 \end{Highlighting}
@@ -1518,11 +1486,22 @@ Likt en ggplot kan man lägga till graf-element. Här använder man dock en pipe
 
 \end{exercise}
 
+\section{AI-uppgift II}\label{ai-uppgift-ii}
+
+\begin{exercise}[Standardavvikelse från gapminder-datan]
+Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att få kod som beräknar standardavvikelsen av medellivslängd från gapminder-datan. Fråga också om tolkning av standardavvikelsen och om det finns några specifika tolkningsproblem för just den här gapminder-datan.
+\end{exercise}
+
+\begin{exercise}[3d-graf återigen]
+Använd en chatbot för att få kod som skapar en 3d-graf lik den vi skapade ovan. Se om det går att utveckla grafen ytterligare, t.ex. med en linje som går ner till grafens \emph{botten}, eller linjer som kopplar samma länder till kontinentens medelvärde.
+\end{exercise}
+
 \chapter{Ett stickprov av normalfördelad data}\label{ett-stickprov-av-normalfuxf6rdelad-data}
 
 Datorövning 3 handlar om hypotestest och konfidensintervall för ett stickprov av normalfördelad data. Efter övningen ska vi kunna
 
 \begin{itemize}
+\tightlist
 \item
   genomföra och tolka ett t-test för normalfördelad data,
 \item
@@ -1577,32 +1556,11 @@ Därefter ett exempel på ett stapeldiagram med felstaplar för samma data. Fels
   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(lifeExp),}
             \AttributeTok{SD =} \FunctionTok{sd}\NormalTok{(lifeExp))}
 \NormalTok{dat\_sum}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## # A tibble: 60 x 4
-## # Groups:   continent [5]
-##    continent  year  Mean    SD
-##    <fct>     <int> <dbl> <dbl>
-##  1 Africa     1952  39.1  5.15
-##  2 Africa     1957  41.3  5.62
-##  3 Africa     1962  43.3  5.88
-##  4 Africa     1967  45.3  6.08
-##  5 Africa     1972  47.5  6.42
-##  6 Africa     1977  49.6  6.81
-##  7 Africa     1982  51.6  7.38
-##  8 Africa     1987  53.3  7.86
-##  9 Africa     1992  53.6  9.46
-## 10 Africa     1997  53.6  9.10
-## # i 50 more rows
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(dat\_sum, }\FunctionTok{aes}\NormalTok{(continent, Mean, }\AttributeTok{fill =}\NormalTok{ continent)) }\SpecialCharTok{+}
   \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_errorbar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ Mean }\SpecialCharTok{{-}}\NormalTok{ SD, }\AttributeTok{ymax =}\NormalTok{ Mean }\SpecialCharTok{+}\NormalTok{ SD), }\AttributeTok{width =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ Mean }\SpecialCharTok{{-}}\NormalTok{ SD, }\AttributeTok{ymax =}\NormalTok{ Mean }\SpecialCharTok{+}\NormalTok{ SD), }
+                \AttributeTok{width =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ year)}
 \end{Highlighting}
 \end{Shaded}
@@ -1615,32 +1573,15 @@ Om man har en normalfördelad variabel och vill testa om populationens medelvär
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
 
-\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\FloatTok{49.8}\NormalTok{, }\FloatTok{58.4}\NormalTok{, }\FloatTok{49.4}\NormalTok{, }\FloatTok{57.1}\NormalTok{, }\FloatTok{52.2}\NormalTok{, }\FloatTok{49.1}\NormalTok{, }\FloatTok{44.6}\NormalTok{, }\FloatTok{55.4}\NormalTok{))}
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\FloatTok{49.8}\NormalTok{, }\FloatTok{58.4}\NormalTok{, }\FloatTok{49.4}\NormalTok{, }\FloatTok{57.1}\NormalTok{, }
+                        \FloatTok{52.2}\NormalTok{, }\FloatTok{49.1}\NormalTok{, }\FloatTok{44.6}\NormalTok{, }\FloatTok{55.4}\NormalTok{))}
 \NormalTok{dat}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-##      x
-## 1 49.8
-## 2 58.4
-## 3 49.4
-## 4 57.1
-## 5 52.2
-## 6 49.1
-## 7 44.6
-## 8 55.4
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(dat, }\FunctionTok{aes}\NormalTok{(x, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{50}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-95-1} \end{center}
 
 I grafen ser vi att värdena ligger jämt spridda kring 50, så 50 är nog ganska rimligt som medelvärde, men låt oss göra ett formellt test.
 I R kan ett t-test genomföras med \texttt{t.test()}.
@@ -1706,25 +1647,8 @@ Vårt mål är att testa ett medelvärde och det är rimligt att anta normalför
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{mean}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 52
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{sd}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x)}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## [1] 4.680354
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{t\_value }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{52} \SpecialCharTok{{-}} \DecValTok{50}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\FloatTok{4.680354} \SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(}\DecValTok{8}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -1752,16 +1676,12 @@ Nästa steg är att identifiera testfördelning, det vill säga den slumpfördel
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-98-1} \end{center}
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(dat\_t, }\FunctionTok{aes}\NormalTok{(x, P)) }\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-98-2} \end{center}
 
 Nästa steg i ett hypotestest är att ta fram ett p-värdet. P-värdet kan illustreras som ytan under t-fördelning \emph{bortom} test-värdet. I ett tvåsidigt test tar vi med bägge svansarna.
 
@@ -1774,8 +1694,6 @@ Nästa steg i ett hypotestest är att ta fram ett p-värdet. P-värdet kan illus
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-99-1} \end{center}
-
 De röda ytorna i \emph{svansarna} motsvarar p-värdet. De anger sannolikheten att få ett större t-värde än det vi fått, under antagandet att nollhypotesen stämmer. Vi kan beräkna p-värdet med \texttt{pt()}. För ett tvåsidigt test multipliceras värdet med 2.
 
 \begin{Shaded}
@@ -1783,10 +1701,6 @@ De röda ytorna i \emph{svansarna} motsvarar p-värdet. De anger sannolikheten a
 \DecValTok{2} \SpecialCharTok{*} \FunctionTok{pt}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{abs}\NormalTok{(t\_value), }\DecValTok{7}\NormalTok{) }\CommentTok{\# Tvåsidigt p{-}värde}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [1] 0.2660402
-\end{verbatim}
 
 P-värdet ges av 0.266. En tolkning av det är om försöket upprepas ett stort antal gånger och nollhypotesen är sann, kommer vi 26.6 procent av gångerna få ett större testvärde än 1.2086. Det vi observerar är ganska sannolikt under nollhypotesen, vilket tyder på att nollhypotesen är rimligt.
 
@@ -1804,10 +1718,6 @@ I R kan man ta fram kritiska värden med \texttt{qt()}. För fem procent i svans
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] 2.364624
-\end{verbatim}
-
 \end{exercise}
 
 Som visades i början har R en specifik funktion för t-testet, \texttt{t.test()}. Funktionens argument är datan man testar och ett nollhypotesvärde \texttt{mu}. Om man vill ha ett ensidigt test kan det sättas med argumentet \texttt{alternative}. För vår data ges testet av
@@ -1817,20 +1727,6 @@ Som visades i början har R en specifik funktion för t-testet, \texttt{t.test()
 \FunctionTok{t.test}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{mu =} \DecValTok{50}\NormalTok{) }\CommentTok{\# Tvåsidigt test}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## 
-##  One Sample t-test
-## 
-## data:  dat$x
-## t = 1.2086, df = 7, p-value = 0.266
-## alternative hypothesis: true mean is not equal to 50
-## 95 percent confidence interval:
-##  48.08713 55.91287
-## sample estimates:
-## mean of x 
-##        52
-\end{verbatim}
 
 Funktionen skriver ut det beräkna t-värdet, antal frihetsgrader och p-värdet.
 
@@ -1918,32 +1814,10 @@ Kvantilen från t-fördelningen kan hämtas från en tabell (samma som det kriti
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{mean}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 52
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{sd}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 4.680354
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{qt}\NormalTok{(}\FloatTok{0.975}\NormalTok{, }\DecValTok{7}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [1] 2.364624
-\end{verbatim}
 
 och konfidensintervallet ges alltså av
 
@@ -2000,8 +1874,6 @@ Ett konfidensintervall illustreras ofta med en felstapel. Vi kan lägga till en 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-110-1} \end{center}
-
 \begin{exercise}[Illustration av smältdata]
 Använd exempelillustrationen för havredata till en liknande illustration av smältpunktsdatan.
 \end{exercise}
@@ -2016,8 +1888,6 @@ Eftersom t-testet bygger på att data är normalfördelad är det förstås bra 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-111-1} \end{center}
-
 Uppenbarligen helt meningslöst. Låt oss titta på histogram över genererad normalfördelad data.
 
 \begin{Shaded}
@@ -2026,8 +1896,6 @@ Uppenbarligen helt meningslöst. Låt oss titta på histogram över genererad no
 \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rnorm}\NormalTok{(n)), }\AttributeTok{bins =} \DecValTok{30}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-112-1} \end{center}
 
 \begin{exercise}[Histogram för normalfördelning]
 Testa koden ovan för lite olika värden på \texttt{n}. Det kan vara nyttigt att sätta antalet staplar \texttt{bins} för att få ett bättre histogram. Hur stort måste n vara för att ge en karaktäristisk klockform för histogrammet?
@@ -2041,8 +1909,6 @@ Ett annat vanligt alternativ för att grafisk undersöka om data följer en unge
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-113-1} \end{center}
-
 Punkterna ligger nära linjen. Vi kan återigen demonstrera med lite genererad data.
 
 \begin{Shaded}
@@ -2052,8 +1918,6 @@ Punkterna ligger nära linjen. Vi kan återigen demonstrera med lite genererad d
 \FunctionTok{ggplot}\NormalTok{(dat\_norm, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ x)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-114-1} \end{center}
 
 \begin{exercise}[Histogram för normalfördelning]
 Funktionen \texttt{runif()} ger slumpmässiga värden mellan 0 och 1. Testa att ändra i kodstycket ovan så att slumptal genereras med \texttt{runif()} istället för \texttt{rnorm()}. Hur påverkar det QQ-grafen?
@@ -2076,15 +1940,11 @@ Funktionen \texttt{runif()} ger slumpmässiga värden mellan 0 och 1. Testa att 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-115-1} \end{center}
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(dat\_sim\_unif, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ x)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-115-2} \end{center}
 
 Fördelningen för summan är inte likformig, men inte heller särskilt normalfördelad. Vad händer om vi ökar antal termer i summan?
 
@@ -2107,15 +1967,11 @@ Under en tidigare datorövning såg vi exempel på diskreta fördelningar: binom
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-116-1} \end{center}
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(dat\_sim\_unif, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ x)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-116-2} \end{center}
 
 Histogrammet visar på en typisk klockform och punkterna följer linjen \emph{ungefärligt}. QQ-grafens trappeffekt är typisk för diskret data. Det här tyder alltså på att t-testet är ett acceptabelt alternativ om man har en poissonfördelning med lambda runt tio och gör tio upprepningar.
 
@@ -2142,8 +1998,6 @@ Det kan också finnas situationer där någon matematisk transformation kan gör
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-117-1} \end{center}
-
 I grafen har vi den ursprungliga variabeln (befolkning per land 2007), den kvadratrot-transformerade variabeln (\texttt{sqrt()}) och den log-transformerade variabeln (\texttt{log10()}). De två första fallen påverkas kraftigt av extremvärden och är klart icke-normala medan den log-transformerade variabeln ger en ungefärlig normalkurva och följer diagonalen väl i QQ-grafen.
 
 \begin{exercise}[Transformera medellivslängd]
@@ -2160,20 +2014,6 @@ Följande kod simulerar ett dataset om tio observationer från en normalfördeln
 \FunctionTok{t.test}\NormalTok{(dat\_sim}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{mu =} \DecValTok{7}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## 
-##  One Sample t-test
-## 
-## data:  dat_sim$x
-## t = -1.9103, df = 9, p-value = 0.08842
-## alternative hypothesis: true mean is not equal to 7
-## 95 percent confidence interval:
-##  0.8958046 7.5147998
-## sample estimates:
-## mean of x 
-##  4.205302
-\end{verbatim}
 
 \begin{exercise}[Upprepad simulering]
 Kör de två raderna i stycket ovan ett tiotal gånger. Du bör se att man ibland förkastar nollhypotesen trots att den ska stämma. Kan du få en känsla för hur stor andel av gångerna man felaktigt förkastar?
@@ -2204,8 +2044,6 @@ Enligt statistisk teori ska t-värdet följa en t-fördelning med nio frihetsgra
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-120-1} \end{center}
-
 Den teoretiska t-fördelning passar histogrammet nästan perfekt.
 
 Vidare ska p-värdet vara under fem procent fem procent av gångerna.
@@ -2215,10 +2053,6 @@ Vidare ska p-värdet vara under fem procent fem procent av gångerna.
 \FunctionTok{mean}\NormalTok{(dat\_sim}\SpecialCharTok{$}\NormalTok{p\_value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [1] 0.05
-\end{verbatim}
 
 Även det stämmer någorlunda väl. Det här innebär alltså att om man har en signifikansnivå på fem procent kommer man förkasta nollhypotesen fem procent av gångerna även om nollhypotesen stämmer. Det kallas ett \emph{falskt positivt} utfall.
 
@@ -2336,7 +2170,7 @@ Ta som exempel följande data på jord-pH och låt oss anta att det är relevant
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-126-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-125-1} \end{center}
 
 Hypoteser ges av
 
@@ -2382,7 +2216,7 @@ En QQ-graf kan visa om det finns några avvikelser från normalantagandet. Med s
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-128-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-127-1} \end{center}
 
 \section{Proportioner från binär data}\label{proportioner-fruxe5n-binuxe4r-data}
 
@@ -2400,7 +2234,7 @@ Låt oss importera lite exempeldata och beräkna ett exempel. Följande rad impo
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-129-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-128-1} \end{center}
 
 \begin{exercise}[En interaktiv målgraf]
 
@@ -2535,7 +2369,7 @@ Därefter kan p-värdet räknas ut som arean under en standardiserad normalförd
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-135-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-134-1} \end{center}
 
 Areans yta kan tas fram med normalfördelningens fördelningsfunktion \texttt{pnorm()}.
 
@@ -2755,7 +2589,7 @@ P-värdet beräknas från en chi-två-fördelning. Antalet frihetsgrader ges av 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-147-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-146-1} \end{center}
 
 Man kan också beräkna ytan i svansen med \texttt{pchisq()}. Ett minus det resultatet ger den övre delen.
 
@@ -2853,7 +2687,7 @@ En vanlig tillämpning av goodness-of-fit-testet är för att testa om alla klas
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-153-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-152-1} \end{center}
 
 Använd de observerade värdena i kolumnen \texttt{Count} för att testa om alla godisfärger är lika vanliga.
 \end{exercise}
@@ -3409,7 +3243,7 @@ Datan kan illustreras med ett enkelt punktdiagram.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-177-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-176-1} \end{center}
 
 Ett t-test för två oberoende stickprov har nollhypotesen att grupperna har samma populationsmedelvärde och alternativhypotesen att populationsmedelvärdena är skilda (för det tvåsidiga fallet):
 
@@ -3694,7 +3528,7 @@ Datan tyder på att överlevnad är beroende av klass. Datan kan illustreras med
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-191-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-190-1} \end{center}
 
 Argumentet \texttt{position} i \texttt{geom\_bar} används för att skapa proportionella staplar.
 
@@ -4123,7 +3957,7 @@ Vi vill här testa om det finns en skillnad mellan arter och om det finns skilln
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-218-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-217-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4133,7 +3967,7 @@ Vi vill här testa om det finns en skillnad mellan arter och om det finns skilln
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-219-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-218-1} \end{center}
 
 För arterna har vi matchad data - varje observation av den ena arten är kopplad till en observation från den andra arten eftersom den kommer från samma båt - och vi kan testa om medelfångsterna av de två arterna är lika med ett t-test. Hypoteserna ges av
 
@@ -4316,7 +4150,7 @@ Datan har 30 observationer av vikt \texttt{weight} och varje observation tillhö
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-225-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-224-1} \end{center}
 
 Behandling 1 verkar vara något lägre än kontrollen medan behandling 2 verkar vara något högre.
 
@@ -4496,27 +4330,27 @@ Anledning till att vi justerar p-värden är att man vid varje test har en sanno
 
 \begin{verbatim}
 ## $emmeans
-##  group  emmean    SE df lower.CL upper.CL
-##  a      0.3102 0.344 45   -0.382    1.003
-##  b      0.1899 0.344 45   -0.503    0.882
-##  c     -0.2747 0.344 45   -0.967    0.418
-##  d     -0.3239 0.344 45   -1.016    0.369
-##  e      0.0984 0.344 45   -0.594    0.791
+##  group   emmean    SE df lower.CL upper.CL
+##  a      0.12925 0.252 45   -0.377    0.636
+##  b     -0.01620 0.252 45   -0.523    0.491
+##  c      0.00452 0.252 45   -0.502    0.511
+##  d     -0.39751 0.252 45   -0.904    0.109
+##  e     -0.12065 0.252 45   -0.627    0.386
 ## 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ##  contrast estimate    SE df t.ratio p.value
-##  a - b      0.1204 0.486 45   0.248  0.8056
-##  a - c      0.5849 0.486 45   1.203  0.2352
-##  a - d      0.6341 0.486 45   1.304  0.1988
-##  a - e      0.2119 0.486 45   0.436  0.6651
-##  b - c      0.4645 0.486 45   0.956  0.3444
-##  b - d      0.5137 0.486 45   1.057  0.2963
-##  b - e      0.0915 0.486 45   0.188  0.8515
-##  c - d      0.0492 0.486 45   0.101  0.9198
-##  c - e     -0.3730 0.486 45  -0.767  0.4469
-##  d - e     -0.4222 0.486 45  -0.868  0.3897
+##  a - b      0.1455 0.356 45   0.409  0.6846
+##  a - c      0.1247 0.356 45   0.351  0.7275
+##  a - d      0.5268 0.356 45   1.481  0.1457
+##  a - e      0.2499 0.356 45   0.702  0.4861
+##  b - c     -0.0207 0.356 45  -0.058  0.9538
+##  b - d      0.3813 0.356 45   1.072  0.2896
+##  b - e      0.1044 0.356 45   0.294  0.7704
+##  c - d      0.4020 0.356 45   1.130  0.2645
+##  c - e      0.1252 0.356 45   0.352  0.7266
+##  d - e     -0.2769 0.356 45  -0.778  0.4405
 \end{verbatim}
 
 Kör koden tio gånger. Hur många gånger av de tio ger de parvisa jämförelserna \emph{någon} signifikant skillnad (det vill säga något p-värde under 0.05)?
@@ -4606,7 +4440,7 @@ En vanlig illustration av ett blockförsök är ett punktdiagram kombinerat med 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-239-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-238-1} \end{center}
 
 Färg och linje sammanbinder observationer från samma block. Det finns tecken på en blockeffekt: block I är nästan alltid högst och block V är nästan alltid lägst. Det finns också en tydlig behandlingseffekt i att högre kväve ger högre skörd.
 
@@ -4811,7 +4645,7 @@ Exempeldata på havre tar med två förklarande faktorer och ett block. Datan ka
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-250-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-249-1} \end{center}
 
 Grafen visar samma kvävesamband som tidigare. Det finns inga tydliga skillnader mellan sorter, möjligen har sorten Victory givit något lägre skörd än övriga. Det finns fortfarande en tydlig blockeffekt, till exempel har block I höga värden och block V låga värden.
 
@@ -4965,7 +4799,7 @@ Normalfördelning kan undersökas grafiskt med ett histogram eller en QQ-graf.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-257-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-256-1} \end{center}
 
 Punkterna avviker något från normalfördelningen i svansarna, men det är förstås alltid en bedömningsfråga.
 
@@ -4979,7 +4813,7 @@ Lika varians undersöks ofta med ett spridningsdiagram med de skattade värdena 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-258-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-257-1} \end{center}
 
 Om datan är i linje med antaganden ska diagrammet se ut som slumpmässigt placerade punkter med ungefär lika stor spridning kring noll-linjen för samtliga nivåer på x-axeln. För det här exemplet ser det okej ut.
 
@@ -5096,7 +4930,7 @@ Vi kan illustrera data genom att pivotera till långt format och göra en graf m
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-267-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-266-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5105,7 +4939,7 @@ Vi kan illustrera data genom att pivotera till långt format och göra en graf m
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-267-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-266-2} \end{center}
 
 Ytterligare alternativ kan vara upprepade lådagram eller staplar med småfönster per art.
 
@@ -5139,7 +4973,7 @@ Ekologiska populationer kan analyseras genom \emph{heirarkisk klustring} - metod
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-269-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-268-1} \end{center}
 
 \begin{exercise}[Avståndsmått]
 Ta upp hjälpsidan till distansfunktionen med \texttt{?dist}. Under \texttt{method} finns flera möjliga avståndsmått. Vad måste ändras i kodstycket ovan för att ange ett Manhattan-avstånd? Har avståndet någon betydande effekt på träddiagrammet?
@@ -5157,7 +4991,7 @@ För att göra en klustring av arter kan man \emph{transponera} data så att rad
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-270-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-269-1} \end{center}
 
 Träddiagrammet tolkas så att enheter vars koppling ligger lågt är mer lika varandra - arterna förekommer ofta på samma plats.
 
@@ -5173,7 +5007,7 @@ I R kan en PCA göras med \texttt{prcomp()} och en biplot kan göras med \texttt
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-271-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-270-1} \end{center}
 
 Platserna illustreras med punkter och arterna med pilar. Pilar i samma riktning motsvarar arter som är lika (de finns på samma platser), närliggande punkter motsvarar lika platser (de har samma arter), och punkter i samma riktning som en pil har höga värden för den arten.
 
@@ -5212,7 +5046,7 @@ Diversitetsindexen kan sedan illustreras och analyseras som vilken numerisk vari
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-274-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-273-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5295,7 +5129,7 @@ Ta som exempel följande data på tandtillväxt (\texttt{len}) hos marsvin under
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-276-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-275-1} \end{center}
 
 Ett lådagram visar en klar skillnad mellan doser och en svagare skillnad mellan metoder. Det finns också tecken på att metoderna svarar olika på dos i att metoden \emph{VC} ligger lägre än \emph{OJ} vid de låga doserna men över (eller iallafall lika) vid den höga dosen.
 
@@ -5339,7 +5173,7 @@ En anovamodell bygger på antaganden om normalfördelning och lika varianser. No
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-278-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-277-1} \end{center}
 
 Punkterna ligger ungefär på linjen i QQ-grafen och punkterna har ungefär samma spridning för alla nivåer av det skattade värdet.
 
@@ -5428,7 +5262,7 @@ Ta som exempel data på förväntad medellivslängd och bnp per capita. Datan h�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-281-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-280-1} \end{center}
 
 Datan visar ett positivt samband mellan variablerna - högre bnp per capita är kopplat till högre medellivslängd.
 
@@ -5497,7 +5331,7 @@ Man kan enkelt rita ut regressionlinjen i en graf med \texttt{geom\_smooth()} oc
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-284-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-283-1} \end{center}
 
 Den blå linjen illustrerar regressionlinjen 72.27 + 0.2146x. Det grå bandet kring linjen är ett konfidensintervall för skattningen av y-variabeln.
 
@@ -5537,7 +5371,7 @@ Testerna av en regressionsmodell bygger på ett normalfördelningsantagande och 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-286-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-285-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5545,7 +5379,7 @@ Testerna av en regressionsmodell bygger på ett normalfördelningsantagande och 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-286-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-285-2} \end{center}
 
 Om data följer en normalfördelning bör histogrammet visa en ungefärlig normalkurva, QQ-plotten bör visa punkter på den diagonala linjen och spridningsdiagrammet bör visa en slumpmässig spridning av punkter. Graferna pekar i det här fallet inte på några tydliga avvikelser från normalfördelningsantagandet, möjligen pekar QQ-plotten på mindre spridning i svansarna än en teoretisk normalfördelning.
 
