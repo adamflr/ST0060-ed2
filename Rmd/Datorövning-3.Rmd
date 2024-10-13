@@ -78,7 +78,7 @@ I grafen ser vi att värdena ligger jämt spridda kring 50, så 50 är nog gansk
 I R kan ett t-test genomföras med `t.test()`.
 
 ```{r}
-t.test(dat$x, mu = 50)   # Ett t-test på variabeln x i dataobjektet dat
+t.test(dat$x, mu = 50)   # Ett t-test på variabeln x
 ```
 
 Utskriften ger ett p-värde från vilket vi kan dra en slutsats. I det här fallet är p-värdet högt (över fem procent) så vi kan inte förkasta nollhypotesen (vilken är att populationsmedelvärdet är lika med 50).
@@ -94,8 +94,8 @@ Ett t-test bygger, som alla hypotestest, på en serie steg:
 
 Vi vill testa om medelskörden är skild från 50, så hypoteser ges av
 
-- H0: mu lika med 50
-- H1: mu ej lika med 50
+- $H_0$: $\mu$ lika med 50
+- $H_1$: $\mu$ ej lika med 50
 
 Alternativhypotesen är tvåsidig - vi tittar både på möjligheten att populationsmedelvärdet är större och på möjligheten att det är mindre.
 
@@ -103,57 +103,45 @@ Alternativhypotesen är tvåsidig - vi tittar både på möjligheten att populat
 Hur hade hypoteserna sett ut om vi ville testa om medelvärdet är *större* än 50?
 :::
 
-Vårt mål är att testa ett medelvärde och det är rimligt att anta normalfördelning för den undersökta variabeln. Det lämpliga testet är då ett t-test för ett stickprov och testvärdet kan beräknas av en testfunktion som ges av det observerade stickprovet minus nollhypotesens värde, delat på standardavvikelsen delat på roten ur antalet observationer. Låt oss beräkna detta i flera steg och jämföra med utskriften från `t.test()`.
+Från datan har vi åtta observation och vi kan ta fram stickprovsmedelvärde och standardavvikelse i R.
 
-```{r, results='hide'}
+```{r}
 mean(dat$x)
 sd(dat$x)
-
-t_value <- (52 - 50) / (4.680354 / sqrt(8))
 ```
 
-::: {.exercise name="Operationsordning"}
-Räkna ut samma sak på miniräknare eller telefon. Vad händer om man missar parenteser runt `4.680354 / sqrt(8)`?
+Vårt mål är att testa ett medelvärde och det är rimligt att anta normalfördelning för den undersökta variabeln. Det lämpliga testet är då ett t-test för ett stickprov och testvärdet kan beräknas av en testfunktion som ges av det observerade stickprovet minus nollhypotesens värde, delat på standardavvikelsen delat på roten ur antalet observationer. 
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
+
+::: {.exercise name="Handräkning"}
+Beräkna t-värdet på miniräknare eller telefon. Finns det beräknade t-värdet i utskriften från `t.test()`?
 :::
 
-::: {.exercise name="t-värdets delar"}
-Vad händer med t-värdet om något av följande händer, givet att övriga delar är desamma? Det observerade medelvärdet (här 52) ökar. Nollhypotesens värde (här 50) minskar. Standardavvikelsen (här 4.680354) minskar. Antalet observationer (här 8) ökar. 
-
-Testa genom att ändra värdena i kodstycket ovan och beräkna `t_value` på nytt.
-:::
-
-Nästa steg är att identifiera testfördelning, det vill säga den slumpfördelning testvärdet följet om nollhypotesen är sann. Fördelningen ges i regel av statistisk teori. I det här fallet är testfördelning en t-fördelning med n - 1 frihetsgrader. Vi har åtta observationer, så antalet frihetsgrader blir 7. I R kan man ta fram täthetsfunktionen för en t-fördelning med `dt()` och fördelningsfunktionen med `pt()`.
+Nästa steg är att identifiera testfördelning, det vill säga den slumpfördelning testvärdet följet om nollhypotesen är sann. I det här fallet är testfördelningen en t-fördelning med n - 1 frihetsgrader. Vi har åtta observationer, så antalet frihetsgrader blir 7. I R kan man ta fram täthetsfunktionen för en t-fördelning med `dt()` och fördelningsfunktionen med `pt()`. Kurvorna kan plottas med `geom_function()` i en ggplot.
 
 ```{r, fig.height=2, results='hide', fig.show='hide'}
-dat_t <- data.frame(x = seq(-4, 4, 0.1)) %>% 
-  mutate(p = dt(x, df = 7),
-         P = pt(x, df = 7))
+ggplot() +
+  geom_function(fun = dt, args = list(df = 7)) +
+  xlim(-5,5)
 
-ggplot(dat_t, aes(x, p)) +
-  geom_line()
-
-ggplot(dat_t, aes(x, P)) +
-  geom_line()
+ggplot() +
+  geom_function(fun = pt, args = list(df = 7)) +
+  xlim(-5,5)
 ```
 
-Nästa steg i ett hypotestest är att ta fram ett p-värdet. P-värdet kan illustreras som ytan under t-fördelning *bortom* test-värdet. I ett tvåsidigt test tar vi med bägge svansarna.
+Från testfördelningen kan vi nu ta fram ett p-värde. P-värdet kan illustreras som ytan under t-fördelning *bortom* test-värdet. I ett tvåsidigt test tar vi med bägge svansarna.
 
 ```{r, fig.height=2, fig.show='hide'}
-ggplot(dat_t) +
-  geom_line(aes(x, p)) +
-  geom_ribbon(aes(x = x, ymin = 0, ymax = p), data = dat_t %>% filter(x > abs(t_value)), fill = "salmon") +
-  geom_ribbon(aes(x = x, ymin = 0, ymax = p), data = dat_t %>% filter(x < -abs(t_value)), fill = "salmon")
+ggplot() +
+  geom_function(fun = dt, args = list(df = 7)) +
+  geom_vline(xintercept = c(-1.2086, 1.2086)) +
+  xlim(-5,5)
 ```
 
-De röda ytorna i *svansarna* motsvarar p-värdet. De anger sannolikheten att få ett större t-värde än det vi fått, under antagandet att nollhypotesen stämmer. Vi kan beräkna p-värdet med `pt()`. För ett tvåsidigt test multipliceras värdet med 2.
+Ytorna i *svansarna* motsvarar p-värdet. De anger sannolikheten att få ett större t-värde än det vi fått, under antagandet att nollhypotesen stämmer. Det exakta p-värdet gavs av `t.test()`-funktionen som 0.266. En tolkning av det är om försöket upprepas ett stort antal gånger och nollhypotesen är sann, kommer vi 26.6 procent av gångerna få ett större testvärde än 1.2086. Det vi observerar är ganska sannolikt om nollhypotesen stämmer, vilket tyder på att nollhypotesen är rimlig.
 
-```{r, results='hide'}
-2 * pt(-abs(t_value), 7) # Tvåsidigt p-värde
-```
-
-P-värdet ges av 0.266. En tolkning av det är om försöket upprepas ett stort antal gånger och nollhypotesen är sann, kommer vi 26.6 procent av gångerna få ett större testvärde än 1.2086. Det vi observerar är ganska sannolikt under nollhypotesen, vilket tyder på att nollhypotesen är rimligt.
-
-Det avslutande steget är att dra en formell slutsats och ge ett tydligt svar. Det klassiska sättet är att jämföra p-värdet med en förbestämd signifikansnivå, oftast fem procent. Här är p-värdet över den nivån, så vi kan inte förkasta nollhyptesen. Slutsatsen är att det *inte* finns någon signifikant skillnad från 50 i havreskörd.
+Det avslutande steget är att dra en formell slutsats och ge ett tydligt svar. Det beräknade p-värdet ställs mot en förbestämd signifikansnivå, oftast fem procent. Här är p-värdet över den nivån, så vi kan inte förkasta nollhyptesen. Slutsatsen är att det *inte* finns någon signifikant skillnad från 50 i havreskörd.
 
 ::: {.exercise name="Kritiskt värde"}
 Om man gör ett t-test för hand kan man inte enkelt ta fram ett p-värde, men kan se om p-värdet är större eller mindre än fem procent genom att ställa testvärdet mot ett kritiskt värde. Använd en tabell för t-fördelning för att hitta det kritiska värdet.
@@ -165,62 +153,8 @@ qt(0.975, 7)
 ```
 :::
 
-Som visades i början har R en specifik funktion för t-testet, `t.test()`. Funktionens argument är datan man testar och ett nollhypotesvärde `mu`. Om man vill ha ett ensidigt test kan det sättas med argumentet `alternative`. För vår data ges testet av
-
-```{r, results='hide'}
-t.test(dat$x, mu = 50) # Tvåsidigt test
-```
-
-Funktionen skriver ut det beräkna t-värdet, antal frihetsgrader och p-värdet.
-
 ::: {.exercise name="Ensigt test"}
 Använd `?t.test` för att ta fram funktionens hjälpsida. Försök att utifrån hjälpsidan beräkna ett *ensidigt* test för att se om medelskörden är *större* än 50.
-:::
-
-::: {.exercise name="Ny nollhypotes"}
-Upprepa det tvåsidiga testet från exemplet ovan. Testa denna gång om medelskörden är skild från 48. Dra en tydlig slutsats.
-:::
-
-::: {.exercise name="Importera smältpunkt-data"}
-På canvassidan finns en excelfil med data för kursens uppgifter *Uppgiftsdata.xlsx*. Fliken *Smältdata* innehåller data för en legerings smältpunkt.
-
-Ladda ner filen till lämplig plats på datorn och importera datan genom att fylla i följande rad.
-
-```{r, eval = F}
-library(readxl)
-dat_smält <- read_excel("___", sheet = "Smältpunkt")
-```
-:::
-
-::: {.exercise name="Plotta smältpunkt-data"}
-Illustrera smältpunktsdatan på samma sätt som exempeldatan genom att fylla i följande kod. Vårt mål är att testa om medelvärde är skilt från 1050, vilket här kan noteras med ett vertikalt streck vid 1050.
-
-```{r, eval = F}
-ggplot(___, aes(x = Smältpunkt, y = 0)) + 
-  ___() +
-  geom_vline(xintercept = ___, color = "red")
-```
-
-Kan man utifrån grafen säga om 1050 är ett rimligt medelvärde för populationen, givet det stickprov vi observerar?
-:::
-
-::: {.exercise name="Hypotestest för hand"}
-Genomför ett t-test för hand för att se om medelsmältpunkten är skild från 1050. Skriv ut tydliga hypoteser. Medelvärde och standardavvikelse ges av följande.
-
-```{r, eval = F}
-mean(dat_smält$Smältpunkt)
-sd(dat_smält$Smältpunkt)
-```
-
-Ett kritiskt värde kan tas från en tabell över t-fördelningen eller beräknas i R med
-
-```{r, eval = F}
-qt(0.975, df = 9)
-```
-:::
-
-::: {.exercise name="Hypotestest i R"}
-Genomför ett t-test med funktionen `t.test()` för att se om medelsmältpunkten är skild från 1050.
 :::
 
 ## Konfidensintervall för normalfördelad data
@@ -232,11 +166,11 @@ t.test(dat$x, mu = 50)
 t.test(dat$x, mu = 48)
 ```
 
-Från p-värdena kan man dra slutsatsen att förkasta vid nollhypotesen att mu är 48, men inte förkasta vid nollhypotesen att mu är 50. Värdet 50 är alltså i någon mening ett mer troligt värde på populationens medelvärde än vad 48 är. *Konfidensintervall* kan ses som en generalisering av den tanken: ett konfidensintervall ger ett spann av värden där man *inte* förkastar. Intervallet tolkas vanligen som att det täcker det sanna populationsmedelvärdet med en viss konfidens.
+Från p-värdena kan man dra slutsatsen att förkasta vid nollhypotesen att $\mu$ är 48, men inte förkasta vid nollhypotesen att mu är 50. Värdet 50 är alltså i någon mening ett mer troligt värde på populationens medelvärde än vad 48 är. *Konfidensintervall* kan ses som en generalisering av den tanken: ett konfidensintervall ger ett spann av värden där man *inte* förkastar. Intervallet tolkas vanligen som att det täcker det sanna populationsmedelvärdet med en viss konfidens.
 
 För ett stickprov och antagen normalfördelning ges konfidensintervallet av
 
-medelvärde ± kvantil från t-fördelningen x standardavvikelse delat på roten ur antalet observationer
+$$\bar x \pm t_{(1-\alpha/2,n-1)} \frac{s}{\sqrt n}$$
 
 Kvantilen från t-fördelningen kan hämtas från en tabell (samma som det kritiska värdet i testet) eller genom R. Antalet frihetsgrader ges av antalet observationer minus ett. I det här fallet ges delarna av
 
@@ -248,11 +182,7 @@ qt(0.975, 7)
 
 och konfidensintervallet ges alltså av
 
-52 ± 2.365 * 4.680 / sqrt(8)
-
-::: {.exercise name="Konfidensintervall för hand"}
-Ta fram medelvärde, standardavvikelse och kritiskt värde för smältpunktsdata, med hjälp av R (eller en tabell för det kritiska värdet). Beräkna konfidensintervallet för smältpunktsdatan för hand.
-:::
+$$52 \pm 2.365 \cdot 4.680 / \sqrt 8$$
 
 Funktionen `t.test()` ger automatiskt ett konfidensintervall, direkt under utfallet av testet. Notera att konfidensintervallet inte beror på nollhypotesen. Konfidensintervall kan beräknas med skilda konfidensnivåer, oftast 95 procent, vilket sätts med argumentet `conf.level`.
 
@@ -266,28 +196,7 @@ t.test(dat$x, conf.level = 0.95)
 Är ett 99-procentigt konfidensintervall bredare eller smalare än ett 95-procentigt?
 :::
 
-::: {.exercise name="Ensidiga konfidensintervall"}
-I en tidigare uppgift användes argumentet `alternative` för att göra ett ensidigt test med `t.test()`. Vad händer med konfidensintervallet om man anger ett ensidigt test?
-:::
-
-::: {.exercise name="Konfidensintervall för smältdata"}
-Ta datan över smältpunkter och beräkna ett konfidensintervall med `t.test()`. Tolka intervallet.
-:::
-
-Ett konfidensintervall illustreras ofta med en felstapel. Vi kan lägga till en till den punktgraf vi tidigare sett för observationerna.
-
-```{r, results='hide', fig.show='hide'}
-interval <- t.test(dat$x)$conf.int
-ggplot(dat, aes(x, 0)) +
-  geom_point() +
-  annotate("errorbar", xmin = interval[1], xmax = interval[2], y = -1, width = 0.1)
-```
-
-::: {.exercise name="Illustration av smältdata"}
-Använd exempelillustrationen för havredata till en liknande illustration av smältpunktsdatan.
-:::
-
-## Normalfördelad data och centrala gränsvärdesatsen
+## Normalfördelad data
 
 Eftersom t-testet bygger på att data är normalfördelad är det förstås bra att kunna undersöka om det antagandet stämmer. Ett sätt är att göra ett histogram över datan - om den underliggande variabeln är normalfördelad bör stickprovet ge den typiska klockformen. Det här kräver dock ganska mycket data. Ta ett histogram för havredatan som exempel
 
@@ -295,7 +204,7 @@ Eftersom t-testet bygger på att data är normalfördelad är det förstås bra 
 ggplot(dat, aes(x)) + geom_histogram(bins = 5)
 ```
 
-Uppenbarligen helt meningslöst. Låt oss titta på histogram över genererad normalfördelad data.
+Låt oss titta på histogram över genererad normalfördelad data.
 
 ```{r, fig.show='hide'}
 n <- 10
@@ -303,7 +212,7 @@ ggplot() + geom_histogram(aes(x = rnorm(n)), bins = 30)
 ```
 
 ::: {.exercise name="Histogram för normalfördelning"}
-Testa koden ovan för lite olika värden på `n`. Det kan vara nyttigt att sätta antalet staplar `bins` för att få ett bättre histogram. Hur stort måste n vara för att ge en karaktäristisk klockform för histogrammet?
+Testa koden ovan för lite olika värden på `n`. Det kan vara nyttigt att sätta antalet staplar `bins` för att få ett bättre histogram. Hur stort måste `n` vara för att ge en karaktäristisk klockform för histogrammet?
 :::
 
 Ett annat vanligt alternativ för att grafisk undersöka om data följer en ungefärlig normalfördelning är en QQ-graf (*QQ-plot*). En qq-graf är ett spridningsdiagram med teoretiska kvantiler på en axel och datans kvantiler på den andra axeln. Om data perfekt följer en normalfördelning kommer grafen visa en rak diagonal linje. En QQ-graf kan tas fram med `qqnorm()` eller `geom_qq()` i en ggplot. En diagonal linje för jämförelse kan läggas till med `geom_qq_line()`.
@@ -315,7 +224,7 @@ ggplot(dat, aes(sample = x)) + geom_qq() + geom_qq_line()
 Punkterna ligger nära linjen. Vi kan återigen demonstrera med lite genererad data.
 
 ```{r, fig.show='hide'}
-n <- 10
+n <- 100
 dat_norm <- data.frame(x = rnorm(n))
 ggplot(dat_norm, aes(sample = x)) + geom_qq() + geom_qq_line()
 ```
@@ -331,13 +240,15 @@ Funktionen `runif()` ger slumpmässiga värden mellan 0 och 1. Testa att ändra 
 ```{r, fig.show='hide'}
 n <- 2
 
-dat_sim_unif <- expand_grid(Observation = 1:n, Upprepning = 1:10000) %>% 
+dat_sim_unif <- expand_grid(Observation = 1:n, 
+                            Upprepning = 1:10000) %>% 
   mutate(x = runif(n())) %>% 
   group_by(Upprepning) %>% 
   summarise(x = mean(x))
 
 ggplot(dat_sim_unif, aes(x)) + geom_histogram(bins = 50)
-ggplot(dat_sim_unif, aes(sample = x)) + geom_qq() + geom_qq_line()
+ggplot(dat_sim_unif, aes(sample = x)) + 
+  geom_qq() + geom_qq_line()
 ```
 
 Fördelningen för summan är inte likformig, men inte heller särskilt normalfördelad. Vad händer om vi ökar antal termer i summan?
@@ -346,38 +257,27 @@ Fördelningen för summan är inte likformig, men inte heller särskilt normalf�
 Vad måste ändras i koden ovan för beräkna medelvärdet av tio observationer? Följer de medelvärdena en ungefärlig normalfördelning? Vad är det lägsta antalet observationer som ger ungefärligen normalfördelade medelvärden?
 :::
 
-Under en tidigare datorövning såg vi exempel på diskreta fördelningar: binomial- och poissonfördelningarna. Vi ska senare titta på specifika test för variabler som följer en diskret fördelning, men centrala gränsvärdesatsen kan även då rättfärdiga ett t-test. Ta som exempel medelvärdet av tio observationer som följer en poissonfördelning med lambda = 10.
-
-```{r, fig.show='hide'}
-n <- 10
-lambda <- 10
-dat_sim_unif <- expand_grid(Observation = 1:n, Upprepning = 1:10000) %>% 
-  mutate(x = rpois(n(), lambda = lambda)) %>% 
-  group_by(Upprepning) %>% 
-  summarise(x = mean(x))
-
-ggplot(dat_sim_unif, aes(x)) + geom_histogram(bins = 30)
-ggplot(dat_sim_unif, aes(sample = x)) + geom_qq() + geom_qq_line()
-```
-
-Histogrammet visar på en typisk klockform och punkterna följer linjen *ungefärligt*. QQ-grafens trappeffekt är typisk för diskret data. Det här tyder alltså på att t-testet är ett acceptabelt alternativ om man har en poissonfördelning med lambda runt tio och gör tio upprepningar.
-
-::: {.exercise name="Svag normalapproximation"}
-Testa att minska värdena på n och lambda. Vad är de lägsta värdena som ger ett histogram med en symmetrisk fördelning och punkter nära linjen i QQ-grafen?
-:::
-
-Det kan också finnas situationer där någon matematisk transformation kan göra icke-normal data till normalfördelad data. Vanliga transformationer är att ta en kvadratrot eller att *logaritmera* datan. Som exempel kan vi återvända till Gapminder-datan vi använde i en tidigare datorövning. Paketet `patchwork` kan användas för att placera flera grafer bredvid varandra. Den exakta koden är mindre viktig här.
+Det kan också finnas situationer där någon matematisk transformation kan göra icke-normal data till normalfördelad data. Vanliga transformationer är att ta en kvadratrot eller att *logaritmera* datan. Som exempel kan vi återvända till gapminder-datan vi använde i en tidigare datorövning. Paketet `patchwork` kan användas för att placera flera grafer bredvid varandra. Den exakta koden är mindre viktig här.
 
 ```{r, fig.show='hide'}
 library(gapminder)
 gapminder_2007 <- gapminder %>% filter(year == 2007)
 
-g1 <- ggplot(gapminder_2007, aes(pop)) + geom_histogram(bins = 30)
-g2 <- ggplot(gapminder_2007, aes(sample = pop)) + geom_qq() + geom_qq_line()
-g3 <- ggplot(gapminder_2007, aes(sqrt(pop))) + geom_histogram(bins = 30)
-g4 <- ggplot(gapminder_2007, aes(sample = sqrt(pop))) + geom_qq() + geom_qq_line()
-g5 <- ggplot(gapminder_2007, aes(log10(pop))) + geom_histogram(bins = 30)
-g6 <- ggplot(gapminder_2007, aes(sample = log10(pop))) + geom_qq() + geom_qq_line()
+g1 <- ggplot(gapminder_2007, aes(pop)) + 
+  geom_histogram(bins = 30)
+g2 <- ggplot(gapminder_2007, aes(sample = pop)) + 
+  geom_qq() + 
+  geom_qq_line()
+g3 <- ggplot(gapminder_2007, aes(sqrt(pop))) + 
+  geom_histogram(bins = 30)
+g4 <- ggplot(gapminder_2007, aes(sample = sqrt(pop))) + 
+  geom_qq() + 
+  geom_qq_line()
+g5 <- ggplot(gapminder_2007, aes(log10(pop))) + 
+  geom_histogram(bins = 30)
+g6 <- ggplot(gapminder_2007, aes(sample = log10(pop))) + 
+  geom_qq() + 
+  geom_qq_line()
 
 library(patchwork)
 g1 + g3 + g5 + g2 + g4 + g6
@@ -385,8 +285,12 @@ g1 + g3 + g5 + g2 + g4 + g6
 
 I grafen har vi den ursprungliga variabeln (befolkning per land 2007), den kvadratrot-transformerade variabeln (`sqrt()`) och den log-transformerade variabeln (`log10()`). De två första fallen påverkas kraftigt av extremvärden och är klart icke-normala medan den log-transformerade variabeln ger en ungefärlig normalkurva och följer diagonalen väl i QQ-grafen.
 
-::: {.exercise name="Transformera medellivslängd"}
-Använd kodstycket ovan som mall och ta fram grafer för medellivslängd (`lifeExp`) istället för befolkningsstorlek (`pop`). Visar grafen samma mönster som för befolkningsdatan?
+## AI-uppgift III
+
+Det finns många studier som pekar på att p-värdet är svårtolkat. Det är särskilt vanligt att p-värdet tolkas som sannolikheten att nollhypotesen är sann. Den korrekta tolkningen är dock snarare tvärtom: p-värdet är sannolikheten för datautfallet givet att nollhypotesen är sann.
+
+::: {.exercise name="Tolkning av p-värdet"}
+Be en AI-chatbot besvara en t-test-fråga t.ex. från en tidigare tenta eller uppgiften i början av den här övningen. Fråga särskilt om tolkningen av p-värdet och om det finns några vanliga feltolkningar.
 :::
 
 ## Bonus. Simuleringar för t-test och konfidensintervall
@@ -409,18 +313,20 @@ dat_sim <- data.frame()
 for(i in 1:1000){
   new_data <- data.frame(x = rnorm(10, mean = 7, sd = 5))
   test <- t.test(new_data$x, mu = 7)
-  new_results <- data.frame(t_value = test$statistic, p_value = test$p.value,
-               ci_lower = test$conf.int[1], ci_upper = test$conf.int[2])
+  new_results <- data.frame(t_value = test$statistic, 
+                            p_value = test$p.value,
+                            ci_lower = test$conf.int[1], 
+                            ci_upper = test$conf.int[2])
   dat_sim <- bind_rows(dat_sim, new_results)
 }
 ```
 
-Enligt statistisk teori ska t-värdet följa en t-fördelning med nio frihetsgrader. Vi kan undersöka det genom ett histogram med en överliggande t-fördelning.
+Enligt statistisk teori ska t-värdet följa en t-fördelning med nio frihetsgrader. Vi kan undersöka det genom ett histogram.
 
 ```{r, fig.show='hide'}
 ggplot(dat_sim) +
-  geom_histogram(aes(t_value, y = ..density..), bins = 50, fill = "white", color = "black") +
-  geom_function(fun = dt, args = list(df = 9), color = "red", size = 1)
+  geom_histogram(aes(t_value, y = ..density..), bins = 50, 
+                 fill = "white", color = "black")
 ```
 
 Den teoretiska t-fördelning passar histogrammet nästan perfekt.
@@ -433,10 +339,6 @@ mean(dat_sim$p_value < 0.05)
 
 Även det stämmer någorlunda väl. Det här innebär alltså att om man har en signifikansnivå på fem procent kommer man förkasta nollhypotesen fem procent av gångerna även om nollhypotesen stämmer. Det kallas ett *falskt positivt* utfall.
 
-::: {.exercise name="Simulerade konfidensintervall"}
-Hur många av de simulerade konfidensintervallen täcker värdet 7?
-:::
-
 ::: {.exercise name="Signifikant skillnad"}
 Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har nollhypotesen att populationsmedelvärdet är 7. Här vill vi alltså förkasta nollhypotesen.
 
@@ -445,34 +347,15 @@ dat_sim <- data.frame()
 for(i in 1:1000){
   new_data <- data.frame(x = rnorm(10, mean = 9, sd = 5))
   test <- t.test(new_data$x, mu = 7)
-  new_results <- data.frame(t_value = test$statistic, p_value = test$p.value,
-               ci_lower = test$conf.int[1], ci_upper = test$conf.int[2])
+  new_results <- data.frame(t_value = test$statistic, 
+                            p_value = test$p.value,
+                            ci_lower = test$conf.int[1], 
+                            ci_upper = test$conf.int[2])
   dat_sim <- bind_rows(dat_sim, new_results)
 }
 ```
 
 Använd kod från den första simuleringen för att undersöka hur väl histogrammet stämmer med den teoretiska fördelningen och för att se hur stor andel av gångerna man förkastar nollhypotesen på signifikansnivån 5 procent.
-:::
-
-::: {.exercise name="50/50"}
-Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har nollhypotesen att populationsmedelvärdet är 7. Ändra värdet för n och se hur det påverkar andelen gånger man förkastar nollhypotesen.
-
-```{r, eval = F, results='hide'}
-n <- 10
-
-dat_sim <- data.frame()
-for(i in 1:1000){
-  new_data <- data.frame(x = rnorm(n, mean = 9, sd = 5))
-  test <- t.test(new_data$x, mu = 7)
-  new_results <- data.frame(t_value = test$statistic, p_value = test$p.value,
-               ci_lower = test$conf.int[1], ci_upper = test$conf.int[2])
-  dat_sim <- bind_rows(dat_sim, new_results)
-}
-
-mean(dat_sim$p_value < 0.05)
-```
-
-Ungefär hur många observationer behövs för att ha femtio procents sannolikhet att förkasta nollhypotesen?
 :::
 
 ::: {.exercise name="Konfidensintervallets bredd"}
@@ -485,8 +368,10 @@ dat_sim <- data.frame()
 for(i in 1:1000){
   new_data <- data.frame(x = rnorm(n, mean = 0, sd = 1))
   test <- t.test(new_data$x, mu = 7)
-  new_results <- data.frame(t_value = test$statistic, p_value = test$p.value,
-               ci_lower = test$conf.int[1], ci_upper = test$conf.int[2])
+  new_results <- data.frame(t_value = test$statistic, 
+                            p_value = test$p.value,
+                            ci_lower = test$conf.int[1], 
+                            ci_upper = test$conf.int[2])
   dat_sim <- bind_rows(dat_sim, new_results)
 }
 

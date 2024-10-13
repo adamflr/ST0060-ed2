@@ -137,7 +137,7 @@
 
 \title{R-anvisningar till \emph{Grundläggande statistik}}
 \author{}
-\date{\vspace{-2.5em}2024-10-07}
+\date{\vspace{-2.5em}2024-10-13}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Sats}[chapter]
@@ -1588,7 +1588,7 @@ I R kan ett t-test genomföras med \texttt{t.test()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{t.test}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{mu =} \DecValTok{50}\NormalTok{)   }\CommentTok{\# Ett t{-}test på variabeln x i dataobjektet dat}
+\FunctionTok{t.test}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{mu =} \DecValTok{50}\NormalTok{)   }\CommentTok{\# Ett t{-}test på variabeln x}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1631,9 +1631,9 @@ Vi vill testa om medelskörden är skild från 50, så hypoteser ges av
 \begin{itemize}
 \tightlist
 \item
-  H0: mu lika med 50
+  \(H_0\): \(\mu\) lika med 50
 \item
-  H1: mu ej lika med 50
+  \(H_1\): \(\mu\) ej lika med 50
 \end{itemize}
 
 Alternativhypotesen är tvåsidig - vi tittar både på möjligheten att populationsmedelvärdet är större och på möjligheten att det är mindre.
@@ -1642,69 +1642,68 @@ Alternativhypotesen är tvåsidig - vi tittar både på möjligheten att populat
 Hur hade hypoteserna sett ut om vi ville testa om medelvärdet är \emph{större} än 50?
 \end{exercise}
 
-Vårt mål är att testa ett medelvärde och det är rimligt att anta normalfördelning för den undersökta variabeln. Det lämpliga testet är då ett t-test för ett stickprov och testvärdet kan beräknas av en testfunktion som ges av det observerade stickprovet minus nollhypotesens värde, delat på standardavvikelsen delat på roten ur antalet observationer. Låt oss beräkna detta i flera steg och jämföra med utskriften från \texttt{t.test()}.
+Från datan har vi åtta observation och vi kan ta fram stickprovsmedelvärde och standardavvikelse i R.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{mean}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 52
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{sd}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x)}
-
-\NormalTok{t\_value }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{52} \SpecialCharTok{{-}} \DecValTok{50}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\FloatTok{4.680354} \SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(}\DecValTok{8}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{exercise}[Operationsordning]
-Räkna ut samma sak på miniräknare eller telefon. Vad händer om man missar parenteser runt \texttt{4.680354\ /\ sqrt(8)}?
+\begin{verbatim}
+## [1] 4.680354
+\end{verbatim}
+
+Vårt mål är att testa ett medelvärde och det är rimligt att anta normalfördelning för den undersökta variabeln. Det lämpliga testet är då ett t-test för ett stickprov och testvärdet kan beräknas av en testfunktion som ges av det observerade stickprovet minus nollhypotesens värde, delat på standardavvikelsen delat på roten ur antalet observationer.
+
+\[t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}\]
+
+\begin{exercise}[Handräkning]
+Beräkna t-värdet på miniräknare eller telefon. Finns det beräknade t-värdet i utskriften från \texttt{t.test()}?
 \end{exercise}
 
-\begin{exercise}[t-värdets delar]
-Vad händer med t-värdet om något av följande händer, givet att övriga delar är desamma? Det observerade medelvärdet (här 52) ökar. Nollhypotesens värde (här 50) minskar. Standardavvikelsen (här 4.680354) minskar. Antalet observationer (här 8) ökar.
-
-Testa genom att ändra värdena i kodstycket ovan och beräkna \texttt{t\_value} på nytt.
-\end{exercise}
-
-Nästa steg är att identifiera testfördelning, det vill säga den slumpfördelning testvärdet följet om nollhypotesen är sann. Fördelningen ges i regel av statistisk teori. I det här fallet är testfördelning en t-fördelning med n - 1 frihetsgrader. Vi har åtta observationer, så antalet frihetsgrader blir 7. I R kan man ta fram täthetsfunktionen för en t-fördelning med \texttt{dt()} och fördelningsfunktionen med \texttt{pt()}.
+Nästa steg är att identifiera testfördelning, det vill säga den slumpfördelning testvärdet följet om nollhypotesen är sann. I det här fallet är testfördelningen en t-fördelning med n - 1 frihetsgrader. Vi har åtta observationer, så antalet frihetsgrader blir 7. I R kan man ta fram täthetsfunktionen för en t-fördelning med \texttt{dt()} och fördelningsfunktionen med \texttt{pt()}. Kurvorna kan plottas med \texttt{geom\_function()} i en ggplot.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat\_t }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\FloatTok{0.1}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{p =} \FunctionTok{dt}\NormalTok{(x, }\AttributeTok{df =} \DecValTok{7}\NormalTok{),}
-         \AttributeTok{P =} \FunctionTok{pt}\NormalTok{(x, }\AttributeTok{df =} \DecValTok{7}\NormalTok{))}
-
-\FunctionTok{ggplot}\NormalTok{(dat\_t, }\FunctionTok{aes}\NormalTok{(x, p)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{()}
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ dt, }\AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{df =} \DecValTok{7}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{xlim}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dat\_t, }\FunctionTok{aes}\NormalTok{(x, P)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{()}
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ pt, }\AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{df =} \DecValTok{7}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{xlim}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Nästa steg i ett hypotestest är att ta fram ett p-värdet. P-värdet kan illustreras som ytan under t-fördelning \emph{bortom} test-värdet. I ett tvåsidigt test tar vi med bägge svansarna.
+Från testfördelningen kan vi nu ta fram ett p-värde. P-värdet kan illustreras som ytan under t-fördelning \emph{bortom} test-värdet. I ett tvåsidigt test tar vi med bägge svansarna.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dat\_t) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, p)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_ribbon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{ymin =} \DecValTok{0}\NormalTok{, }\AttributeTok{ymax =}\NormalTok{ p), }\AttributeTok{data =}\NormalTok{ dat\_t }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{\textgreater{}} \FunctionTok{abs}\NormalTok{(t\_value)), }\AttributeTok{fill =} \StringTok{"salmon"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_ribbon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{ymin =} \DecValTok{0}\NormalTok{, }\AttributeTok{ymax =}\NormalTok{ p), }\AttributeTok{data =}\NormalTok{ dat\_t }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\FunctionTok{abs}\NormalTok{(t\_value)), }\AttributeTok{fill =} \StringTok{"salmon"}\NormalTok{)}
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ dt, }\AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{df =} \DecValTok{7}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{1.2086}\NormalTok{, }\FloatTok{1.2086}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{xlim}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-De röda ytorna i \emph{svansarna} motsvarar p-värdet. De anger sannolikheten att få ett större t-värde än det vi fått, under antagandet att nollhypotesen stämmer. Vi kan beräkna p-värdet med \texttt{pt()}. För ett tvåsidigt test multipliceras värdet med 2.
+Ytorna i \emph{svansarna} motsvarar p-värdet. De anger sannolikheten att få ett större t-värde än det vi fått, under antagandet att nollhypotesen stämmer. Det exakta p-värdet gavs av \texttt{t.test()}-funktionen som 0.266. En tolkning av det är om försöket upprepas ett stort antal gånger och nollhypotesen är sann, kommer vi 26.6 procent av gångerna få ett större testvärde än 1.2086. Det vi observerar är ganska sannolikt om nollhypotesen stämmer, vilket tyder på att nollhypotesen är rimlig.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{2} \SpecialCharTok{*} \FunctionTok{pt}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{abs}\NormalTok{(t\_value), }\DecValTok{7}\NormalTok{) }\CommentTok{\# Tvåsidigt p{-}värde}
-\end{Highlighting}
-\end{Shaded}
-
-P-värdet ges av 0.266. En tolkning av det är om försöket upprepas ett stort antal gånger och nollhypotesen är sann, kommer vi 26.6 procent av gångerna få ett större testvärde än 1.2086. Det vi observerar är ganska sannolikt under nollhypotesen, vilket tyder på att nollhypotesen är rimligt.
-
-Det avslutande steget är att dra en formell slutsats och ge ett tydligt svar. Det klassiska sättet är att jämföra p-värdet med en förbestämd signifikansnivå, oftast fem procent. Här är p-värdet över den nivån, så vi kan inte förkasta nollhyptesen. Slutsatsen är att det \emph{inte} finns någon signifikant skillnad från 50 i havreskörd.
+Det avslutande steget är att dra en formell slutsats och ge ett tydligt svar. Det beräknade p-värdet ställs mot en förbestämd signifikansnivå, oftast fem procent. Här är p-värdet över den nivån, så vi kan inte förkasta nollhyptesen. Slutsatsen är att det \emph{inte} finns någon signifikant skillnad från 50 i havreskörd.
 
 \begin{exercise}[Kritiskt värde]
 
@@ -1720,76 +1719,8 @@ I R kan man ta fram kritiska värden med \texttt{qt()}. För fem procent i svans
 
 \end{exercise}
 
-Som visades i början har R en specifik funktion för t-testet, \texttt{t.test()}. Funktionens argument är datan man testar och ett nollhypotesvärde \texttt{mu}. Om man vill ha ett ensidigt test kan det sättas med argumentet \texttt{alternative}. För vår data ges testet av
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{t.test}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{mu =} \DecValTok{50}\NormalTok{) }\CommentTok{\# Tvåsidigt test}
-\end{Highlighting}
-\end{Shaded}
-
-Funktionen skriver ut det beräkna t-värdet, antal frihetsgrader och p-värdet.
-
 \begin{exercise}[Ensigt test]
 Använd \texttt{?t.test} för att ta fram funktionens hjälpsida. Försök att utifrån hjälpsidan beräkna ett \emph{ensidigt} test för att se om medelskörden är \emph{större} än 50.
-\end{exercise}
-
-\begin{exercise}[Ny nollhypotes]
-Upprepa det tvåsidiga testet från exemplet ovan. Testa denna gång om medelskörden är skild från 48. Dra en tydlig slutsats.
-\end{exercise}
-
-\begin{exercise}[Importera smältpunkt-data]
-
-På canvassidan finns en excelfil med data för kursens uppgifter \emph{Uppgiftsdata.xlsx}. Fliken \emph{Smältdata} innehåller data för en legerings smältpunkt.
-
-Ladda ner filen till lämplig plats på datorn och importera datan genom att fylla i följande rad.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(readxl)}
-\NormalTok{dat\_smält }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"\_\_\_"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"Smältpunkt"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Plotta smältpunkt-data]
-Illustrera smältpunktsdatan på samma sätt som exempeldatan genom att fylla i följande kod. Vårt mål är att testa om medelvärde är skilt från 1050, vilket här kan noteras med ett vertikalt streck vid 1050.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(\_\_\_, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Smältpunkt, }\AttributeTok{y =} \DecValTok{0}\NormalTok{)) }\SpecialCharTok{+} 
-  \FunctionTok{\_\_\_}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ \_\_\_, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Kan man utifrån grafen säga om 1050 är ett rimligt medelvärde för populationen, givet det stickprov vi observerar?
-\end{exercise}
-
-\begin{exercise}[Hypotestest för hand]
-
-Genomför ett t-test för hand för att se om medelsmältpunkten är skild från 1050. Skriv ut tydliga hypoteser. Medelvärde och standardavvikelse ges av följande.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{mean}\NormalTok{(dat\_smält}\SpecialCharTok{$}\NormalTok{Smältpunkt)}
-\FunctionTok{sd}\NormalTok{(dat\_smält}\SpecialCharTok{$}\NormalTok{Smältpunkt)}
-\end{Highlighting}
-\end{Shaded}
-
-Ett kritiskt värde kan tas från en tabell över t-fördelningen eller beräknas i R med
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{qt}\NormalTok{(}\FloatTok{0.975}\NormalTok{, }\AttributeTok{df =} \DecValTok{9}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Hypotestest i R]
-Genomför ett t-test med funktionen \texttt{t.test()} för att se om medelsmältpunkten är skild från 1050.
 \end{exercise}
 
 \section{Konfidensintervall för normalfördelad data}\label{konfidensintervall-fuxf6r-normalfuxf6rdelad-data}
@@ -1803,11 +1734,11 @@ För exemplet på havredata tittade vi på två olika värden för nollhypotesen
 \end{Highlighting}
 \end{Shaded}
 
-Från p-värdena kan man dra slutsatsen att förkasta vid nollhypotesen att mu är 48, men inte förkasta vid nollhypotesen att mu är 50. Värdet 50 är alltså i någon mening ett mer troligt värde på populationens medelvärde än vad 48 är. \emph{Konfidensintervall} kan ses som en generalisering av den tanken: ett konfidensintervall ger ett spann av värden där man \emph{inte} förkastar. Intervallet tolkas vanligen som att det täcker det sanna populationsmedelvärdet med en viss konfidens.
+Från p-värdena kan man dra slutsatsen att förkasta vid nollhypotesen att \(\mu\) är 48, men inte förkasta vid nollhypotesen att mu är 50. Värdet 50 är alltså i någon mening ett mer troligt värde på populationens medelvärde än vad 48 är. \emph{Konfidensintervall} kan ses som en generalisering av den tanken: ett konfidensintervall ger ett spann av värden där man \emph{inte} förkastar. Intervallet tolkas vanligen som att det täcker det sanna populationsmedelvärdet med en viss konfidens.
 
 För ett stickprov och antagen normalfördelning ges konfidensintervallet av
 
-medelvärde ± kvantil från t-fördelningen x standardavvikelse delat på roten ur antalet observationer
+\[\bar x \pm t_{(1-\alpha/2,n-1)} \frac{s}{\sqrt n}\]
 
 Kvantilen från t-fördelningen kan hämtas från en tabell (samma som det kritiska värdet i testet) eller genom R. Antalet frihetsgrader ges av antalet observationer minus ett. I det här fallet ges delarna av
 
@@ -1821,11 +1752,7 @@ Kvantilen från t-fördelningen kan hämtas från en tabell (samma som det kriti
 
 och konfidensintervallet ges alltså av
 
-52 ± 2.365 * 4.680 / sqrt(8)
-
-\begin{exercise}[Konfidensintervall för hand]
-Ta fram medelvärde, standardavvikelse och kritiskt värde för smältpunktsdata, med hjälp av R (eller en tabell för det kritiska värdet). Beräkna konfidensintervallet för smältpunktsdatan för hand.
-\end{exercise}
+\[52 \pm 2.365 \cdot 4.680 / \sqrt 8\]
 
 Funktionen \texttt{t.test()} ger automatiskt ett konfidensintervall, direkt under utfallet av testet. Notera att konfidensintervallet inte beror på nollhypotesen. Konfidensintervall kan beräknas med skilda konfidensnivåer, oftast 95 procent, vilket sätts med argumentet \texttt{conf.level}.
 
@@ -1855,30 +1782,7 @@ Gör lämplig ändring i koden nedan för att beräkna ett 99-procentigt konfide
 Är ett 99-procentigt konfidensintervall bredare eller smalare än ett 95-procentigt?
 \end{exercise}
 
-\begin{exercise}[Ensidiga konfidensintervall]
-I en tidigare uppgift användes argumentet \texttt{alternative} för att göra ett ensidigt test med \texttt{t.test()}. Vad händer med konfidensintervallet om man anger ett ensidigt test?
-\end{exercise}
-
-\begin{exercise}[Konfidensintervall för smältdata]
-Ta datan över smältpunkter och beräkna ett konfidensintervall med \texttt{t.test()}. Tolka intervallet.
-\end{exercise}
-
-Ett konfidensintervall illustreras ofta med en felstapel. Vi kan lägga till en till den punktgraf vi tidigare sett för observationerna.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{interval }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x)}\SpecialCharTok{$}\NormalTok{conf.int}
-\FunctionTok{ggplot}\NormalTok{(dat, }\FunctionTok{aes}\NormalTok{(x, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{annotate}\NormalTok{(}\StringTok{"errorbar"}\NormalTok{, }\AttributeTok{xmin =}\NormalTok{ interval[}\DecValTok{1}\NormalTok{], }\AttributeTok{xmax =}\NormalTok{ interval[}\DecValTok{2}\NormalTok{], }\AttributeTok{y =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{exercise}[Illustration av smältdata]
-Använd exempelillustrationen för havredata till en liknande illustration av smältpunktsdatan.
-\end{exercise}
-
-\section{Normalfördelad data och centrala gränsvärdesatsen}\label{normalfuxf6rdelad-data-och-centrala-gruxe4nsvuxe4rdesatsen}
+\section{Normalfördelad data}\label{normalfuxf6rdelad-data}
 
 Eftersom t-testet bygger på att data är normalfördelad är det förstås bra att kunna undersöka om det antagandet stämmer. Ett sätt är att göra ett histogram över datan - om den underliggande variabeln är normalfördelad bör stickprovet ge den typiska klockformen. Det här kräver dock ganska mycket data. Ta ett histogram för havredatan som exempel
 
@@ -1888,7 +1792,7 @@ Eftersom t-testet bygger på att data är normalfördelad är det förstås bra 
 \end{Highlighting}
 \end{Shaded}
 
-Uppenbarligen helt meningslöst. Låt oss titta på histogram över genererad normalfördelad data.
+Låt oss titta på histogram över genererad normalfördelad data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1898,7 +1802,7 @@ Uppenbarligen helt meningslöst. Låt oss titta på histogram över genererad no
 \end{Shaded}
 
 \begin{exercise}[Histogram för normalfördelning]
-Testa koden ovan för lite olika värden på \texttt{n}. Det kan vara nyttigt att sätta antalet staplar \texttt{bins} för att få ett bättre histogram. Hur stort måste n vara för att ge en karaktäristisk klockform för histogrammet?
+Testa koden ovan för lite olika värden på \texttt{n}. Det kan vara nyttigt att sätta antalet staplar \texttt{bins} för att få ett bättre histogram. Hur stort måste \texttt{n} vara för att ge en karaktäristisk klockform för histogrammet?
 \end{exercise}
 
 Ett annat vanligt alternativ för att grafisk undersöka om data följer en ungefärlig normalfördelning är en QQ-graf (\emph{QQ-plot}). En qq-graf är ett spridningsdiagram med teoretiska kvantiler på en axel och datans kvantiler på den andra axeln. Om data perfekt följer en normalfördelning kommer grafen visa en rak diagonal linje. En QQ-graf kan tas fram med \texttt{qqnorm()} eller \texttt{geom\_qq()} i en ggplot. En diagonal linje för jämförelse kan läggas till med \texttt{geom\_qq\_line()}.
@@ -1913,7 +1817,7 @@ Punkterna ligger nära linjen. Vi kan återigen demonstrera med lite genererad d
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100}
 \NormalTok{dat\_norm }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rnorm}\NormalTok{(n))}
 \FunctionTok{ggplot}\NormalTok{(dat\_norm, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ x)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
 \end{Highlighting}
@@ -1931,7 +1835,8 @@ Funktionen \texttt{runif()} ger slumpmässiga värden mellan 0 och 1. Testa att 
 \begin{Highlighting}[]
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{2}
 
-\NormalTok{dat\_sim\_unif }\OtherTok{\textless{}{-}} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{Observation =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n, }\AttributeTok{Upprepning =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{dat\_sim\_unif }\OtherTok{\textless{}{-}} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{Observation =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n, }
+                            \AttributeTok{Upprepning =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{x =} \FunctionTok{runif}\NormalTok{(}\FunctionTok{n}\NormalTok{())) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{group\_by}\NormalTok{(Upprepning) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{x =} \FunctionTok{mean}\NormalTok{(x))}
@@ -1942,7 +1847,8 @@ Funktionen \texttt{runif()} ger slumpmässiga värden mellan 0 och 1. Testa att 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dat\_sim\_unif, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ x)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
+\FunctionTok{ggplot}\NormalTok{(dat\_sim\_unif, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ x)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1952,46 +1858,28 @@ Fördelningen för summan är inte likformig, men inte heller särskilt normalf�
 Vad måste ändras i koden ovan för beräkna medelvärdet av tio observationer? Följer de medelvärdena en ungefärlig normalfördelning? Vad är det lägsta antalet observationer som ger ungefärligen normalfördelade medelvärden?
 \end{exercise}
 
-Under en tidigare datorövning såg vi exempel på diskreta fördelningar: binomial- och poissonfördelningarna. Vi ska senare titta på specifika test för variabler som följer en diskret fördelning, men centrala gränsvärdesatsen kan även då rättfärdiga ett t-test. Ta som exempel medelvärdet av tio observationer som följer en poissonfördelning med lambda = 10.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{10}
-\NormalTok{lambda }\OtherTok{\textless{}{-}} \DecValTok{10}
-\NormalTok{dat\_sim\_unif }\OtherTok{\textless{}{-}} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{Observation =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n, }\AttributeTok{Upprepning =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rpois}\NormalTok{(}\FunctionTok{n}\NormalTok{(), }\AttributeTok{lambda =}\NormalTok{ lambda)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(Upprepning) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{x =} \FunctionTok{mean}\NormalTok{(x))}
-
-\FunctionTok{ggplot}\NormalTok{(dat\_sim\_unif, }\FunctionTok{aes}\NormalTok{(x)) }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dat\_sim\_unif, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ x)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-Histogrammet visar på en typisk klockform och punkterna följer linjen \emph{ungefärligt}. QQ-grafens trappeffekt är typisk för diskret data. Det här tyder alltså på att t-testet är ett acceptabelt alternativ om man har en poissonfördelning med lambda runt tio och gör tio upprepningar.
-
-\begin{exercise}[Svag normalapproximation]
-Testa att minska värdena på n och lambda. Vad är de lägsta värdena som ger ett histogram med en symmetrisk fördelning och punkter nära linjen i QQ-grafen?
-\end{exercise}
-
-Det kan också finnas situationer där någon matematisk transformation kan göra icke-normal data till normalfördelad data. Vanliga transformationer är att ta en kvadratrot eller att \emph{logaritmera} datan. Som exempel kan vi återvända till Gapminder-datan vi använde i en tidigare datorövning. Paketet \texttt{patchwork} kan användas för att placera flera grafer bredvid varandra. Den exakta koden är mindre viktig här.
+Det kan också finnas situationer där någon matematisk transformation kan göra icke-normal data till normalfördelad data. Vanliga transformationer är att ta en kvadratrot eller att \emph{logaritmera} datan. Som exempel kan vi återvända till gapminder-datan vi använde i en tidigare datorövning. Paketet \texttt{patchwork} kan användas för att placera flera grafer bredvid varandra. Den exakta koden är mindre viktig här.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(gapminder)}
 \NormalTok{gapminder\_2007 }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2007}\NormalTok{)}
 
-\NormalTok{g1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(pop)) }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{)}
-\NormalTok{g2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ pop)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
-\NormalTok{g3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(pop))) }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{)}
-\NormalTok{g4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =} \FunctionTok{sqrt}\NormalTok{(pop))) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
-\NormalTok{g5 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(}\FunctionTok{log10}\NormalTok{(pop))) }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{)}
-\NormalTok{g6 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =} \FunctionTok{log10}\NormalTok{(pop))) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
+\NormalTok{g1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(pop)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{)}
+\NormalTok{g2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ pop)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_qq\_line}\NormalTok{()}
+\NormalTok{g3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(pop))) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{)}
+\NormalTok{g4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =} \FunctionTok{sqrt}\NormalTok{(pop))) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_qq\_line}\NormalTok{()}
+\NormalTok{g5 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(}\FunctionTok{log10}\NormalTok{(pop))) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{)}
+\NormalTok{g6 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(gapminder\_2007, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =} \FunctionTok{log10}\NormalTok{(pop))) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_qq\_line}\NormalTok{()}
 
 \FunctionTok{library}\NormalTok{(patchwork)}
 \NormalTok{g1 }\SpecialCharTok{+}\NormalTok{ g3 }\SpecialCharTok{+}\NormalTok{ g5 }\SpecialCharTok{+}\NormalTok{ g2 }\SpecialCharTok{+}\NormalTok{ g4 }\SpecialCharTok{+}\NormalTok{ g6}
@@ -2000,8 +1888,12 @@ Det kan också finnas situationer där någon matematisk transformation kan gör
 
 I grafen har vi den ursprungliga variabeln (befolkning per land 2007), den kvadratrot-transformerade variabeln (\texttt{sqrt()}) och den log-transformerade variabeln (\texttt{log10()}). De två första fallen påverkas kraftigt av extremvärden och är klart icke-normala medan den log-transformerade variabeln ger en ungefärlig normalkurva och följer diagonalen väl i QQ-grafen.
 
-\begin{exercise}[Transformera medellivslängd]
-Använd kodstycket ovan som mall och ta fram grafer för medellivslängd (\texttt{lifeExp}) istället för befolkningsstorlek (\texttt{pop}). Visar grafen samma mönster som för befolkningsdatan?
+\section{AI-uppgift III}\label{ai-uppgift-iii}
+
+Det finns många studier som pekar på att p-värdet är svårtolkat. Det är särskilt vanligt att p-värdet tolkas som sannolikheten att nollhypotesen är sann. Den korrekta tolkningen är dock snarare tvärtom: p-värdet är sannolikheten för datautfallet givet att nollhypotesen är sann.
+
+\begin{exercise}[Tolkning av p-värdet]
+Be en AI-chatbot besvara en t-test-fråga t.ex. från en tidigare tenta eller uppgiften i början av den här övningen. Fråga särskilt om tolkningen av p-värdet och om det finns några vanliga feltolkningar.
 \end{exercise}
 
 \section{Bonus. Simuleringar för t-test och konfidensintervall}\label{bonus.-simuleringar-fuxf6r-t-test-och-konfidensintervall}
@@ -2027,20 +1919,22 @@ Låt oss upprepa simuleringen tusen gånger. Ett sätt är att upprepa ett steg 
 \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{1000}\NormalTok{)\{}
 \NormalTok{  new\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{, }\AttributeTok{mean =} \DecValTok{7}\NormalTok{, }\AttributeTok{sd =} \DecValTok{5}\NormalTok{))}
 \NormalTok{  test }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(new\_data}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{mu =} \DecValTok{7}\NormalTok{)}
-\NormalTok{  new\_results }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{t\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{statistic, }\AttributeTok{p\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{p.value,}
-               \AttributeTok{ci\_lower =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{1}\NormalTok{], }\AttributeTok{ci\_upper =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{2}\NormalTok{])}
+\NormalTok{  new\_results }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{t\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{statistic, }
+                            \AttributeTok{p\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{p.value,}
+                            \AttributeTok{ci\_lower =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{1}\NormalTok{], }
+                            \AttributeTok{ci\_upper =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{2}\NormalTok{])}
 \NormalTok{  dat\_sim }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(dat\_sim, new\_results)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-Enligt statistisk teori ska t-värdet följa en t-fördelning med nio frihetsgrader. Vi kan undersöka det genom ett histogram med en överliggande t-fördelning.
+Enligt statistisk teori ska t-värdet följa en t-fördelning med nio frihetsgrader. Vi kan undersöka det genom ett histogram.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(dat\_sim) }\SpecialCharTok{+}
-  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(t\_value, }\AttributeTok{y =}\NormalTok{ ..density..), }\AttributeTok{bins =} \DecValTok{50}\NormalTok{, }\AttributeTok{fill =} \StringTok{"white"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ dt, }\AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{df =} \DecValTok{9}\NormalTok{), }\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{)}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(t\_value, }\AttributeTok{y =}\NormalTok{ ..density..), }\AttributeTok{bins =} \DecValTok{50}\NormalTok{, }
+                 \AttributeTok{fill =} \StringTok{"white"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2056,10 +1950,6 @@ Vidare ska p-värdet vara under fem procent fem procent av gångerna.
 
 Även det stämmer någorlunda väl. Det här innebär alltså att om man har en signifikansnivå på fem procent kommer man förkasta nollhypotesen fem procent av gångerna även om nollhypotesen stämmer. Det kallas ett \emph{falskt positivt} utfall.
 
-\begin{exercise}[Simulerade konfidensintervall]
-Hur många av de simulerade konfidensintervallen täcker värdet 7?
-\end{exercise}
-
 \begin{exercise}[Signifikant skillnad]
 Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har nollhypotesen att populationsmedelvärdet är 7. Här vill vi alltså förkasta nollhypotesen.
 
@@ -2069,37 +1959,16 @@ Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har n
 \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{1000}\NormalTok{)\{}
 \NormalTok{  new\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{, }\AttributeTok{mean =} \DecValTok{9}\NormalTok{, }\AttributeTok{sd =} \DecValTok{5}\NormalTok{))}
 \NormalTok{  test }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(new\_data}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{mu =} \DecValTok{7}\NormalTok{)}
-\NormalTok{  new\_results }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{t\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{statistic, }\AttributeTok{p\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{p.value,}
-               \AttributeTok{ci\_lower =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{1}\NormalTok{], }\AttributeTok{ci\_upper =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{2}\NormalTok{])}
+\NormalTok{  new\_results }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{t\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{statistic, }
+                            \AttributeTok{p\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{p.value,}
+                            \AttributeTok{ci\_lower =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{1}\NormalTok{], }
+                            \AttributeTok{ci\_upper =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{2}\NormalTok{])}
 \NormalTok{  dat\_sim }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(dat\_sim, new\_results)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
 Använd kod från den första simuleringen för att undersöka hur väl histogrammet stämmer med den teoretiska fördelningen och för att se hur stor andel av gångerna man förkastar nollhypotesen på signifikansnivån 5 procent.
-\end{exercise}
-
-\begin{exercise}[50/50]
-Stycket nedan simulerar data när populationsmedelvärdet är 9 och t-test har nollhypotesen att populationsmedelvärdet är 7. Ändra värdet för n och se hur det påverkar andelen gånger man förkastar nollhypotesen.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{10}
-
-\NormalTok{dat\_sim }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{()}
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{1000}\NormalTok{)\{}
-\NormalTok{  new\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rnorm}\NormalTok{(n, }\AttributeTok{mean =} \DecValTok{9}\NormalTok{, }\AttributeTok{sd =} \DecValTok{5}\NormalTok{))}
-\NormalTok{  test }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(new\_data}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{mu =} \DecValTok{7}\NormalTok{)}
-\NormalTok{  new\_results }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{t\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{statistic, }\AttributeTok{p\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{p.value,}
-               \AttributeTok{ci\_lower =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{1}\NormalTok{], }\AttributeTok{ci\_upper =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{2}\NormalTok{])}
-\NormalTok{  dat\_sim }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(dat\_sim, new\_results)}
-\NormalTok{\}}
-
-\FunctionTok{mean}\NormalTok{(dat\_sim}\SpecialCharTok{$}\NormalTok{p\_value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Ungefär hur många observationer behövs för att ha femtio procents sannolikhet att förkasta nollhypotesen?
 \end{exercise}
 
 \begin{exercise}[Konfidensintervallets bredd]
@@ -2113,8 +1982,10 @@ Ett konfidensintervall blir smalare och smalare ju större stickprovet är. Kode
 \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{1000}\NormalTok{)\{}
 \NormalTok{  new\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rnorm}\NormalTok{(n, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{))}
 \NormalTok{  test }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(new\_data}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{mu =} \DecValTok{7}\NormalTok{)}
-\NormalTok{  new\_results }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{t\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{statistic, }\AttributeTok{p\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{p.value,}
-               \AttributeTok{ci\_lower =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{1}\NormalTok{], }\AttributeTok{ci\_upper =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{2}\NormalTok{])}
+\NormalTok{  new\_results }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{t\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{statistic, }
+                            \AttributeTok{p\_value =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{p.value,}
+                            \AttributeTok{ci\_lower =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{1}\NormalTok{], }
+                            \AttributeTok{ci\_upper =}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{conf.int[}\DecValTok{2}\NormalTok{])}
 \NormalTok{  dat\_sim }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(dat\_sim, new\_results)}
 \NormalTok{\}}
 
@@ -2170,7 +2041,7 @@ Ta som exempel följande data på jord-pH och låt oss anta att det är relevant
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-125-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-116-1} \end{center}
 
 Hypoteser ges av
 
@@ -2216,7 +2087,7 @@ En QQ-graf kan visa om det finns några avvikelser från normalantagandet. Med s
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-127-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-118-1} \end{center}
 
 \section{Proportioner från binär data}\label{proportioner-fruxe5n-binuxe4r-data}
 
@@ -2234,7 +2105,7 @@ Låt oss importera lite exempeldata och beräkna ett exempel. Följande rad impo
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-128-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-119-1} \end{center}
 
 \begin{exercise}[En interaktiv målgraf]
 
@@ -2369,7 +2240,7 @@ Därefter kan p-värdet räknas ut som arean under en standardiserad normalförd
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-134-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-125-1} \end{center}
 
 Areans yta kan tas fram med normalfördelningens fördelningsfunktion \texttt{pnorm()}.
 
@@ -2589,7 +2460,7 @@ P-värdet beräknas från en chi-två-fördelning. Antalet frihetsgrader ges av 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-146-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-137-1} \end{center}
 
 Man kan också beräkna ytan i svansen med \texttt{pchisq()}. Ett minus det resultatet ger den övre delen.
 
@@ -2687,7 +2558,7 @@ En vanlig tillämpning av goodness-of-fit-testet är för att testa om alla klas
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-152-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-143-1} \end{center}
 
 Använd de observerade värdena i kolumnen \texttt{Count} för att testa om alla godisfärger är lika vanliga.
 \end{exercise}
@@ -3243,7 +3114,7 @@ Datan kan illustreras med ett enkelt punktdiagram.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-176-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-167-1} \end{center}
 
 Ett t-test för två oberoende stickprov har nollhypotesen att grupperna har samma populationsmedelvärde och alternativhypotesen att populationsmedelvärdena är skilda (för det tvåsidiga fallet):
 
@@ -3528,7 +3399,7 @@ Datan tyder på att överlevnad är beroende av klass. Datan kan illustreras med
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-190-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-181-1} \end{center}
 
 Argumentet \texttt{position} i \texttt{geom\_bar} används för att skapa proportionella staplar.
 
@@ -3957,7 +3828,7 @@ Vi vill här testa om det finns en skillnad mellan arter och om det finns skilln
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-217-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-208-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3967,7 +3838,7 @@ Vi vill här testa om det finns en skillnad mellan arter och om det finns skilln
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-218-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-209-1} \end{center}
 
 För arterna har vi matchad data - varje observation av den ena arten är kopplad till en observation från den andra arten eftersom den kommer från samma båt - och vi kan testa om medelfångsterna av de två arterna är lika med ett t-test. Hypoteserna ges av
 
@@ -4150,7 +4021,7 @@ Datan har 30 observationer av vikt \texttt{weight} och varje observation tillhö
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-224-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-215-1} \end{center}
 
 Behandling 1 verkar vara något lägre än kontrollen medan behandling 2 verkar vara något högre.
 
@@ -4331,26 +4202,26 @@ Anledning till att vi justerar p-värden är att man vid varje test har en sanno
 \begin{verbatim}
 ## $emmeans
 ##  group   emmean    SE df lower.CL upper.CL
-##  a      0.12925 0.252 45   -0.377    0.636
-##  b     -0.01620 0.252 45   -0.523    0.491
-##  c      0.00452 0.252 45   -0.502    0.511
-##  d     -0.39751 0.252 45   -0.904    0.109
-##  e     -0.12065 0.252 45   -0.627    0.386
+##  a     -0.19813 0.293 45   -0.788    0.391
+##  b     -0.05731 0.293 45   -0.647    0.532
+##  c     -0.00833 0.293 45   -0.598    0.581
+##  d      0.43693 0.293 45   -0.152    1.026
+##  e     -0.07586 0.293 45   -0.665    0.514
 ## 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ##  contrast estimate    SE df t.ratio p.value
-##  a - b      0.1455 0.356 45   0.409  0.6846
-##  a - c      0.1247 0.356 45   0.351  0.7275
-##  a - d      0.5268 0.356 45   1.481  0.1457
-##  a - e      0.2499 0.356 45   0.702  0.4861
-##  b - c     -0.0207 0.356 45  -0.058  0.9538
-##  b - d      0.3813 0.356 45   1.072  0.2896
-##  b - e      0.1044 0.356 45   0.294  0.7704
-##  c - d      0.4020 0.356 45   1.130  0.2645
-##  c - e      0.1252 0.356 45   0.352  0.7266
-##  d - e     -0.2769 0.356 45  -0.778  0.4405
+##  a - b     -0.1408 0.414 45  -0.340  0.7352
+##  a - c     -0.1898 0.414 45  -0.459  0.6487
+##  a - d     -0.6351 0.414 45  -1.534  0.1319
+##  a - e     -0.1223 0.414 45  -0.295  0.7690
+##  b - c     -0.0490 0.414 45  -0.118  0.9063
+##  b - d     -0.4942 0.414 45  -1.194  0.2387
+##  b - e      0.0185 0.414 45   0.045  0.9645
+##  c - d     -0.4453 0.414 45  -1.076  0.2877
+##  c - e      0.0675 0.414 45   0.163  0.8711
+##  d - e      0.5128 0.414 45   1.239  0.2218
 \end{verbatim}
 
 Kör koden tio gånger. Hur många gånger av de tio ger de parvisa jämförelserna \emph{någon} signifikant skillnad (det vill säga något p-värde under 0.05)?
@@ -4440,7 +4311,7 @@ En vanlig illustration av ett blockförsök är ett punktdiagram kombinerat med 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-238-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-229-1} \end{center}
 
 Färg och linje sammanbinder observationer från samma block. Det finns tecken på en blockeffekt: block I är nästan alltid högst och block V är nästan alltid lägst. Det finns också en tydlig behandlingseffekt i att högre kväve ger högre skörd.
 
@@ -4645,7 +4516,7 @@ Exempeldata på havre tar med två förklarande faktorer och ett block. Datan ka
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-249-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-240-1} \end{center}
 
 Grafen visar samma kvävesamband som tidigare. Det finns inga tydliga skillnader mellan sorter, möjligen har sorten Victory givit något lägre skörd än övriga. Det finns fortfarande en tydlig blockeffekt, till exempel har block I höga värden och block V låga värden.
 
@@ -4799,7 +4670,7 @@ Normalfördelning kan undersökas grafiskt med ett histogram eller en QQ-graf.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-256-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-247-1} \end{center}
 
 Punkterna avviker något från normalfördelningen i svansarna, men det är förstås alltid en bedömningsfråga.
 
@@ -4813,7 +4684,7 @@ Lika varians undersöks ofta med ett spridningsdiagram med de skattade värdena 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-257-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-248-1} \end{center}
 
 Om datan är i linje med antaganden ska diagrammet se ut som slumpmässigt placerade punkter med ungefär lika stor spridning kring noll-linjen för samtliga nivåer på x-axeln. För det här exemplet ser det okej ut.
 
@@ -4930,7 +4801,7 @@ Vi kan illustrera data genom att pivotera till långt format och göra en graf m
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-266-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-257-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4939,7 +4810,7 @@ Vi kan illustrera data genom att pivotera till långt format och göra en graf m
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-266-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-257-2} \end{center}
 
 Ytterligare alternativ kan vara upprepade lådagram eller staplar med småfönster per art.
 
@@ -4973,7 +4844,7 @@ Ekologiska populationer kan analyseras genom \emph{heirarkisk klustring} - metod
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-268-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-259-1} \end{center}
 
 \begin{exercise}[Avståndsmått]
 Ta upp hjälpsidan till distansfunktionen med \texttt{?dist}. Under \texttt{method} finns flera möjliga avståndsmått. Vad måste ändras i kodstycket ovan för att ange ett Manhattan-avstånd? Har avståndet någon betydande effekt på träddiagrammet?
@@ -4991,7 +4862,7 @@ För att göra en klustring av arter kan man \emph{transponera} data så att rad
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-269-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-260-1} \end{center}
 
 Träddiagrammet tolkas så att enheter vars koppling ligger lågt är mer lika varandra - arterna förekommer ofta på samma plats.
 
@@ -5007,7 +4878,7 @@ I R kan en PCA göras med \texttt{prcomp()} och en biplot kan göras med \texttt
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-270-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-261-1} \end{center}
 
 Platserna illustreras med punkter och arterna med pilar. Pilar i samma riktning motsvarar arter som är lika (de finns på samma platser), närliggande punkter motsvarar lika platser (de har samma arter), och punkter i samma riktning som en pil har höga värden för den arten.
 
@@ -5046,7 +4917,7 @@ Diversitetsindexen kan sedan illustreras och analyseras som vilken numerisk vari
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-273-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-264-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5129,7 +5000,7 @@ Ta som exempel följande data på tandtillväxt (\texttt{len}) hos marsvin under
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-275-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-266-1} \end{center}
 
 Ett lådagram visar en klar skillnad mellan doser och en svagare skillnad mellan metoder. Det finns också tecken på att metoderna svarar olika på dos i att metoden \emph{VC} ligger lägre än \emph{OJ} vid de låga doserna men över (eller iallafall lika) vid den höga dosen.
 
@@ -5173,7 +5044,7 @@ En anovamodell bygger på antaganden om normalfördelning och lika varianser. No
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-277-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-268-1} \end{center}
 
 Punkterna ligger ungefär på linjen i QQ-grafen och punkterna har ungefär samma spridning för alla nivåer av det skattade värdet.
 
@@ -5262,7 +5133,7 @@ Ta som exempel data på förväntad medellivslängd och bnp per capita. Datan h�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-280-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-271-1} \end{center}
 
 Datan visar ett positivt samband mellan variablerna - högre bnp per capita är kopplat till högre medellivslängd.
 
@@ -5331,7 +5202,7 @@ Man kan enkelt rita ut regressionlinjen i en graf med \texttt{geom\_smooth()} oc
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-283-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-274-1} \end{center}
 
 Den blå linjen illustrerar regressionlinjen 72.27 + 0.2146x. Det grå bandet kring linjen är ett konfidensintervall för skattningen av y-variabeln.
 
@@ -5371,7 +5242,7 @@ Testerna av en regressionsmodell bygger på ett normalfördelningsantagande och 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-285-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-276-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5379,7 +5250,7 @@ Testerna av en regressionsmodell bygger på ett normalfördelningsantagande och 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-285-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-276-2} \end{center}
 
 Om data följer en normalfördelning bör histogrammet visa en ungefärlig normalkurva, QQ-plotten bör visa punkter på den diagonala linjen och spridningsdiagrammet bör visa en slumpmässig spridning av punkter. Graferna pekar i det här fallet inte på några tydliga avvikelser från normalfördelningsantagandet, möjligen pekar QQ-plotten på mindre spridning i svansarna än en teoretisk normalfördelning.
 
