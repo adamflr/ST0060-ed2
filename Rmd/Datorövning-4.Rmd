@@ -11,9 +11,7 @@ Datorövning 4 handlar om hypotestest och konfidensintervall för ett stickprov 
 
 - genomföra och tolka ett chi-två-test för nominal data
 
-- beräkna och tolka ett konfidensintervall för proportioner,
-
-- använda simulerad data för att förstå testens egenskaper.
+- beräkna och tolka ett konfidensintervall för proportioner.
 
 Om det finns tid för en bonussektion kommer vi också titta på interaktiva kartor med `leaflet`.
 
