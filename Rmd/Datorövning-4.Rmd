@@ -43,8 +43,8 @@ ggplot(dat_pH, aes(pH, 0)) +
 
 Hypoteser ges av
 
-- H0: mu lika med 7
-- H1: mu ej lika med 7
+- $H_0$: $\mu$ lika med 7
+- $H_1$: $\mu$ ej lika med 7
 
 Testet kan genomföras med funktionen `t.test()`.
 
@@ -79,7 +79,7 @@ ggplot(dat_alls, aes(hemmamal, bortamal)) +
 ::: {.exercise name="En interaktiv målgraf"}
 Kör stycket nedan för en interaktiv målgraf. Vilken match gav det högsta antalet gjorda bortamål?
 ```{r, eval = F}
-# install.packages(plotly)
+# install.packages("plotly")
 library(plotly)
 g <- ggplot(dat_alls, aes(hemmamal, bortamal, 
                       text = paste(sasong, hemma, "-", borta))) +
@@ -152,7 +152,7 @@ Vi kan jämföra den beräkning med den direkta R-funktionen.
 prop.test(x = 947, n = 2750, p = 0.33, correct = F)
 ```
 
-Den stegvisa beräkningen gav samma utfall som funktionen (`p-value = 0.01092`). Funktionen ger inte z-värdet utan ett chi-två-värde (2.5661). Här är det värdet lika med z-värdet i kvadrat.
+Den stegvisa beräkningen gav samma utfall som funktionen (`p-value = 0.1092`). Funktionen ger inte z-värdet utan ett chi-två-värde (2.5661). Här är det värdet lika med z-värdet i kvadrat.
 
 ```{r, results='hide'}
 z_value^2
