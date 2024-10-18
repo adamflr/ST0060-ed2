@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2024-10-16" />
+<meta name="date" content="2024-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,8 +251,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>I datorövning 5 tittade vi på tester som inte bygger på normalfördelning: dels tester för proportioner, där varje observation är något av två möjliga utfall; dels tester för kategoridata, där varje observation har ett ufall i någon av flera kategorier.</p>
 <p>Proportioner kan testas med ett z-test. Säg att man testar om en doft har en effekt på en insekt, man skickar 20 insekter i ett y-rör och 16 går mot doften. Hypoteserna ges av</p>
 <ul>
-<li>H0: proportionen i populationen är 0.5,</li>
-<li>H1: proportionen i populationen är inte 0.5.</li>
+<li><span class="math inline">\(H_0\)</span>: proportionen i populationen är 0.5,</li>
+<li><span class="math inline">\(H_1\)</span>: proportionen i populationen är inte 0.5.</li>
 </ul>
 <p>I R genomförs ett z-test med <code>prop.test()</code>. Funktionen gör en korrektion som ger ett något bättre test än det man ofta beräknar för hand. Korrektionen kan sättas av med argumentet <code>correct</code>.</p>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="test-för-två-stickprov.html#cb173-1" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="at">x =</span> <span class="dv">16</span>, <span class="at">n =</span> <span class="dv">20</span>, <span class="at">p =</span> <span class="fl">0.5</span>, <span class="at">correct =</span> F)</span></code></pre></div>
@@ -263,8 +263,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Populationens proportion ligger med 95 procents konfidens mellan 0.62 och 0.98.</p>
 <p>Om utfallen är mer än två kategorier kan en hypotes om datans fördelning testas med ett goodness-of-fit-test, vilket är ett slags chi-två-test. Testet bygger på att observerade antal (O) ställs mot förväntade antal (E). I R genomförs ett chi-två-test med <code>chisq.test()</code>. Säg som exempel att man studerar fågelpopulationer genom en observationsstudie. Observerade antal av fyra fågelarter är 102, 53, 75 och 12 och de förväntade andelarna av arterna är 50, 15, 25 och 10 procent. Testets hypoteser ges av</p>
 <ul>
-<li>H0: proportionerna följer den förväntade fördelningen,</li>
-<li>H1: proportionerna följer inte den förväntade fördelningen,</li>
+<li><span class="math inline">\(H_0\)</span>: proportionerna följer den förväntade fördelningen,</li>
+<li><span class="math inline">\(H_1\)</span>: proportionerna följer inte den förväntade fördelningen,</li>
 </ul>
 <p>och testet ges av</p>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="test-för-två-stickprov.html#cb175-1" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">c</span>(<span class="dv">102</span>, <span class="dv">53</span>, <span class="dv">75</span>, <span class="dv">12</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.15</span>, <span class="fl">0.25</span>, <span class="fl">0.10</span>))</span></code></pre></div>
@@ -360,8 +360,8 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 <h2><span class="header-section-number">5.3</span> z-test och konfidensintervall för två proportioner<a href="test-för-två-stickprov.html#z-test-och-konfidensintervall-för-två-proportioner" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Om man vill jämföra två proportioner kan man använda z-testet för två stickprov. Säg till exempel att man har två sorter av någon planta och vill se hur stor proportion som är infekterad av bladmögel. I den ena gruppen (sort A) är 17 av 50 infektera och i den andra (sort B) är 26 av 60 infekterade. Testets hypoteser är i det tvåsidiga fallet</p>
 <ul>
-<li>H0: proportion A är lika med proportion B</li>
-<li>H1: proportion A är skild från proportion B</li>
+<li><span class="math inline">\(H_0\)</span>: proportion A är lika med proportion B</li>
+<li><span class="math inline">\(H_1\)</span>: proportion A är skild från proportion B</li>
 </ul>
 <p>I R kan testet genomföras med <code>prop.test()</code>-funktionen. Funktionens första argument är antalen infekterade, som en vektor med två värden, och dess andra argument är totalerna. Likt testet med ett stickprov finns en möjlighet att göra en kontinuitetskorrektion med <code>correct</code>-argumentet. För att få samma resultat som räkning för hand anger vi att korrektion inte ska göras med <code>correct = F</code>.</p>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="test-för-två-stickprov.html#cb187-1" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">17</span>, <span class="dv">26</span>), <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">60</span>), <span class="at">correct =</span> F)</span></code></pre></div>
@@ -393,7 +393,7 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 <span id="cb192-2"><a href="test-för-två-stickprov.html#cb192-2" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_fill</span>(), <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
 <span id="cb192-3"><a href="test-för-två-stickprov.html#cb192-3" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;red4&quot;</span>, <span class="st">&quot;white&quot;</span>))</span></code></pre></div>
 <p>Argumentet <code>position</code> i <code>geom_bar</code> används för att skapa proportionella staplar.</p>
-<p>Ett chi-två-test på en korstabell har nollhypotesen att det inte finns något samband mellan variabeln för rader och variabeln för kolumner. Antal frihetsgrader ges av antal rader minus ett gånger antal kolumner minus ett. Testet kan enkelt göras med <code>chisq.test()</code>. Som ingångsvärde kan man plocka ut kolumnerna med numeriska värden genom hakparenteser.</p>
+<p>Ett chi-två-test på en korstabell har nollhypotesen att det inte finns något samband mellan variabeln för rader och variabeln för kolumner. Chi-två-testet kan tillämpas på korstabeller med godtyckligt antal rader och kolumner. Antal frihetsgrader ges av antal rader minus ett gånger antal kolumner minus ett. Testet kan enkelt göras med <code>chisq.test()</code>. Som ingångsvärde kan man plocka ut kolumnerna med numeriska värden genom hakparenteser.</p>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="test-för-två-stickprov.html#cb193-1" tabindex="-1"></a>dat_wide[, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># De två numeriska kolumnerna</span></span>
 <span id="cb193-2"><a href="test-för-två-stickprov.html#cb193-2" tabindex="-1"></a></span>
 <span id="cb193-3"><a href="test-för-två-stickprov.html#cb193-3" tabindex="-1"></a><span class="fu">chisq.test</span>(dat_wide[, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
@@ -420,7 +420,6 @@ Ett exempel på funktionen <code>pairwise.t.test()</code> ges nedan. Funktionen 
 <div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="test-för-två-stickprov.html#cb198-1" tabindex="-1"></a>dat_bird_swe[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)]</span>
 <span id="cb198-2"><a href="test-för-två-stickprov.html#cb198-2" tabindex="-1"></a><span class="fu">chisq.test</span>(___, <span class="at">correct =</span> F)</span></code></pre></div>
 </div>
-<p>Chi-två-testet kan tillämpas på korstabeller med godtyckligt antal rader och kolumner.</p>
 
 </div>
 </div>

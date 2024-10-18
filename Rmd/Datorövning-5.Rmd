@@ -28,8 +28,8 @@ I datorövning 5 tittade vi på tester som inte bygger på normalfördelning: de
 
 Proportioner kan testas med ett z-test. Säg att man testar om en doft har en effekt på en insekt, man skickar 20 insekter i ett y-rör och 16 går mot doften. Hypoteserna ges av
 
-- H0: proportionen i populationen är 0.5,
-- H1: proportionen i populationen är inte 0.5.
+- $H_0$: proportionen i populationen är 0.5,
+- $H_1$: proportionen i populationen är inte 0.5.
 
 I R genomförs ett z-test med `prop.test()`. Funktionen gör en korrektion som ger ett något bättre test än det man ofta beräknar för hand. Korrektionen kan sättas av med argumentet `correct`.
 
@@ -50,8 +50,8 @@ Populationens proportion ligger med 95 procents konfidens mellan 0.62 och 0.98.
 
 Om utfallen är mer än två kategorier kan en hypotes om datans fördelning testas med ett goodness-of-fit-test, vilket är ett slags chi-två-test. Testet bygger på att observerade antal (O) ställs mot förväntade antal (E). I R genomförs ett chi-två-test med `chisq.test()`. Säg som exempel att man studerar fågelpopulationer genom en observationsstudie. Observerade antal av fyra fågelarter är 102, 53, 75 och 12 och de förväntade andelarna av arterna är 50, 15, 25 och 10 procent. Testets hypoteser ges av
 
-- H0: proportionerna följer den förväntade fördelningen,
-- H1: proportionerna följer inte den förväntade fördelningen,
+- $H_0$: proportionerna följer den förväntade fördelningen,
+- $H_1$: proportionerna följer inte den förväntade fördelningen,
 
 och testet ges av
 
@@ -187,8 +187,8 @@ pairwise.t.test(dat_berry$Vikt, dat_berry$Behandling,
 
 Om man vill jämföra två proportioner kan man använda z-testet för två stickprov. Säg till exempel att man har två sorter av någon planta och vill se hur stor proportion som är infekterad av bladmögel. I den ena gruppen (sort A) är 17 av 50 infektera och i den andra (sort B) är 26 av 60 infekterade. Testets hypoteser är i det tvåsidiga fallet
 
-- H0: proportion A är lika med proportion B
-- H1: proportion A är skild från proportion B
+- $H_0$: proportion A är lika med proportion B
+- $H_1$: proportion A är skild från proportion B
 
 I R kan testet genomföras med `prop.test()`-funktionen. Funktionens första argument är antalen infekterade, som en vektor med två värden, och dess andra argument är totalerna. Likt testet med ett stickprov finns en möjlighet att göra en kontinuitetskorrektion med `correct`-argumentet. För att få samma resultat som räkning för hand anger vi att korrektion inte ska göras med `correct = F`.
 
@@ -246,7 +246,7 @@ ggplot(dat_titanic, aes(Class, Freq, fill = Survived)) +
 
 Argumentet `position` i `geom_bar` används för att skapa proportionella staplar.
 
-Ett chi-två-test på en korstabell har nollhypotesen att det inte finns något samband mellan variabeln för rader och variabeln för kolumner. Antal frihetsgrader ges av antal rader minus ett gånger antal kolumner minus ett. Testet kan enkelt göras med `chisq.test()`. Som ingångsvärde kan man plocka ut kolumnerna med numeriska värden genom hakparenteser.
+Ett chi-två-test på en korstabell har nollhypotesen att det inte finns något samband mellan variabeln för rader och variabeln för kolumner. Chi-två-testet kan tillämpas på korstabeller med godtyckligt antal rader och kolumner. Antal frihetsgrader ges av antal rader minus ett gånger antal kolumner minus ett. Testet kan enkelt göras med `chisq.test()`. Som ingångsvärde kan man plocka ut kolumnerna med numeriska värden genom hakparenteser.
 
 ```{r, results='hide'}
 dat_wide[, 4:5] # De två numeriska kolumnerna
@@ -290,5 +290,3 @@ dat_bird_swe[, c(2,3)]
 chisq.test(___, correct = F)
 ```
 :::
-
-Chi-två-testet kan tillämpas på korstabeller med godtyckligt antal rader och kolumner.
