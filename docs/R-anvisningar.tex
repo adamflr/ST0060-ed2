@@ -137,7 +137,7 @@
 
 \title{R-anvisningar till \emph{Grundläggande statistik}}
 \author{}
-\date{\vspace{-2.5em}2024-10-18}
+\date{\vspace{-2.5em}2024-10-24}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Sats}[chapter]
@@ -2025,7 +2025,7 @@ När man startar en ny R-session bör man ladda de paket man vet kommer behövas
 \end{Highlighting}
 \end{Shaded}
 
-I datorövning 4 tittade vi på analys av ett stickprov av normalfördelad data. Det underliggande upplägget är att vi vill säga något om en population genom att titta på ett stickprov. Ett \emph{t-test} kan användas för att testa en given \emph{nollhypotes}. Ett konfidensintervall ringar in populationens medelvärde med en viss konfidensgrad - oftast 95 procent. Ett normalfördelningsantagande kan undersökas med histogram eller QQ-grafer.
+I datorövning 3 tittade vi på analys av ett stickprov av normalfördelad data. Det underliggande upplägget är att vi vill säga något om en population genom att titta på ett stickprov. Ett \emph{t-test} kan användas för att testa en given \emph{nollhypotes}. Ett konfidensintervall ringar in populationens medelvärde med en viss konfidensgrad - oftast 95 procent. Ett normalfördelningsantagande kan undersökas med histogram eller QQ-grafer.
 
 Ta som exempel följande data på jord-pH och låt oss anta att det är relevant att testa om populationens medelvärde är 7.
 
@@ -2491,7 +2491,7 @@ Datorövning 5 handlar om hypotestest och konfidensintervall för jämförelse a
 \item
   z-test för jämförelse av två proportioner,
 \item
-  chi-två-test för jämförelse fördelningar mellan två eller flera grupper,
+  chi-två-test för jämförelse av fördelningar mellan två eller flera grupper,
 \item
   konfidensintervall för skillnaden mellan två medelvärden eller två proportioner.
 \end{itemize}
@@ -2507,7 +2507,7 @@ När man startar en ny R-session bör man ladda de paket man vet kommer behövas
 \end{Highlighting}
 \end{Shaded}
 
-I datorövning 5 tittade vi på tester som inte bygger på normalfördelning: dels tester för proportioner, där varje observation är något av två möjliga utfall; dels tester för kategoridata, där varje observation har ett ufall i någon av flera kategorier.
+I datorövning 4 tittade vi på tester som inte bygger på normalfördelning: dels tester för proportioner, där varje observation är något av två möjliga utfall; dels tester för kategoridata, där varje observation har ett ufall i någon av flera kategorier.
 
 Proportioner kan testas med ett z-test. Säg att man testar om en doft har en effekt på en insekt, man skickar 20 insekter i ett y-rör och 16 går mot doften. Hypoteserna ges av
 
@@ -2880,6 +2880,7 @@ Genomför ett chi-två-test för att se om andelen cancerdrabbade än densamma i
 Datorövning 6 handlar om variansanalys. Efter övningen ska vi kunna
 
 \begin{itemize}
+\tightlist
 \item
   beräkna en anova-modell i R,
 \item
@@ -2901,7 +2902,7 @@ När man startar en ny R-session bör man ladda de paket man vet kommer behövas
 \end{Highlighting}
 \end{Shaded}
 
-I datorövning 6 tittade vi på tester för två stickprov. För normalfördelad data kan man då använda ett t-test för två stickprov (för två matchade stickprov eller för två oberoende stickprov beroende på situation) för data med utfall i två eller flera kategorier kan man använda ett z-test för två stickprov eller ett chi-två-test för en korstabell.
+I datorövning 5 tittade vi på tester för två stickprov. För normalfördelad data kan man då använda ett t-test för två stickprov (för två matchade stickprov eller för två oberoende stickprov beroende på situation) för data med utfall i två eller flera kategorier kan man använda ett z-test för två stickprov eller ett chi-två-test för en korstabell.
 
 Ett t-test för matchade stickprov används när de två grupper man jämför är matchade så att en observation i den ena gruppen är kopplad till en observation i den andra gruppen. Ett t-test för oberoende stickprov används om man inte har matchade stickprov, det vill säga då det inte finns någon koppling mellan behandlinggrupperna.
 
@@ -2909,10 +2910,12 @@ Ta som exempel följande fiskefångster för sex båtar från två regioner och 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat\_fish }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Vessel =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"E"}\NormalTok{, }\StringTok{"F"}\NormalTok{),}
-                       \AttributeTok{Region =} \FunctionTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\StringTok{"N"}\NormalTok{, }\StringTok{"N"}\NormalTok{, }\StringTok{"S"}\NormalTok{, }\StringTok{"S"}\NormalTok{, }\StringTok{"S"}\NormalTok{),}
-                       \AttributeTok{Species1 =} \FunctionTok{c}\NormalTok{(}\FloatTok{115.7}\NormalTok{, }\FloatTok{98.5}\NormalTok{, }\FloatTok{82.1}\NormalTok{, }\FloatTok{89.2}\NormalTok{, }\FloatTok{95.7}\NormalTok{, }\FloatTok{99.4}\NormalTok{),}
-                       \AttributeTok{Species2 =} \FunctionTok{c}\NormalTok{(}\FloatTok{122.8}\NormalTok{, }\FloatTok{105.3}\NormalTok{, }\FloatTok{99.8}\NormalTok{, }\FloatTok{106.8}\NormalTok{, }\DecValTok{114}\NormalTok{, }\FloatTok{102.7}\NormalTok{))}
+\NormalTok{dat\_fish }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Vessel =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"E"}\NormalTok{, }\StringTok{"F"}\NormalTok{),}
+  \AttributeTok{Region =} \FunctionTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\StringTok{"N"}\NormalTok{, }\StringTok{"N"}\NormalTok{, }\StringTok{"S"}\NormalTok{, }\StringTok{"S"}\NormalTok{, }\StringTok{"S"}\NormalTok{),}
+  \AttributeTok{Species1 =} \FunctionTok{c}\NormalTok{(}\FloatTok{115.7}\NormalTok{, }\FloatTok{98.5}\NormalTok{, }\FloatTok{82.1}\NormalTok{, }\FloatTok{89.2}\NormalTok{, }\FloatTok{95.7}\NormalTok{, }\FloatTok{99.4}\NormalTok{),}
+  \AttributeTok{Species2 =} \FunctionTok{c}\NormalTok{(}\FloatTok{122.8}\NormalTok{, }\FloatTok{105.3}\NormalTok{, }\FloatTok{99.8}\NormalTok{, }\FloatTok{106.8}\NormalTok{, }\DecValTok{114}\NormalTok{, }\FloatTok{102.7}\NormalTok{)}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2921,15 +2924,15 @@ Vi vill här testa om det finns en skillnad mellan arter och om det finns skilln
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dat\_long }\OtherTok{\textless{}{-}}\NormalTok{ dat\_fish }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Vessel, Region), }\AttributeTok{names\_to =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Catch"}\NormalTok{)}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Vessel, Region), }
+               \AttributeTok{names\_to =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Catch"}\NormalTok{)}
 \FunctionTok{ggplot}\NormalTok{(dat\_long, }\FunctionTok{aes}\NormalTok{(Species, Catch, }\AttributeTok{group =}\NormalTok{ Vessel)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
   \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Fångster av två arter"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Linje sammanbinder observationer från samma fartyg"}\NormalTok{)}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Fångster av två arter"}\NormalTok{, }
+       \AttributeTok{subtitle =} \StringTok{"Linje kopplar värden från samma fartyg"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-176-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2938,8 +2941,6 @@ Vi vill här testa om det finns en skillnad mellan arter och om det finns skilln
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Fångster i två regioner"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-177-1} \end{center}
 
 För arterna har vi matchad data - varje observation av den ena arten är kopplad till en observation från den andra arten eftersom den kommer från samma båt - och vi kan testa om medelfångsterna av de två arterna är lika med ett t-test. Hypoteserna ges av
 
@@ -2956,25 +2957,7 @@ I R kan ett test för matchad data genomföras med \texttt{t.test()} och argumen
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{t.test}\NormalTok{(dat\_fish}\SpecialCharTok{$}\NormalTok{Species1, dat\_fish}\SpecialCharTok{$}\NormalTok{Species2, }\AttributeTok{paired =}\NormalTok{ T)}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## 
-##  Paired t-test
-## 
-## data:  dat_fish$Species1 and dat_fish$Species2
-## t = -4.2613, df = 5, p-value = 0.008005
-## alternative hypothesis: true mean difference is not equal to 0
-## 95 percent confidence interval:
-##  -18.918238  -4.681762
-## sample estimates:
-## mean difference 
-##           -11.8
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \CommentTok{\# Alternativt}
 \CommentTok{\# t.test(dat\_fish$Species1 {-} dat\_fish$Species2)}
 \end{Highlighting}
@@ -3000,20 +2983,6 @@ Testet kan genomföras med \texttt{t.test()} och kan antingen göras med ett ant
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## 
-##  Two Sample t-test
-## 
-## data:  Species1 by Region
-## t = 0.39416, df = 4, p-value = 0.7136
-## alternative hypothesis: true difference in means between group N and group S is not equal to 0
-## 95 percent confidence interval:
-##  -24.17586  32.17586
-## sample estimates:
-## mean in group N mean in group S 
-##        98.76667        94.76667
-\end{verbatim}
-
 Ett högt p-värde tyder på att det inte finns någon skillnad i fångst mellan regioner.
 
 För data där utfallen är två eller flera kategorier kan ett chi-två-test testa om det finns något samband mellan två variabler. Följande data anger vilka partier ett urval väljare från tre kommuner planerar rösta på i nästa riksdagsval.
@@ -3027,13 +2996,6 @@ För data där utfallen är två eller flera kategorier kan ett chi-två-test te
 \NormalTok{dat\_parti}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-##     Kommun   S  M MP
-## 1    Malmö  54 30  7
-## 2     Lund 102 98 50
-## 3 Kävlinge  40 53  5
-\end{verbatim}
 
 För att testa om det finns något samband mellan kommun och parti sätter vi upp hypoteserna
 
@@ -3053,14 +3015,6 @@ Detta kan testas med ett chi-två-test med funktionen \texttt{chisq.test()}. Som
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## 
-##  Pearson's Chi-squared test
-## 
-## data:  dat_parti[, -1]
-## X-squared = 25.659, df = 4, p-value = 3.706e-05
-\end{verbatim}
-
 Det låga p-värdet på 0.000037 ger att vi förkastar nollhypotesen och drar slutsatsen att det finns ett samband mellan kommun och parti.
 
 \section{Allmänt}\label{allmuxe4nt}
@@ -3079,40 +3033,6 @@ Vid variansanalys med en faktor har man observationer av en kontinuerlig utfalls
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##    weight group
-## 1    4.17  ctrl
-## 2    5.58  ctrl
-## 3    5.18  ctrl
-## 4    6.11  ctrl
-## 5    4.50  ctrl
-## 6    4.61  ctrl
-## 7    5.17  ctrl
-## 8    4.53  ctrl
-## 9    5.33  ctrl
-## 10   5.14  ctrl
-## 11   4.81  trt1
-## 12   4.17  trt1
-## 13   4.41  trt1
-## 14   3.59  trt1
-## 15   5.87  trt1
-## 16   3.83  trt1
-## 17   6.03  trt1
-## 18   4.89  trt1
-## 19   4.32  trt1
-## 20   4.69  trt1
-## 21   6.31  trt2
-## 22   5.12  trt2
-## 23   5.54  trt2
-## 24   5.50  trt2
-## 25   5.37  trt2
-## 26   5.29  trt2
-## 27   4.92  trt2
-## 28   6.15  trt2
-## 29   5.80  trt2
-## 30   5.26  trt2
-\end{verbatim}
-
 Datan har 30 observationer av vikt \texttt{weight} och varje observation tillhör någon specifik behandling \texttt{group}. Datan kan illustreras med ett spridningsdiagram.
 
 \begin{Shaded}
@@ -3121,8 +3041,6 @@ Datan har 30 observationer av vikt \texttt{weight} och varje observation tillhö
   \FunctionTok{geom\_point}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-183-1} \end{center}
 
 Behandling 1 verkar vara något lägre än kontrollen medan behandling 2 verkar vara något högre.
 
@@ -3145,17 +3063,6 @@ För anova-tabellen finns flera alternativ. Här används funktionen \texttt{Ano
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Anova Table (Type II tests)
-## 
-## Response: weight
-##            Sum Sq Df F value  Pr(>F)  
-## group      3.7663  2  4.8461 0.01591 *
-## Residuals 10.4921 27                  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
 Anova-tabellen ger kvadratsummor (\texttt{Sum\ Sq}), frihetsgrader (\texttt{Df}) och utfallet av ett F-test. Testets hypoteser ges av
 
 H0: alla behandlingsgrupper har samma medelvärde
@@ -3177,10 +3084,6 @@ Anova-tabellen ger ett p-värde från vilket vi kan dra en direkt slutsats. Om m
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] 3.354131
-\end{verbatim}
-
 \end{exercise}
 
 En naturlig följdfråga är vilka behandlingsgrupper som skiljer sig åt. För att besvara det krävs \emph{parvisa jämförelser} där behandlingarna jämförs två och två. Parvisa jämförelse kan göras med paketet \texttt{emmeans} och funktionen med samma namn. Funktionen tar modellobjektet som första argument och en formel för jämförelsetyp som andra argument (här \texttt{pairwise\ \textasciitilde{}\ group}, en parvis jämförelse mellan nivåer i \texttt{group}).
@@ -3193,24 +3096,6 @@ En naturlig följdfråga är vilka behandlingsgrupper som skiljer sig åt. För 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## $emmeans
-##  group emmean    SE df lower.CL upper.CL
-##  ctrl    5.03 0.197 27     4.63     5.44
-##  trt1    4.66 0.197 27     4.26     5.07
-##  trt2    5.53 0.197 27     5.12     5.93
-## 
-## Confidence level used: 0.95 
-## 
-## $contrasts
-##  contrast    estimate    SE df t.ratio p.value
-##  ctrl - trt1    0.371 0.279 27   1.331  0.3909
-##  ctrl - trt2   -0.494 0.279 27  -1.772  0.1980
-##  trt1 - trt2   -0.865 0.279 27  -3.103  0.0120
-## 
-## P value adjustment: tukey method for comparing a family of 3 estimates
-\end{verbatim}
-
 I den nedre tabellen med jämförelser ges alla parvisa jämförelser. Nollhypotesen är att de två grupper som jämförs har samma medelvärde - ett lågt p-värde tyder alltså på att de två grupperna är signifikant skilda. Notera också att p-värden justeras med tukey-metoden, även känt som Tukeys HSD.
 
 Om man istället vill använda Fishers LSD kan man styra justeringen med argumentet \texttt{adjust}.
@@ -3221,46 +3106,18 @@ Om man istället vill använda Fishers LSD kan man styra justeringen med argumen
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## $emmeans
-##  group emmean    SE df lower.CL upper.CL
-##  ctrl    5.03 0.197 27     4.63     5.44
-##  trt1    4.66 0.197 27     4.26     5.07
-##  trt2    5.53 0.197 27     5.12     5.93
-## 
-## Confidence level used: 0.95 
-## 
-## $contrasts
-##  contrast    estimate    SE df t.ratio p.value
-##  ctrl - trt1    0.371 0.279 27   1.331  0.1944
-##  ctrl - trt2   -0.494 0.279 27  -1.772  0.0877
-##  trt1 - trt2   -0.865 0.279 27  -3.103  0.0045
-\end{verbatim}
-
 Parvisa jämförelser presenteras ofta med signifikansbokstäver (en. \emph{compact letter display, cld}). Dessa kan plockas fram med \texttt{multcomp}-paketet och funktionen \texttt{cld()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{em }\OtherTok{\textless{}{-}} \FunctionTok{emmeans}\NormalTok{(mod, pairwise }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group)}
 
+\CommentTok{\# install.packages("multcomp")}
+\CommentTok{\# install.packages("multcompView")}
 \FunctionTok{library}\NormalTok{(multcomp)}
 \FunctionTok{cld}\NormalTok{(em, }\AttributeTok{Letters =}\NormalTok{ letters)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-##  group emmean    SE df lower.CL upper.CL .group
-##  trt1    4.66 0.197 27     4.26     5.07  a    
-##  ctrl    5.03 0.197 27     4.63     5.44  ab   
-##  trt2    5.53 0.197 27     5.12     5.93   b   
-## 
-## Confidence level used: 0.95 
-## P value adjustment: tukey method for comparing a family of 3 estimates 
-## significance level used: alpha = 0.05 
-## NOTE: If two or more means share the same grouping symbol,
-##       then we cannot show them to be different.
-##       But we also did not show them to be the same.
-\end{verbatim}
 
 Tolkning av grupperingen till höger är att grupper som delar en bokstav inte är signifikant skilda. I det här fallet är den lägsta nivån skild från de två högsta. I övrigt finns inga signifikanta skillnader. Jämför gärna med p-värdena från tabellen med parvisa jämförelser. Man bör se att parvisa jämförelser med ett p-värde under fem procent motsvaras av att de behandlingarna inte delar någon bokstav i bokstavstabellen.
 
@@ -3281,7 +3138,7 @@ Använd den datan för att göra ett t-test för två oberoende stickprov med li
 \FunctionTok{t.test}\NormalTok{(\_\_\_ }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ dat\_two, }\AttributeTok{var.equal =}\NormalTok{ T)}
 \FunctionTok{t.test}\NormalTok{(weight }\SpecialCharTok{\textasciitilde{}}\NormalTok{ \_\_\_, }\AttributeTok{data =}\NormalTok{ dat\_two, }\AttributeTok{var.equal =}\NormalTok{ F)}
 
-\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(weight }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ \_\_\_)}
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(weight }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ dat\_two)}
 \FunctionTok{Anova}\NormalTok{(mod)}
 \end{Highlighting}
 \end{Shaded}
@@ -3294,40 +3151,14 @@ Anledning till att vi justerar p-värden är att man vid varje test har en sanno
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{n\_groups }\OtherTok{\textless{}{-}} \DecValTok{5}
-\NormalTok{dat\_sim }\OtherTok{\textless{}{-}} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{obs =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{group =}\NormalTok{ letters[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n\_groups]) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{y =} \FunctionTok{rnorm}\NormalTok{(}\FunctionTok{n}\NormalTok{()))}
+\NormalTok{dat\_sim }\OtherTok{\textless{}{-}} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{obs =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{group =}\NormalTok{ letters[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n\_groups]) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{y =} \FunctionTok{rnorm}\NormalTok{(}\FunctionTok{n}\NormalTok{()))}
 \NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, dat\_sim)}
 \FunctionTok{emmeans}\NormalTok{(mod, pairwise }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{adjust =} \StringTok{"none"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## $emmeans
-##  group emmean    SE df lower.CL upper.CL
-##  a     -0.754 0.327 45   -1.412  -0.0960
-##  b     -0.384 0.327 45   -1.042   0.2741
-##  c     -0.178 0.327 45   -0.836   0.4797
-##  d     -0.699 0.327 45   -1.357  -0.0416
-##  e      0.352 0.327 45   -0.306   1.0100
-## 
-## Confidence level used: 0.95 
-## 
-## $contrasts
-##  contrast estimate    SE df t.ratio p.value
-##  a - b     -0.3701 0.462 45  -0.801  0.4272
-##  a - c     -0.5757 0.462 45  -1.246  0.2191
-##  a - d     -0.0544 0.462 45  -0.118  0.9068
-##  a - e     -1.1060 0.462 45  -2.394  0.0209
-##  b - c     -0.2056 0.462 45  -0.445  0.6584
-##  b - d      0.3157 0.462 45   0.683  0.4978
-##  b - e     -0.7359 0.462 45  -1.593  0.1181
-##  c - d      0.5213 0.462 45   1.129  0.2651
-##  c - e     -0.5303 0.462 45  -1.148  0.2570
-##  d - e     -1.0516 0.462 45  -2.277  0.0276
-\end{verbatim}
-
 Kör koden tio gånger. Hur många gånger av de tio ger de parvisa jämförelserna \emph{någon} signifikant skillnad (det vill säga något p-värde under 0.05)?
-
-En passande xkcd-serie: \url{https://xkcd.com/882/}
 \end{exercise}
 
 \begin{exercise}[Äppelinfektionsimport]
@@ -3374,34 +3205,6 @@ Som exempel på ett blockförsök kan vi titta på datan \texttt{oats} från pak
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##      B          V      N   Y
-## 1    I Marvellous 0.0cwt 105
-## 2    I Marvellous 0.2cwt 140
-## 3    I Marvellous 0.4cwt 118
-## 4    I Marvellous 0.6cwt 156
-## 5   II Marvellous 0.0cwt  96
-## 6   II Marvellous 0.2cwt 124
-## 7   II Marvellous 0.4cwt 121
-## 8   II Marvellous 0.6cwt 144
-## 9  III Marvellous 0.0cwt  89
-## 10 III Marvellous 0.2cwt 129
-## 11 III Marvellous 0.4cwt 132
-## 12 III Marvellous 0.6cwt 124
-## 13  IV Marvellous 0.0cwt  70
-## 14  IV Marvellous 0.2cwt  89
-## 15  IV Marvellous 0.4cwt 104
-## 16  IV Marvellous 0.6cwt 117
-## 17   V Marvellous 0.0cwt  63
-## 18   V Marvellous 0.2cwt  70
-## 19   V Marvellous 0.4cwt 109
-## 20   V Marvellous 0.6cwt  99
-## 21  VI Marvellous 0.0cwt  97
-## 22  VI Marvellous 0.2cwt  99
-## 23  VI Marvellous 0.4cwt 119
-## 24  VI Marvellous 0.6cwt 121
-\end{verbatim}
-
 En vanlig illustration av ett blockförsök är ett punktdiagram kombinerat med ett linjediagram.
 
 \begin{Shaded}
@@ -3411,8 +3214,6 @@ En vanlig illustration av ett blockförsök är ett punktdiagram kombinerat med 
   \FunctionTok{geom\_line}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-197-1} \end{center}
 
 Färg och linje sammanbinder observationer från samma block. Det finns tecken på en blockeffekt: block I är nästan alltid högst och block V är nästan alltid lägst. Det finns också en tydlig behandlingseffekt i att högre kväve ger högre skörd.
 
@@ -3425,18 +3226,6 @@ Blockeffekten kan enkelt föras in i modellen genom att lägga till variabeln \t
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Anova Table (Type II tests)
-## 
-## Response: Y
-##           Sum Sq Df F value    Pr(>F)    
-## N         5287.5  3 14.6241 0.0001004 ***
-## B         5708.7  5  9.4735 0.0003106 ***
-## Residuals 1807.8 15                      
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
 P-värdet från F-testet på variabeln N är nu klart mindre än tidigare. Detta beror på att en stor del av variationen kan förklaras med blockeffekten, vilket är tydligt i att blockeffekten också har ett litet p-värde i F-testet.
 
 Det kan vara intressant att jämföra med modellen utan block.
@@ -3448,17 +3237,6 @@ Det kan vara intressant att jämföra med modellen utan block.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Anova Table (Type II tests)
-## 
-## Response: Y
-##           Sum Sq Df F value  Pr(>F)  
-## N         5287.5  3  4.6896 0.01227 *
-## Residuals 7516.5 20                  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
 Det som är residualens kvadratsumma i modellen utan block är i blockmodellen uppdelat i en blockeffekt och en residualterm. Eftersom F-testet bygger på en jämförelse mellan behandlingseffekten och residualtermen leder blockdesignen till starkare signifikans i blockmodellen. Å andra sidan kostar blockfaktorn frihetsgrader vilket ger oss ett svagare test. Effekten av att ta med ett block beror alltså på om det finns en verklig skillnad mellan blocken eller ej.
 
 Vi kan gå vidare med att titta på parvisa jämförelser mellan kvävenivåer. Funktionen \texttt{emmeans()} och \texttt{cld()} fungerar som tidigare.
@@ -3469,22 +3247,6 @@ Vi kan gå vidare med att titta på parvisa jämförelser mellan kvävenivåer. 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##  N      emmean   SE df lower.CL upper.CL .group
-##  0.0cwt   86.7 4.48 15     77.1     96.2  a    
-##  0.2cwt  108.5 4.48 15     98.9    118.1   b   
-##  0.4cwt  117.2 4.48 15    107.6    126.7   bc  
-##  0.6cwt  126.8 4.48 15    117.3    136.4    c  
-## 
-## Results are averaged over the levels of: B 
-## Confidence level used: 0.95 
-## P value adjustment: tukey method for comparing a family of 4 estimates 
-## significance level used: alpha = 0.05 
-## NOTE: If two or more means share the same grouping symbol,
-##       then we cannot show them to be different.
-##       But we also did not show them to be the same.
-\end{verbatim}
-
 Signifikansbokstäver anger att den lägsta nivån är skild från övriga och att den näst lägsta är skild från den högsta. Även här kan det vara intressant att jämföra med modellen utan block.
 
 \begin{Shaded}
@@ -3492,21 +3254,6 @@ Signifikansbokstäver anger att den lägsta nivån är skild från övriga och a
 \FunctionTok{cld}\NormalTok{(}\FunctionTok{emmeans}\NormalTok{(mod\_wo\_block, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ N), }\AttributeTok{Letters =}\NormalTok{ letters)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-##  N      emmean   SE df lower.CL upper.CL .group
-##  0.0cwt   86.7 7.91 20     70.2      103  a    
-##  0.2cwt  108.5 7.91 20     92.0      125  ab   
-##  0.4cwt  117.2 7.91 20    100.7      134  ab   
-##  0.6cwt  126.8 7.91 20    110.3      143   b   
-## 
-## Confidence level used: 0.95 
-## P value adjustment: tukey method for comparing a family of 4 estimates 
-## significance level used: alpha = 0.05 
-## NOTE: If two or more means share the same grouping symbol,
-##       then we cannot show them to be different.
-##       But we also did not show them to be the same.
-\end{verbatim}
 
 Modellen utan block ger samma medelvärden \texttt{emmean} men större medelfel \texttt{SE} och färre signifikanta skillnader.
 
@@ -3516,26 +3263,11 @@ Det minsta möjliga blocket är det med två behandlingar. Vi filtrerar havredat
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat\_small\_block }\OtherTok{\textless{}{-}}\NormalTok{ oats }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(V }\SpecialCharTok{==} \StringTok{"Marvellous"}\NormalTok{, N }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"0.6cwt"}\NormalTok{, }\StringTok{"0.0cwt"}\NormalTok{))}
+\NormalTok{dat\_small\_block }\OtherTok{\textless{}{-}}\NormalTok{ oats }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(V }\SpecialCharTok{==} \StringTok{"Marvellous"}\NormalTok{, N }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"0.6cwt"}\NormalTok{, }\StringTok{"0.0cwt"}\NormalTok{))}
 \NormalTok{dat\_small\_block}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-##      B          V      N   Y
-## 1    I Marvellous 0.0cwt 105
-## 2    I Marvellous 0.6cwt 156
-## 3   II Marvellous 0.0cwt  96
-## 4   II Marvellous 0.6cwt 144
-## 5  III Marvellous 0.0cwt  89
-## 6  III Marvellous 0.6cwt 124
-## 7   IV Marvellous 0.0cwt  70
-## 8   IV Marvellous 0.6cwt 117
-## 9    V Marvellous 0.0cwt  63
-## 10   V Marvellous 0.6cwt  99
-## 11  VI Marvellous 0.0cwt  97
-## 12  VI Marvellous 0.6cwt 121
-\end{verbatim}
 
 Fyll i stycket nedan för att skapa en graf med \texttt{N} på x-axeln, \texttt{Y} på y-axeln och en gruppering som länkar observationer från samma block.
 
@@ -3564,48 +3296,7 @@ Eftersom det är ett försök med en förklarande faktor och block kan man model
 
 \end{exercise}
 
-\begin{exercise}[Majshybridimport]
-
-I fliken \emph{Majshybrider} i excelfilen \emph{Uppgiftsdata.xlsx} finns data på fyra majssorter, vardera sorterad på fem platser (som agerar som block). Importera datan med funktionen \texttt{read\_excel()} genom att fylla i kodstycket nedan.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_corn }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{""}\NormalTok{, }\AttributeTok{sheet =}\NormalTok{ \_\_\_)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Majshybridgraf]
-Skapa en lämplig graf av datan på majshybrider. Grafen ska illustrera både jämförelsen mellan hybrider och jämförelsen mellan platser. Se exemplet ovan som guide.
-\end{exercise}
-
-\begin{exercise}[Majshybridmodell]
-
-Fyll i koden nedan för att skatta en anova-modell med block för datan på majshybrider. Ta fram anovatabellen med \texttt{Anova()}. Vilka slutsatser kan man dra från anovatabellen?
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(\_\_\_ }\SpecialCharTok{\textasciitilde{}}\NormalTok{ \_\_\_ }\SpecialCharTok{+}\NormalTok{ Plats, }\AttributeTok{data =}\NormalTok{ dat\_corn)}
-\FunctionTok{Anova}\NormalTok{(mod)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Majshybridjämförelser]
-
-Gör lämplig ändring i koden nedan för att jämföra hybrider, istället för platser.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{emmeans}\NormalTok{(mod, pairwise }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Plats)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\section{Variansanalys. Två faktorer med block}\label{variansanalys.-tvuxe5-faktorer-med-block}
+\section{Bonus. Två faktorer med block}\label{bonus.-tvuxe5-faktorer-med-block}
 
 Exempeldata på havre tar med två förklarande faktorer och ett block. Datan kan illustreras med ett punktdiagram där \texttt{facet\_wrap} delar grafen efter sort.
 
@@ -3616,8 +3307,6 @@ Exempeldata på havre tar med två förklarande faktorer och ett block. Datan ka
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ V)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-208-1} \end{center}
 
 Grafen visar samma kvävesamband som tidigare. Det finns inga tydliga skillnader mellan sorter, möjligen har sorten Victory givit något lägre skörd än övriga. Det finns fortfarande en tydlig blockeffekt, till exempel har block I höga värden och block V låga värden.
 
@@ -3637,20 +3326,6 @@ Anovatabellen kan plockas fram på samma sätt som tidigare.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Anova Table (Type II tests)
-## 
-## Response: Y
-##            Sum Sq Df F value    Pr(>F)    
-## N         20020.5  3 26.2510 1.135e-10 ***
-## V          1786.4  2  3.5134   0.03665 *  
-## B         15875.3  5 12.4894 4.093e-08 ***
-## N:V         321.7  6  0.2109   0.97187    
-## Residuals 13982.1 55                      
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
 Raden \texttt{N:V} gäller interaktionseffekten mellan kväve och sort. I det här fallet är det ingen signifikant interaktion - vilket tyder på att sorterna svarar på kvävebehandling på liknande sätt. Samtliga huvudeffekter (raderna för N, V och B) är signifikanta. Kvadratsummorna och p-värdena tyder på att kväve förklarar mer av variationen än sort, vilket också är i linje med grafen ovan.
 
 Vid flerfaktoriella försök kan man presentera parvisa jämförelser på flera olika sätt. Man kan ange huvudeffekter för en faktor utan att ange den andra faktorn, man kan ange medelvärden för samtliga kombinationer av två faktorer, och man kan ange medelvärden uppdelat efter nivåer i en annan faktor.
@@ -3658,76 +3333,10 @@ Vid flerfaktoriella försök kan man presentera parvisa jämförelser på flera 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{emmeans}\NormalTok{(mod\_two\_fact, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ N)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##  N      emmean   SE df lower.CL upper.CL
-##  0.0cwt   79.4 3.76 55     71.9     86.9
-##  0.2cwt   98.9 3.76 55     91.4    106.4
-##  0.4cwt  114.2 3.76 55    106.7    121.8
-##  0.6cwt  123.4 3.76 55    115.9    130.9
-## 
-## Results are averaged over the levels of: V, B 
-## Confidence level used: 0.95
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{emmeans}\NormalTok{(mod\_two\_fact, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ N }\SpecialCharTok{+}\NormalTok{ V)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##  N      V           emmean   SE df lower.CL upper.CL
-##  0.0cwt Golden.rain   80.0 6.51 55     67.0     93.0
-##  0.2cwt Golden.rain   98.5 6.51 55     85.5    111.5
-##  0.4cwt Golden.rain  114.7 6.51 55    101.6    127.7
-##  0.6cwt Golden.rain  124.8 6.51 55    111.8    137.9
-##  0.0cwt Marvellous    86.7 6.51 55     73.6     99.7
-##  0.2cwt Marvellous   108.5 6.51 55     95.5    121.5
-##  0.4cwt Marvellous   117.2 6.51 55    104.1    130.2
-##  0.6cwt Marvellous   126.8 6.51 55    113.8    139.9
-##  0.0cwt Victory       71.5 6.51 55     58.5     84.5
-##  0.2cwt Victory       89.7 6.51 55     76.6    102.7
-##  0.4cwt Victory      110.8 6.51 55     97.8    123.9
-##  0.6cwt Victory      118.5 6.51 55    105.5    131.5
-## 
-## Results are averaged over the levels of: B 
-## Confidence level used: 0.95
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{emmeans}\NormalTok{(mod\_two\_fact, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ N }\SpecialCharTok{|}\NormalTok{ V)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## V = Golden.rain:
-##  N      emmean   SE df lower.CL upper.CL
-##  0.0cwt   80.0 6.51 55     67.0     93.0
-##  0.2cwt   98.5 6.51 55     85.5    111.5
-##  0.4cwt  114.7 6.51 55    101.6    127.7
-##  0.6cwt  124.8 6.51 55    111.8    137.9
-## 
-## V = Marvellous:
-##  N      emmean   SE df lower.CL upper.CL
-##  0.0cwt   86.7 6.51 55     73.6     99.7
-##  0.2cwt  108.5 6.51 55     95.5    121.5
-##  0.4cwt  117.2 6.51 55    104.1    130.2
-##  0.6cwt  126.8 6.51 55    113.8    139.9
-## 
-## V = Victory:
-##  N      emmean   SE df lower.CL upper.CL
-##  0.0cwt   71.5 6.51 55     58.5     84.5
-##  0.2cwt   89.7 6.51 55     76.6    102.7
-##  0.4cwt  110.8 6.51 55     97.8    123.9
-##  0.6cwt  118.5 6.51 55    105.5    131.5
-## 
-## Results are averaged over the levels of: B 
-## Confidence level used: 0.95
-\end{verbatim}
 
 Även här kan man göra jämförelser mellan nivåer genom att sätta \texttt{pairwise\ \textasciitilde{}\ N\ +\ V} eller beräkna signifikansbokstäver med \texttt{cld}. Följande kod jämför kvävenivåer \emph{inom} sort.
 
@@ -3747,326 +3356,12 @@ I modellen ovan är block en \emph{additiv} faktor - den ingår inte i någon in
 
 \end{exercise}
 
-\section{Modellantaganden och residualer}\label{modellantaganden-och-residualer}
-
-Samtliga anovamodeller har samma grundläggande antaganden: feltermerna (den kvarvarande slumpmässigheten) är normalfördelade, sinsemellan oberoende, och variansen är samma för samtliga behandlingsgrupper. Antagandena testas oftast genom att titta på modellens \emph{residualer} - skillnaden mellan det faktiska värdet och det skattade värdet. För en skattad modell kan man ta upp residualerna med \texttt{residuals()} och de skattade värdena med \texttt{fitted()}. Vi kan lägga till residualer och skattningar till datan med ett \texttt{mutate()}-steg.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{oats }\OtherTok{\textless{}{-}}\NormalTok{ oats }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Residualer =} \FunctionTok{residuals}\NormalTok{(mod\_two\_fact),}
-         \AttributeTok{Skattade =} \FunctionTok{fitted}\NormalTok{(mod\_two\_fact))}
-\end{Highlighting}
-\end{Shaded}
-
-Normalfördelning kan undersökas grafiskt med ett histogram eller en QQ-graf.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{g\_hist }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(oats, }\FunctionTok{aes}\NormalTok{(Residualer)) }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{20}\NormalTok{)}
-\NormalTok{g\_qq }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(oats, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ Residualer)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
-
-\FunctionTok{library}\NormalTok{(patchwork)}
-\NormalTok{g\_hist }\SpecialCharTok{+}\NormalTok{ g\_qq}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-215-1} \end{center}
-
-Punkterna avviker något från normalfördelningen i svansarna, men det är förstås alltid en bedömningsfråga.
-
-Lika varians undersöks ofta med ett spridningsdiagram med de skattade värdena på x-axeln och residualerna på y-axeln.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(oats, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Skattade, }\AttributeTok{y =}\NormalTok{ Residualer)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-216-1} \end{center}
-
-Om datan är i linje med antaganden ska diagrammet se ut som slumpmässigt placerade punkter med ungefär lika stor spridning kring noll-linjen för samtliga nivåer på x-axeln. För det här exemplet ser det okej ut.
-
-\begin{exercise}[Bakterieimport]
-
-Fliken \emph{Bakterier} i filen \emph{Uppgiftsdata.xlsx} innehåller data om tillväxt hos gräs efter inokulering av bakterier. Ladda ner filen och importera datan genom att fylla i koden nedan.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_bact }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"\_\_\_"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"Bakterier"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Bakterieimport]
-
-Illustrera datan med en lämplig graf, till exempel ett spridningsdiagram med \texttt{Inoculation} på x-axeln, \texttt{Dry\ weight} på y-axeln, småfönster efter \texttt{Cultivar} och färg efter \texttt{Block}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dat\_bact, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ \_\_\_, }\AttributeTok{y =} \StringTok{\textasciigrave{}}\AttributeTok{\_\_\_}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{color =}\NormalTok{ Block)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{6}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ \_\_\_)}
-\end{Highlighting}
-\end{Shaded}
-
-Hur blev färgerna för blocket? Om de inte blev distinkta färger kan variabeln \texttt{Block} ha blivit inläst som numerisk. Transformera variabeln med \texttt{as.character()} och gör om grafen. Ändras färgerna?
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_bact }\OtherTok{\textless{}{-}}\NormalTok{ dat\_bact }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Block =} \FunctionTok{as.character}\NormalTok{(Block))}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Bakteriemodell]
-
-Bakteriedatan har två faktorer och en blockfaktor. Skatta en anova-modell med interaktion och block genom att fylla i stycket nedan. Ta fram anovatabell och dra en slutsats från F-testen. Ligger slutsatsen i linje med grafen?
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{\_\_\_}\StringTok{\textasciigrave{}} \SpecialCharTok{\textasciitilde{}}\NormalTok{ \_\_\_ }\SpecialCharTok{*}\NormalTok{ \_\_\_ }\SpecialCharTok{+}\NormalTok{ \_\_\_, }\AttributeTok{data =}\NormalTok{ dat\_bact)}
-\FunctionTok{Anova}\NormalTok{(mod)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Bakteriejämförelser]
-
-Använd \texttt{emmeans()} för parvisa jämförelser mellan inokuleringsmetoder. Vilka par är signifikant åtskilda?
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{emmeans}\NormalTok{(mod, pairwise }\SpecialCharTok{\textasciitilde{}}\NormalTok{ \_\_\_)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Bakterieresidualer]
-Vi använder den skattade modellen för att ta fram skattade värden och residualer.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_bact }\OtherTok{\textless{}{-}}\NormalTok{ dat\_bact }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Residualer =} \FunctionTok{residuals}\NormalTok{(mod),}
-         \AttributeTok{Skattade =} \FunctionTok{fitted}\NormalTok{(mod))}
-\end{Highlighting}
-\end{Shaded}
-
-Använd exemplet på residualtester ovan för att undersöka antagandet om normalfördelade residualer.
-\end{exercise}
-
-\section{Bonus. Statistik för ekologi}\label{bonus.-statistik-fuxf6r-ekologi}
-
-Här tittar vi på några statistiska metoder som är vanliga inom ekologin, men går bortom materialet på en statistisk grundkurs. Vi börjar med datastruktur och visualisering för populationsdata, för att sedan titta på diversitetsmått, principalkomponentanalys (PCA) och hierarkisk klustering. Det vanligaste paketet för ekologi är \texttt{vegan}, så vi kan börja med att installera och ladda det. Vi kommer också använda \texttt{factoextra} för en graf.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# install.packages("vegan")}
-\FunctionTok{library}\NormalTok{(vegan)}
-
-\CommentTok{\# install.packages("factoextra")}
-\FunctionTok{library}\NormalTok{(factoextra)}
-\end{Highlighting}
-\end{Shaded}
-
-Data för ekologiska populationer för flera platser eller tillfällen ordnas oftast i en tabell med plats som rad och arter som kolumner. Värdena i tabellen anger antingen antalet observerade individer eller ett binärt utfall (1 för förekomst, 0 för ingen förekomst). Exempeldatan \texttt{dune}, som kan laddas med funktionen \texttt{data()}, ger ett exempel. För att illustrera en typisk jämförelsestudie skapar vi en kolumn för platstyp och lägger till ett plats-id.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{data}\NormalTok{(dune)}
-\NormalTok{dune }\OtherTok{\textless{}{-}}\NormalTok{ dune }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Site =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{n}\NormalTok{(), }
-         \AttributeTok{Type =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\AttributeTok{each =} \DecValTok{10}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-Vi kan illustrera data genom att pivotera till långt format och göra en graf med \texttt{ggplot()}. En heatmap eller ett spridningsdiagram med storlek för antal observationer kan vara lämpliga grafer. Tolkning kräver förstås kod artkännedom och beror på den vetenskapliga frågan.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dune\_long }\OtherTok{\textless{}{-}}\NormalTok{ dune }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Site, Type), }\AttributeTok{names\_to =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Abundance"}\NormalTok{)}
-
-\FunctionTok{ggplot}\NormalTok{(dune\_long, }\FunctionTok{aes}\NormalTok{(Site, Species, }\AttributeTok{fill =}\NormalTok{ Abundance)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{scale\_fill\_gradient2}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{theme\_minimal}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-225-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dune\_long }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Abundance }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{), }\FunctionTok{aes}\NormalTok{(Site, Species, }\AttributeTok{size =}\NormalTok{ Abundance, }\AttributeTok{color =}\NormalTok{ Type)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-225-2} \end{center}
-
-Ytterligare alternativ kan vara upprepade lådagram eller staplar med småfönster per art.
-
-\begin{exercise}[Populationsgrafer]
-
-Vad måste läggas till i stycket nedan för göra ett lådagram (med art på y-axeln och abundans på x-axeln) och ett stapeldiagram (med platstyp på x-axeln och abundans på y-axeln)?
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dune\_long}
-\FunctionTok{ggplot}\NormalTok{(dune\_long, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ \_\_\_, }\AttributeTok{y =}\NormalTok{ \_\_\_, }\AttributeTok{fill =}\NormalTok{ Type)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{()}
-
-\FunctionTok{ggplot}\NormalTok{(dune\_long, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ \_\_\_, }\AttributeTok{y =}\NormalTok{ \_\_\_, }\AttributeTok{fill =}\NormalTok{ Type)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ \_\_\_, }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-Ekologiska populationer kan analyseras genom \emph{heirarkisk klustring} - metoder där platser (rader) eller arter (kolumner) sorteras efter hur lika de är. Först beräknas ett avstånd mellan samtliga enheter (platser eller arter) och därefter sker klustringen genom att slå ihop enheter som ligger \emph{nära} varandra. Resultatet illustreras med ett träddiagram.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dune\_data }\OtherTok{\textless{}{-}}\NormalTok{ dune }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Site, }\SpecialCharTok{{-}}\NormalTok{Type)}
-\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{dist}\NormalTok{(dune\_data, }\AttributeTok{method =} \StringTok{"euclidean"}\NormalTok{)}
-\NormalTok{hc }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(d)}
-\FunctionTok{plot}\NormalTok{(hc, }\AttributeTok{hang =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{labels =}\NormalTok{ dune}\SpecialCharTok{$}\NormalTok{Type, }
-     \AttributeTok{axes =}\NormalTok{ F, }\AttributeTok{xlab =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{""}\NormalTok{, }\AttributeTok{ann =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-227-1} \end{center}
-
-\begin{exercise}[Avståndsmått]
-Ta upp hjälpsidan till distansfunktionen med \texttt{?dist}. Under \texttt{method} finns flera möjliga avståndsmått. Vad måste ändras i kodstycket ovan för att ange ett Manhattan-avstånd? Har avståndet någon betydande effekt på träddiagrammet?
-\end{exercise}
-
-För att göra en klustring av arter kan man \emph{transponera} data så att rader och kolumner byter plats med varandra. Här kommer artnamn automatisk med eftersom raderna i datan har namn. Det är inte alltid fallet, så det kan vara nödvändigt att sätta etiketter med argumentet \texttt{labels} i \texttt{plot()}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dune\_data }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(dune\_data)}
-\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{dist}\NormalTok{(dune\_data, }\AttributeTok{method =} \StringTok{"euclidean"}\NormalTok{)}
-\NormalTok{hc }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(d)}
-\FunctionTok{plot}\NormalTok{(hc, }\AttributeTok{hang =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}
-     \AttributeTok{axes =}\NormalTok{ F, }\AttributeTok{xlab =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{""}\NormalTok{, }\AttributeTok{ann =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-228-1} \end{center}
-
-Träddiagrammet tolkas så att enheter vars koppling ligger lågt är mer lika varandra - arterna förekommer ofta på samma plats.
-
-En annan vanlig metod för \emph{multivariat} data, vilket populationsdata är ett exempel på, är \emph{principalkomponentsanalys} (PCA, Principal Component Analysis). En PCA är ett försök att sammanfatta den ursprungliga datans 30 variabler (en per art) med ett mindre antal variabler. De nya variablerna - \emph{komponenterna} - skapas genom att väga och addera de ursprungliga variablerna på ett sätt som förklarar så mycket som möjligt av variationen med minsta möjliga antal variabler. Resultatet illustreras vanligen med en \emph{biplot} - ett spridningsdiagram som placerar ut både platser och arter.
-
-I R kan en PCA göras med \texttt{prcomp()} och en biplot kan göras med \texttt{fviz\_pca\_biplot()} från \texttt{factoextra}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dune\_data }\OtherTok{\textless{}{-}}\NormalTok{ dune }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Site, }\SpecialCharTok{{-}}\NormalTok{Type)}
-\NormalTok{pca }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(dune\_data, }\AttributeTok{scale. =}\NormalTok{ F)}
-\FunctionTok{fviz\_pca\_biplot}\NormalTok{(pca, }\AttributeTok{geom.ind =} \StringTok{"point"}\NormalTok{, }\AttributeTok{habillage =}\NormalTok{ dune}\SpecialCharTok{$}\NormalTok{Type, }\AttributeTok{labelsize =} \DecValTok{3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-229-1} \end{center}
-
-Platserna illustreras med punkter och arterna med pilar. Pilar i samma riktning motsvarar arter som är lika (de finns på samma platser), närliggande punkter motsvarar lika platser (de har samma arter), och punkter i samma riktning som en pil har höga värden för den arten.
-
-\begin{exercise}[Skalning i en PCA]
-En PCA kan göras med och utan att skala variablerna. Om variablerna skalas får en variabel som varierar mycket samma vikt som en variabel som varierar lite. Det kan vara bra om man har variabler som är mätta på olika sätt, till exempel om en variabel är i meter och en är i centimeter. Gör lämplig ändring i kodstycket ovan för att skala variablerna i \texttt{prcomp()}. Har det någon effekt på grafen?
-\end{exercise}
-
-Den sista ansatsen vi ska titta på är att sammanfatta en population i ett enskilt tal - ett diversitetsindex. Genom att beräkna ett index kan man reducera datan till en observation på plats. Man kan därifrån tillämpa de metoder vi sett i övriga delar av kursen (t-test och variansanalys). Det finns en stor mängd olika index. Det vanligaste än Shannon-Weaver indexet (eller entropi), vilket beräknas genom att ta andelen per art, multiplicera med logaritmen av andelen, summera över arter, och multiplicera med minus ett. Om man har tre arter med andelarna 0.3, 0.5 och 0.2 ges Shannon-Weaver alltså av
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\SpecialCharTok{{-}}\NormalTok{(}\FloatTok{0.3} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+} \FloatTok{0.5} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FloatTok{0.2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FloatTok{0.2}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 1.029653
-\end{verbatim}
-
-Indexet ökar om det finns många arter och om andelen per art är samma. En population med \emph{en} dominant art kommer alltså ha ett lågt index.
-
-För en tabell med data kan index beräknas med \texttt{diversity()}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{diver }\OtherTok{\textless{}{-}} \FunctionTok{diversity}\NormalTok{(dune\_data, }\AttributeTok{index =} \StringTok{"shannon"}\NormalTok{)}
-\NormalTok{dune }\OtherTok{\textless{}{-}}\NormalTok{ dune }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Diversity =}\NormalTok{ diver)}
-\end{Highlighting}
-\end{Shaded}
-
-Diversitetsindexen kan sedan illustreras och analyseras som vilken numerisk variabel som helst.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dune, }\FunctionTok{aes}\NormalTok{(Diversity, Type)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-232-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Diversity }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Type, }\AttributeTok{data =}\NormalTok{ dune)}
-\FunctionTok{Anova}\NormalTok{(mod)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Anova Table (Type II tests)
-## 
-## Response: Diversity
-##            Sum Sq Df F value  Pr(>F)  
-## Type      0.37586  1  6.6647 0.01881 *
-## Residuals 1.01513 18                  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{emmeans}\NormalTok{(mod, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Type)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##  Type emmean     SE df lower.CL upper.CL
-##  A      2.30 0.0751 18     2.14     2.46
-##  B      2.03 0.0751 18     1.87     2.18
-## 
-## Confidence level used: 0.95
-\end{verbatim}
-
-Här finns en signifikant skillnad med platstyper.
-
-\begin{exercise}[Diversitetsindex]
-Ta upp hjälpsidan till funktionen \texttt{diversity()}. Hur anger man att funktionen ska ge Simpsons index?
-\end{exercise}
-
-\begin{exercise}[Test på nytt index]
-Gör om analysen på diversitet (anovamodellen och F-testet) med Simpsons index istället för Shannon-Weaver. Påverkar valet av diversitetsindex utfallet av testet?
-\end{exercise}
-
 \chapter{Regression och korrelation}\label{regression-och-korrelation}
 
 Datorövning 7 handlar om regression och korrelation. Efter övningen ska vi kunna
 
 \begin{itemize}
+\tightlist
 \item
   skatta en regressionsmodell i R,
 \item
@@ -4088,7 +3383,7 @@ När man startar en ny R-session bör man ladda de paket man vet kommer behövas
 \end{Highlighting}
 \end{Shaded}
 
-I datorövning 7 tittade vi på variansanalys - en metod som gör det möjligt att utvidga t-testet för två grupper till ett godtyckligt antal grupper eller kombinationer av faktorer. I variansanalys skattar man en modell som förklarar ett datautfall. Utifrån modellen sätter man upp en anova-tabell som delar upp den totala variansen i en förklarad del och en kvarvarande residualdel. Anova-tabell ger också ett F-test som testar om det finns några skillnader mellan grupper. Från en skattad modell kan man sedan göra parvisa jämförelser mellan specifika grupper och testa modellantaganden (främst antagande om normalfördelning och lika varians inom grupper).
+I datorövning 6 tittade vi på variansanalys - en metod som gör det möjligt att utvidga t-testet för två grupper till ett godtyckligt antal grupper eller kombinationer av faktorer. I variansanalys skattar man en modell som förklarar ett datautfall. Utifrån modellen sätter man upp en anova-tabell som delar upp den totala variansen i en förklarad del och en kvarvarande residualdel. Anova-tabell ger också ett F-test som testar om det finns några skillnader mellan grupper. Från en skattad modell kan man sedan göra parvisa jämförelser mellan specifika grupper och testa modellantaganden (främst antagande om normalfördelning och lika varians inom grupper).
 
 Ta som exempel följande data på tandtillväxt (\texttt{len}) hos marsvin under C-vitaminbehandling i olika doser (\texttt{dose}) och två olika metoder (\texttt{supp}), tillgängligt i R som objektet \texttt{ToothGrowth}.
 
@@ -4100,8 +3395,6 @@ Ta som exempel följande data på tandtillväxt (\texttt{len}) hos marsvin under
   \FunctionTok{geom\_boxplot}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-234-1} \end{center}
 
 Ett lådagram visar en klar skillnad mellan doser och en svagare skillnad mellan metoder. Det finns också tecken på att metoderna svarar olika på dos i att metoden \emph{VC} ligger lägre än \emph{OJ} vid de låga doserna men över (eller iallafall lika) vid den höga dosen.
 
@@ -4116,103 +3409,16 @@ En envägsanova-modell (en modell med en faktor) kan skattas med \texttt{lm()} o
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Anova Table (Type II tests)
-## 
-## Response: len
-##           Sum Sq Df F value    Pr(>F)    
-## dose      2426.4  2  67.416 9.533e-16 ***
-## Residuals 1025.8 57                      
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
 F-testets nollhypotes är att alla grupper (här alla doser) har samma populationsmedelvärde. Det låga p-värdet pekar på en klar skillnad mellan doser.
 
-En anovamodell bygger på antaganden om normalfördelning och lika varianser. Normalfördelningsantagandet kan undersökas med en QQ-graf över residualerna och variansantagandet kan undersökas med en spridningsgraf över skattade värden och residualer.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(patchwork)}
-\NormalTok{ToothGrowth }\OtherTok{\textless{}{-}}\NormalTok{ ToothGrowth }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Skattade =} \FunctionTok{fitted}\NormalTok{(mod),}
-         \AttributeTok{Residualer =} \FunctionTok{residuals}\NormalTok{(mod))}
-\NormalTok{g1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(ToothGrowth, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ Residualer)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
-\NormalTok{g2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(ToothGrowth, }\FunctionTok{aes}\NormalTok{(Skattade, Residualer)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{)}
-\NormalTok{g1 }\SpecialCharTok{+}\NormalTok{ g2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-236-1} \end{center}
-
-Punkterna ligger ungefär på linjen i QQ-grafen och punkterna har ungefär samma spridning för alla nivåer av det skattade värdet.
-
-Anova-modeller kan lätt byggas ut genom att lägga till fler faktorer. Här är det till exempel naturligt att skatta en modell med både metod och dos, vilket kan göras genom att lägga till \texttt{supp} till formeln i \texttt{lm()}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(len }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dose }\SpecialCharTok{*}\NormalTok{ supp, ToothGrowth)}
-\FunctionTok{Anova}\NormalTok{(mod)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Anova Table (Type II tests)
-## 
-## Response: len
-##            Sum Sq Df F value    Pr(>F)    
-## dose      2426.43  2  92.000 < 2.2e-16 ***
-## supp       205.35  1  15.572 0.0002312 ***
-## dose:supp  108.32  2   4.107 0.0218603 *  
-## Residuals  712.11 54                      
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-Resultaten är i linje med grafen - dos har en stor effekt medan metod och interaktionen mellan dos och metod är något svagare, om än signifikanta.
-
-En anovamodell kan användas för parvisa jämförelse, vilket ibland kallas post-hoc-test. Den vanligaste är Tukey-testet, men andra tester kan också förekomma. Testet kan utföras med \texttt{emmeans()} från paketet med samma namn. Följande ger en jämförelse mellan doser uppdelat efter metod.
+En anovamodell kan användas för parvisa jämförelse, vilket ibland kallas post-hoc-test. Den vanligaste är Tukey-testet, men andra tester kan också förekomma. Testet kan utföras med \texttt{emmeans()} från paketet med samma namn. Följande ger en jämförelse mellan doser.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(emmeans)}
-\FunctionTok{emmeans}\NormalTok{(mod, pairwise }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dose }\SpecialCharTok{|}\NormalTok{ supp)}
+\FunctionTok{emmeans}\NormalTok{(mod, pairwise }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dose)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## $emmeans
-## supp = OJ:
-##  dose emmean   SE df lower.CL upper.CL
-##  0.5   13.23 1.15 54    10.93     15.5
-##  1     22.70 1.15 54    20.40     25.0
-##  2     26.06 1.15 54    23.76     28.4
-## 
-## supp = VC:
-##  dose emmean   SE df lower.CL upper.CL
-##  0.5    7.98 1.15 54     5.68     10.3
-##  1     16.77 1.15 54    14.47     19.1
-##  2     26.14 1.15 54    23.84     28.4
-## 
-## Confidence level used: 0.95 
-## 
-## $contrasts
-## supp = OJ:
-##  contrast        estimate   SE df t.ratio p.value
-##  dose0.5 - dose1    -9.47 1.62 54  -5.831  <.0001
-##  dose0.5 - dose2   -12.83 1.62 54  -7.900  <.0001
-##  dose1 - dose2      -3.36 1.62 54  -2.069  0.1060
-## 
-## supp = VC:
-##  contrast        estimate   SE df t.ratio p.value
-##  dose0.5 - dose1    -8.79 1.62 54  -5.413  <.0001
-##  dose0.5 - dose2   -18.16 1.62 54 -11.182  <.0001
-##  dose1 - dose2      -9.37 1.62 54  -5.770  <.0001
-## 
-## P value adjustment: tukey method for comparing a family of 3 estimates
-\end{verbatim}
 
 \section{Regression}\label{regression}
 
@@ -4234,8 +3440,6 @@ Ta som exempel data på förväntad medellivslängd och bnp per capita. Datan h�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-239-1} \end{center}
-
 Datan visar ett positivt samband mellan variablerna - högre bnp per capita är kopplat till högre medellivslängd.
 
 \begin{exercise}[Data för 1957]
@@ -4256,7 +3460,7 @@ Vad måste ändras i stycket nedan för att plocka ut data och göra en graf fö
 
 \end{exercise}
 
-En regressionmodell kan i R skattas med \texttt{lm}-funktionen. Syntaxen är väldigt lik den för anovamodellen, men istället för en faktor som förklarande variabel används nu en kontinuerlig variabel.
+En regressionmodell kan i R skattas med \texttt{lm()}-funktionen. Syntaxen är väldigt lik den för anovamodellen, men istället för en faktor som förklarande variabel används nu en kontinuerlig variabel.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4264,27 +3468,6 @@ En regressionmodell kan i R skattas med \texttt{lm}-funktionen. Syntaxen är vä
 \FunctionTok{summary}\NormalTok{(mod)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = lifeExp ~ gdpPercap, data = dat_eu07)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -2.79839 -1.30472  0.00807  1.33443  2.87766 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 72.27106    0.69416 104.113  < 2e-16 ***
-## gdpPercap    0.21463    0.02514   8.537  2.8e-09 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 1.598 on 28 degrees of freedom
-## Multiple R-squared:  0.7225, Adjusted R-squared:  0.7125 
-## F-statistic: 72.88 on 1 and 28 DF,  p-value: 2.795e-09
-\end{verbatim}
 
 Funktionen \texttt{summary} ger en sammanfattning av modellen. Skattningen av modellens konstanta parameter ges som raden \texttt{(Intercept)} och dess tolkning är som förväntat värde i medellivslängd om bnp per capita är noll. Det är ofta lutningsparametern som är mer intressant. Skattningen av lutningsparametern ges på den rad som har samma namn som den förklarande variabeln, här \texttt{gdpPercap}. Den skattade parametern är 0.2146. Lutningsparametern har den generella tolkning som ökningen i y-variabeln när x-variabeln ökar med 1. I det här fallet ger 0.2146 att ett lands medellivslängd ökar med ungefär 0.2146 år (eller 78 dagar) när bnp per capita ökar med 1000 dollar.
 
@@ -4303,8 +3486,6 @@ Man kan enkelt rita ut regressionlinjen i en graf med \texttt{geom\_smooth()} oc
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-242-1} \end{center}
-
 Den blå linjen illustrerar regressionlinjen 72.27 + 0.2146x. Det grå bandet kring linjen är ett konfidensintervall för skattningen av y-variabeln.
 
 \begin{exercise}[Graf för 1957]
@@ -4320,17 +3501,6 @@ Utskriften från \texttt{summary} ger också tester av parametrarna (den högra 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Anova Table (Type II tests)
-## 
-## Response: lifeExp
-##            Sum Sq Df F value    Pr(>F)    
-## gdpPercap 186.031  1  72.883 2.795e-09 ***
-## Residuals  71.469 28                      
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
 Testerna av en regressionsmodell bygger på ett normalfördelningsantagande och ett antagande om \emph{homoskedasticitet} (lika varians i y oavsett position på x-axeln). Antagandena kan undersökas genom att titta på skattningens \emph{residualer} - skillnaden mellan det faktiska y-värdet och modellens värde. Residualerna kan undersökas med ett histogram eller en QQ-plot. En annan vanlig diagnosplot är ett spridningsdiagram med skattade värden på x-axeln och residualerna på y-axeln.
 
 \begin{Shaded}
@@ -4339,11 +3509,10 @@ Testerna av en regressionsmodell bygger på ett normalfördelningsantagande och 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Residualer =} \FunctionTok{residuals}\NormalTok{(mod),}
          \AttributeTok{Skattade =} \FunctionTok{fitted}\NormalTok{(mod))}
 
-\FunctionTok{ggplot}\NormalTok{(dat\_eu07, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ Residualer)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
+\FunctionTok{ggplot}\NormalTok{(dat\_eu07, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ Residualer)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-244-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4351,13 +3520,7 @@ Testerna av en regressionsmodell bygger på ett normalfördelningsantagande och 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-244-2} \end{center}
-
 Om data följer en normalfördelning bör histogrammet visa en ungefärlig normalkurva, QQ-plotten bör visa punkter på den diagonala linjen och spridningsdiagrammet bör visa en slumpmässig spridning av punkter. Graferna pekar i det här fallet inte på några tydliga avvikelser från normalfördelningsantagandet, möjligen pekar QQ-plotten på mindre spridning i svansarna än en teoretisk normalfördelning.
-
-\begin{exercise}[Diagnos för 1957]
-Gör lämpliga ändringar i data ovan för diagnosgrafer för data från 1957. Finns det några tydliga avvikande värden?
-\end{exercise}
 
 \begin{exercise}[Icke-linjära samband]
 Låt oss titta på hela gapminder-datan för 2007.
@@ -4385,66 +3548,6 @@ Vad ska ändras i koden nedan för att använda logaritmerad \texttt{gdpPercap} 
 
 \end{exercise}
 
-\begin{exercise}[Blodtrycksdata]
-
-Gör lämplig ändring i stycket nedan för att läsa in fliken \emph{Blodtrycksdata} från filen \emph{Uppgiftsdata.xlsx}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(readxl)}
-\NormalTok{dat\_blod }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"\_\_\_"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"Blodtryck"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Blodtrycksgraf]
-
-Gör ett spridningsdiagram med ålder på x-axeln och blodtryck på y-axeln. Lägg till en regressionslinje med \texttt{geom\_smooth(method\ =\ lm)}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(\_\_\_, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ \_\_\_, }\AttributeTok{y =}\NormalTok{ \_\_\_)) }\SpecialCharTok{+}
-  \FunctionTok{\_\_\_}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{\_\_\_}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Blodtrycksmodell]
-
-Skatta och tolka en regressionmodell med ålder som förklarande variabel och blodtryck som förklarad variabel.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(\_\_\_ }\SpecialCharTok{\textasciitilde{}}\NormalTok{ \_\_\_, }\AttributeTok{data =}\NormalTok{ dat\_blod)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Blodtryckstest]
-Använd \texttt{Anova()} för att testa om det finns ett signifikant samband mellan ålder och blodtryck. Vad är testets nollhypotes och alternativhypotes?
-\end{exercise}
-
-\begin{exercise}[Blodtrycksdiagnos]
-
-Ta fram diagnosgrafer för blodtrycksmodell och avgör om det finns några tydliga avvikelser från normalfördelning eller några extrema värden.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_blod }\OtherTok{\textless{}{-}}\NormalTok{ dat\_blod }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Residualer =} \FunctionTok{residuals}\NormalTok{(mod),}
-         \AttributeTok{Skattade =} \FunctionTok{fitted}\NormalTok{(mod))}
-
-\FunctionTok{ggplot}\NormalTok{(\_\_\_, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ \_\_\_)) }\SpecialCharTok{+} \FunctionTok{geom\_qq}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_qq\_line}\NormalTok{()}
-\FunctionTok{ggplot}\NormalTok{(\_\_\_, }\FunctionTok{aes}\NormalTok{(Skattade, \_\_\_)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
 \section{Korrelation}\label{korrelation}
 
 Korrelation ger ett mått mellan \(-1\) och \(1\) på hur väl två variabler samvarierar. En korrelation över noll tyder på ett positivt samband mellan variablerna - en observation med ett högt värde i den ena variabeln har också ett högt värde på den andra - medan en korrelation under noll tyder på ett negativt samband. I R kan korrelation beräknas med \texttt{cor()} och två variabler som första och andra argument. Funktionen \texttt{cor.test()} ger ett test där nollhypotesen är att korrelationen är noll.
@@ -4452,32 +3555,9 @@ Korrelation ger ett mått mellan \(-1\) och \(1\) på hur väl två variabler sa
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{cor}\NormalTok{(dat\_eu07}\SpecialCharTok{$}\NormalTok{lifeExp, dat\_eu07}\SpecialCharTok{$}\NormalTok{gdpPercap)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.8499711
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{cor.test}\NormalTok{(dat\_eu07}\SpecialCharTok{$}\NormalTok{lifeExp, dat\_eu07}\SpecialCharTok{$}\NormalTok{gdpPercap)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## 
-##  Pearson's product-moment correlation
-## 
-## data:  dat_eu07$lifeExp and dat_eu07$gdpPercap
-## t = 8.5372, df = 28, p-value = 2.795e-09
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  0.7058444 0.9265221
-## sample estimates:
-##       cor 
-## 0.8499711
-\end{verbatim}
 
 Medellivslängd och bnp per capita har en stark positiv korrelation på 0.85 och den korrelation är signifikant skild från noll (p \textless{} 0.001). Notera att p-värdet är detsamma som för lutningsparametern i regressionen.
 
@@ -4487,38 +3567,9 @@ Om man har fler än två variabler sammanfattas korrelationer ofta med en korrel
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dat\_eu07[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 30 x 3
-##    lifeExp      pop gdpPercap
-##      <dbl>    <int>     <dbl>
-##  1    76.4  3600523      5.94
-##  2    79.8  8199783     36.1 
-##  3    79.4 10392226     33.7 
-##  4    74.9  4552198      7.45
-##  5    73.0  7322858     10.7 
-##  6    75.7  4493312     14.6 
-##  7    76.5 10228744     22.8 
-##  8    78.3  5468120     35.3 
-##  9    79.3  5238460     33.2 
-## 10    80.7 61083916     30.5 
-## # i 20 more rows
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{cor}\NormalTok{(dat\_eu07[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-##              lifeExp        pop gdpPercap
-## lifeExp   1.00000000 0.06946716 0.8499711
-## pop       0.06946716 1.00000000 0.0137427
-## gdpPercap 0.84997107 0.01374270 1.0000000
-\end{verbatim}
 
 Vad är korrelationen mellan befolkningsstorlek och bnp per capita?
 \end{exercise}
@@ -4544,231 +3595,7 @@ Plotta de fyra graferna (\texttt{x1} paras med \texttt{y1} och så vidare) i spr
 
 \end{exercise}
 
-\begin{exercise}[Datasaurus Dozen. Beskrivande mått]
-Datasaurus-datan är en konstruerad datamängd som illustrerar hur skilda mönster i data kan ge samma punktskattningar (medelvärden, standardavvikelser och korrelationer). Datan finns tillgänglig som en del av TidyTuesday-projektet och kan hämtas med följande rad.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_saurus }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{\textquotesingle{}https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020{-}10{-}13/datasaurus.csv\textquotesingle{}}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Datan innehåller en gruppering (\texttt{dataset}) och x- och y-koordinater. Beräkna medelvärden, standardavvikelser och korrelation för varje grupp i \texttt{dataset} genom att fylla i stycket nedan.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_saurus }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(\_\_\_) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{mean}\NormalTok{(x), }\FunctionTok{mean}\NormalTok{(y), }\FunctionTok{sd}\NormalTok{(x), }\FunctionTok{sd}\NormalTok{(y), }\FunctionTok{cor}\NormalTok{(x, y))}
-\end{Highlighting}
-\end{Shaded}
-
-Kommentera utfallet.
-\end{exercise}
-
-\begin{exercise}[Datasaurus Dozen. Grafer]
-
-Illustrera datasaurus datan med spridningsdiagram. Använd \texttt{facet\_wrap()} för småfönster per \texttt{dataset}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dat\_saurus, }\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ \_\_\_)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Galtons längdstudier. Installation av paket]
-
-En modern förståelse av regression införs under slutet av 1800-talet av Francis Galton (1822 - 1911). I en studie från 1886 samlade Galton in data på längder hos föräldrar och barn. En av Galtons slutsatser från den datan var att barn till långa föräldrar ofta blev kortade än föräldrarna. Extremvärden hade en tendes att \emph{återgå} mot mitten - härifrån kommer namnet \emph{regression}.
-
-Galtons längddata finns tillgänglig i paketet \texttt{HistData} som \texttt{Galton}. Installera paketet, ladda paketet, och skriv ut datan.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{install.packages}\NormalTok{(}\StringTok{"\_\_\_"}\NormalTok{)}
-\FunctionTok{library}\NormalTok{(\_\_\_)}
-\NormalTok{Galton}
-\end{Highlighting}
-\end{Shaded}
-
-Datan är i tum. Om man föredrar cm kan man multiplicera med 2.54.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{Galton }\OtherTok{\textless{}{-}} \FloatTok{2.54} \SpecialCharTok{*}\NormalTok{ Galton}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Galtons längdstudier. Graf]
-
-Gör en graf med föräldrars medellängd (\texttt{parent}) och barnets längd (\texttt{child}). Eftersom det finns överlappande punkter kan man använda \texttt{geom\_count()} eller \texttt{geom\_jitter()} istället för \texttt{geom\_point()}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(Galton, }\FunctionTok{aes}\NormalTok{(parent, child)) }\SpecialCharTok{+} \FunctionTok{geom\_count}\NormalTok{()}
-\FunctionTok{ggplot}\NormalTok{(Galton, }\FunctionTok{aes}\NormalTok{(parent, child)) }\SpecialCharTok{+} \FunctionTok{geom\_jitter}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Galtons längdstudier. Modell]
-
-Skatta en regressionmodell med barnets längd som förklarad variabel och förälderns längd som förklarande variabeln. Skriv ut resultaten och tolka lutningsparametern. Gör ett F-test med \texttt{Anova()}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(\_\_\_ }\SpecialCharTok{\textasciitilde{}}\NormalTok{ \_\_\_, Galton)}
-\FunctionTok{summary}\NormalTok{(\_\_\_)}
-\FunctionTok{Anova}\NormalTok{(\_\_\_)}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Galtons längdstudier. Konfidensintervall]
-Paketet \texttt{emmeans()}, som vi tidigare använt för att ta fram effekter i anovamodeller, har också en funktion för lutningsparametrar \texttt{emtrends()}. Vi kan använda den funktionen för att beräkna konfidensintervall för lutningen.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(emmeans)}
-\FunctionTok{emtrends}\NormalTok{(mod, }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }\AttributeTok{var =} \StringTok{"parent"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Funktionen \texttt{emmeans()} kan också användas för ett konfidensintervall för barnets längd vid ett specifikt värde för föräldrarnas längd. Följande ger ett konfidensintervall för barnets längd om föräldrarnas medellängd är 170 cm.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{emmeans}\NormalTok{(mod, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ parent, }\AttributeTok{at =} \FunctionTok{list}\NormalTok{(}\AttributeTok{parent =} \DecValTok{68}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-Vad ska ändras i stycket ovan för att beräkna ett konfidensintervall för barnets längd om föräldrarnas medellängd är 190 cm?
-\end{exercise}
-
-\begin{exercise}[Galtons längdstudier. Diagnosgrafer]
-Galtondatan omfattar 928 mätningar. Ta ut residualerna med \texttt{residuals(mod)} och gör ett histogram med \texttt{hist()} eller \texttt{geom\_histogram()}. Följer residualerna en ungefärlig normalfördelning?
-\end{exercise}
-
-\section{Bonus. Skrapa data från webbsidor}\label{bonus.-skrapa-data-fruxe5n-webbsidor}
-
-Det är väldigt vanligt att hämta in data från externa källor för att bygga ut en statistisk analys, till exempel kan offentlig väderdata vara intressant för ett odlingsförsök. Den typen av data kan vara mer eller mindre lättillgänglig. Här tittar vi på några exempel på hur allmänt tillgänglig data kan hämtas och användas.
-
-Kommunikation mellan datorer sker genom ett API (\emph{Application Programming Interface}). Många organisationer som sprider data har ett öppet tillgängligt API som användare kan koppla upp sig till. Ofta finns R-paket som gör det enkelt att ange vilket data man är ute efter. Några exempel är
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{pxweb} - statistiska centralbyråns web-API, \url{https://cran.r-project.org/web/packages/pxweb/vignettes/pxweb.html},
-\item
-  \texttt{Eurostat} - europeiska statistikbyrån, \url{https://ropengov.github.io/eurostat/articles/eurostat_tutorial.html},
-\item
-  \texttt{Rspotify} - Spotifys API, \url{https://github.com/tiagomendesdantas/Rspotify}.
-\end{itemize}
-
-I följande exempel används paketet \texttt{osmdata} för att hämta data från OpenStreetMap, \url{https://www.openstreetmap.org/}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#install.packages("osmdata")}
-\FunctionTok{library}\NormalTok{(osmdata)}
-\NormalTok{dat\_osm }\OtherTok{\textless{}{-}} \FunctionTok{opq}\NormalTok{(}\AttributeTok{bbox =} \StringTok{\textquotesingle{}Malmö\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{add\_osm\_feature}\NormalTok{(}\AttributeTok{key =} \StringTok{\textquotesingle{}admin\_level\textquotesingle{}}\NormalTok{, }\AttributeTok{value =} \StringTok{\textquotesingle{}10\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{osmdata\_sf}\NormalTok{()}
-
-\NormalTok{dat\_osm\_pol }\OtherTok{\textless{}{-}}\NormalTok{ dat\_osm}\SpecialCharTok{$}\NormalTok{osm\_multipolygons}
-
-\FunctionTok{ggplot}\NormalTok{(dat\_osm\_pol, }\FunctionTok{aes}\NormalTok{()) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_sf\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ name), }\AttributeTok{size =} \DecValTok{3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{exercise}[Malmös stadsdelar]
-Vad kan ändras i exemplet ovan för att ta ut Lunds stadsdelar i stället för Malmös?
-\end{exercise}
-
-Ännu ett exempel. Denna gång Malmös restauranger efter typ.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_osm }\OtherTok{\textless{}{-}} \FunctionTok{opq}\NormalTok{(}\AttributeTok{bbox =} \StringTok{\textquotesingle{}Malmö\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{add\_osm\_feature}\NormalTok{(}\AttributeTok{key =} \StringTok{\textquotesingle{}amenity\textquotesingle{}}\NormalTok{, }\AttributeTok{value =} \StringTok{\textquotesingle{}restaurant\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{osmdata\_sf}\NormalTok{()}
-
-\NormalTok{dat\_osm\_point }\OtherTok{\textless{}{-}}\NormalTok{ dat\_osm}\SpecialCharTok{$}\NormalTok{osm\_points }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(cuisine }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"pizza"}\NormalTok{, }\StringTok{"sushi"}\NormalTok{, }\StringTok{"burger"}\NormalTok{, }\StringTok{"chinese"}\NormalTok{, }\StringTok{"indian"}\NormalTok{, }\StringTok{"vietnamese"}\NormalTok{))}
-
-\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+} 
-  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ dat\_osm\_pol) }\SpecialCharTok{+}
-  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ dat\_osm\_point, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ cuisine), }\AttributeTok{size =} \DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{exercise}[Offentlig konst]
-Offentliga konstverk är ofta registrerade med \texttt{key\ =\ \textquotesingle{}tourism\textquotesingle{}} och \texttt{value\ =\ \textquotesingle{}artwork\textquotesingle{}}. Vad kan ändras i exemplet ovan för att ta ut offentliga konstverk i Malmö?
-\end{exercise}
-
-Det är inte alltid data finns tillgängligt genom en API. Mycket information finns publicerad som text eller tabeller på vanliga hemsidor. I såna fall kan man ofta ta hem data genom webbskrapning - att man med ett skript hämtar hem hemsidan, snarare än att själv läsa genom en webbläsare. I R kan det göras med paketet \texttt{rvest}. Ta som exempel den här tabellen över filmer i criterion-samlingen: \url{https://www.criterion.com/shop/browse/list}. För att läsa in den listan i R kan vi göra följande.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# install.packages("rvest")}
-\FunctionTok{library}\NormalTok{(rvest)}
-
-\NormalTok{url }\OtherTok{\textless{}{-}} \StringTok{"https://www.criterion.com/shop/browse/list"}
-\NormalTok{html }\OtherTok{\textless{}{-}} \FunctionTok{read\_html}\NormalTok{(url)}
-
-\NormalTok{dat\_crit }\OtherTok{\textless{}{-}}\NormalTok{ html }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{html\_table}\NormalTok{()}
-
-\NormalTok{dat\_crit }\OtherTok{\textless{}{-}}\NormalTok{ dat\_crit[[}\DecValTok{1}\NormalTok{]] }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(Director }\SpecialCharTok{!=} \StringTok{""}\NormalTok{)}
-\NormalTok{dat\_crit}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{exercise}[Regissör]
-Vilken regissör har flest filmer i criterion-samlingen? Använd datan från exemplet ovan och räkna antal filmer per regissör, t.ex. med \texttt{count()}.
-\end{exercise}
-
-Det finns flera paket som kan hämta data från Wikipedia, men det kan också göras med \texttt{rvest}. Här hämtas en tabell över mottagare av Nobelpriset i litteratur.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{url }\OtherTok{\textless{}{-}} \StringTok{"https://en.wikipedia.org/wiki/List\_of\_Nobel\_laureates\_in\_Literature"}
-\NormalTok{dat\_nob }\OtherTok{\textless{}{-}}\NormalTok{ url }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{read\_html}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{html\_table}\NormalTok{()}
-\NormalTok{dat\_nob }\OtherTok{\textless{}{-}}\NormalTok{ dat\_nob[[}\DecValTok{1}\NormalTok{]]}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{exercise}[Skrivspråk]
-
-Skapa ett stapeldiagram över antalet vinnare per språk (kolumnen \texttt{Language(s)}) genom att fylla i stycket nedan.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_agg }\OtherTok{\textless{}{-}}\NormalTok{ dat\_nob }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Language(s)}\StringTok{\textasciigrave{}}\NormalTok{)}
-
-\FunctionTok{ggplot}\NormalTok{(dat\_agg, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ n, }\AttributeTok{y =}\NormalTok{ \_\_\_)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_col}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}[Valfri tabell]
-Hitta en wikipedia-artikel med en tabell och försök hämta ner den till R genom att göra lämplig ändring i exemplet ovan.
-\end{exercise}
+För en modern variant av Anscombes data kan man titta på \emph{The Datasaurus Dozen}. Det är också en serie konstruerade variabler som har liknande egenskaper sett till medelvärden, standardavvikelser och korrelationer, men skiljer sig åt om du ritas i en graf.
 
 
 

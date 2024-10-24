@@ -11,7 +11,7 @@ Datorövning 5 handlar om hypotestest och konfidensintervall för jämförelse a
 
 - z-test för jämförelse av två proportioner,
 
-- chi-två-test för jämförelse fördelningar mellan två eller flera grupper,
+- chi-två-test för jämförelse av fördelningar mellan två eller flera grupper,
 
 - konfidensintervall för skillnaden mellan två medelvärden eller två proportioner.
 
@@ -24,7 +24,7 @@ När man startar en ny R-session bör man ladda de paket man vet kommer behövas
 library(tidyverse)
 ```
 
-I datorövning 5 tittade vi på tester som inte bygger på normalfördelning: dels tester för proportioner, där varje observation är något av två möjliga utfall; dels tester för kategoridata, där varje observation har ett ufall i någon av flera kategorier.
+I datorövning 4 tittade vi på tester som inte bygger på normalfördelning: dels tester för proportioner, där varje observation är något av två möjliga utfall; dels tester för kategoridata, där varje observation har ett ufall i någon av flera kategorier.
 
 Proportioner kan testas med ett z-test. Säg att man testar om en doft har en effekt på en insekt, man skickar 20 insekter i ett y-rör och 16 går mot doften. Hypoteserna ges av
 

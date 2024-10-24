@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Test för två stickprov | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="5 Test för två stickprov | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Test för två stickprov | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2024-10-18" />
+<meta name="date" content="2024-10-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -206,16 +206,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="variansanalys.html"><a href="variansanalys.html#allmänt"><i class="fa fa-check"></i><b>6.2</b> Allmänt</a></li>
 <li class="chapter" data-level="6.3" data-path="variansanalys.html"><a href="variansanalys.html#variansanalys.-en-faktor"><i class="fa fa-check"></i><b>6.3</b> Variansanalys. En faktor</a></li>
 <li class="chapter" data-level="6.4" data-path="variansanalys.html"><a href="variansanalys.html#variansanalys.-en-faktor-med-block"><i class="fa fa-check"></i><b>6.4</b> Variansanalys. En faktor med block</a></li>
-<li class="chapter" data-level="6.5" data-path="variansanalys.html"><a href="variansanalys.html#variansanalys.-två-faktorer-med-block"><i class="fa fa-check"></i><b>6.5</b> Variansanalys. Två faktorer med block</a></li>
-<li class="chapter" data-level="6.6" data-path="variansanalys.html"><a href="variansanalys.html#modellantaganden-och-residualer"><i class="fa fa-check"></i><b>6.6</b> Modellantaganden och residualer</a></li>
-<li class="chapter" data-level="6.7" data-path="variansanalys.html"><a href="variansanalys.html#bonus.-statistik-för-ekologi"><i class="fa fa-check"></i><b>6.7</b> Bonus. Statistik för ekologi</a></li>
+<li class="chapter" data-level="6.5" data-path="variansanalys.html"><a href="variansanalys.html#bonus.-två-faktorer-med-block"><i class="fa fa-check"></i><b>6.5</b> Bonus. Två faktorer med block</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html"><i class="fa fa-check"></i><b>7</b> Regression och korrelation</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#repetition-av-datorövning-6"><i class="fa fa-check"></i><b>7.1</b> Repetition av datorövning 6</a></li>
 <li class="chapter" data-level="7.2" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#regression"><i class="fa fa-check"></i><b>7.2</b> Regression</a></li>
 <li class="chapter" data-level="7.3" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#korrelation"><i class="fa fa-check"></i><b>7.3</b> Korrelation</a></li>
-<li class="chapter" data-level="7.4" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#bonus.-skrapa-data-från-webbsidor"><i class="fa fa-check"></i><b>7.4</b> Bonus. Skrapa data från webbsidor</a></li>
 </ul></li>
 </ul>
 
@@ -240,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p>t-test för jämförelse av två medelvärden,</p></li>
 <li><p>z-test för jämförelse av två proportioner,</p></li>
-<li><p>chi-två-test för jämförelse fördelningar mellan två eller flera grupper,</p></li>
+<li><p>chi-två-test för jämförelse av fördelningar mellan två eller flera grupper,</p></li>
 <li><p>konfidensintervall för skillnaden mellan två medelvärden eller två proportioner.</p></li>
 </ul>
 <div id="repetition-av-datorövning-4" class="section level2 hasAnchor" number="5.1">
@@ -248,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>När man startar en ny R-session bör man ladda de paket man vet kommer behövas med <code>library()</code>. Om paket inte finns installerade måste man först köra <code>install.packages()</code>.</p>
 <div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="test-för-två-stickprov.html#cb172-1" tabindex="-1"></a><span class="co"># install.packages(&quot;tidyverse&quot;)</span></span>
 <span id="cb172-2"><a href="test-för-två-stickprov.html#cb172-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<p>I datorövning 5 tittade vi på tester som inte bygger på normalfördelning: dels tester för proportioner, där varje observation är något av två möjliga utfall; dels tester för kategoridata, där varje observation har ett ufall i någon av flera kategorier.</p>
+<p>I datorövning 4 tittade vi på tester som inte bygger på normalfördelning: dels tester för proportioner, där varje observation är något av två möjliga utfall; dels tester för kategoridata, där varje observation har ett ufall i någon av flera kategorier.</p>
 <p>Proportioner kan testas med ett z-test. Säg att man testar om en doft har en effekt på en insekt, man skickar 20 insekter i ett y-rör och 16 går mot doften. Hypoteserna ges av</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span>: proportionen i populationen är 0.5,</li>
