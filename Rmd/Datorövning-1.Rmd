@@ -476,7 +476,7 @@ ggplot(dat_small, aes(lifeExp, continent)) +
 
 Nedan har vi en graf gjord med `ggplot2` med flera olika *geom* och ändringar från standardtemat.
 
-```{r, fig.height=5.3, echo=F}
+```{r, fig.height=5.3, echo=F, render=F, eval=F}
 counts <- c("Sweden", "Norway")
 col <- "lightblue"
 ggplot(gapminder %>% filter(continent == "Europe", year == 2007), aes(gdpPercap, lifeExp)) +

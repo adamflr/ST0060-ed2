@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 Beskrivande statistik | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="2 Beskrivande statistik | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 Beskrivande statistik | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2024-10-24" />
+<meta name="date" content="2025-09-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="datahantering-och-grafer.html"/>
-<link rel="next" href="ett-stickprov-av-normalfördelad-data.html"/>
+<link rel="next" href="tester-vid-ett-eller-flera-stickprov.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -145,13 +146,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="0.1" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html#inledning"><i class="fa fa-check"></i><b>0.1</b> Inledning</a></li>
 <li class="chapter" data-level="0.2" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html#installation-av-r"><i class="fa fa-check"></i><b>0.2</b> Installation av R</a></li>
 <li class="chapter" data-level="0.3" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html#installation-av-rstudio"><i class="fa fa-check"></i><b>0.3</b> Installation av RStudio</a></li>
-<li class="chapter" data-level="0.4" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html#gränssnittet-i-rstudio"><i class="fa fa-check"></i><b>0.4</b> Gränssnittet i RStudio</a></li>
+<li class="chapter" data-level="0.4" data-path="Rmd/Datorövning-2.html"><a href="#gr%C3%A4nssnittet-i-rstudio"><i class="fa fa-check"></i><b>0.4</b> Gränssnittet i RStudio</a></li>
 <li class="chapter" data-level="0.5" data-path="installation-av-r-och-rstudio.html"><a href="installation-av-r-och-rstudio.html#paket-i-r"><i class="fa fa-check"></i><b>0.5</b> Paket i R</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html"><i class="fa fa-check"></i><b>1</b> Datahantering och grafer</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#uppstart-och-orientering"><i class="fa fa-check"></i><b>1.1</b> Uppstart och orientering</a></li>
-<li class="chapter" data-level="1.2" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#packages-från-cran"><i class="fa fa-check"></i><b>1.2</b> <em>Packages</em> från CRAN</a></li>
+<li class="chapter" data-level="1.2" data-path="Rmd/Datorövning-2.html"><a href="#packages-fr%C3%A5n-cran"><i class="fa fa-check"></i><b>1.2</b> <em>Packages</em> från CRAN</a></li>
 <li class="chapter" data-level="1.3" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#objekt-och-funktioner"><i class="fa fa-check"></i><b>1.3</b> Objekt och funktioner</a></li>
 <li class="chapter" data-level="1.4" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#sekvenser-av-funktioner"><i class="fa fa-check"></i><b>1.4</b> Sekvenser av funktioner</a></li>
 <li class="chapter" data-level="1.5" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#datainskrivning"><i class="fa fa-check"></i><b>1.5</b> Datainskrivning</a></li>
@@ -161,58 +162,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html"><i class="fa fa-check"></i><b>2</b> Beskrivande statistik</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#repetition-från-datorövning-1"><i class="fa fa-check"></i><b>2.1</b> Repetition från datorövning 1</a></li>
-<li class="chapter" data-level="2.2" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#import-av-data-från-en-excelfil"><i class="fa fa-check"></i><b>2.2</b> Import av data från en Excelfil</a></li>
-<li class="chapter" data-level="2.3" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ändra-och-skapa-nya-kolumner-med-mutate"><i class="fa fa-check"></i><b>2.3</b> Ändra och skapa nya kolumner med <code>mutate</code></a></li>
-<li class="chapter" data-level="2.4" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#sammanfattande-lägesmått"><i class="fa fa-check"></i><b>2.4</b> Sammanfattande lägesmått</a></li>
-<li class="chapter" data-level="2.5" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#sammanfattande-spridningsmått"><i class="fa fa-check"></i><b>2.5</b> Sammanfattande spridningsmått</a></li>
+<li class="chapter" data-level="2.1" data-path="Rmd/Datorövning-2.html"><a href="#repetition-fr%C3%A5n-dator%C3%B6vning-1"><i class="fa fa-check"></i><b>2.1</b> Repetition från datorövning 1</a></li>
+<li class="chapter" data-level="2.2" data-path="Rmd/Datorövning-2.html"><a href="#import-av-data-fr%C3%A5n-en-excelfil"><i class="fa fa-check"></i><b>2.2</b> Import av data från en Excelfil</a></li>
+<li class="chapter" data-level="2.3" data-path="Rmd/Datorövning-2.html"><a href="#%C3%A4ndra-och-skapa-nya-kolumner-med-mutate"><i class="fa fa-check"></i><b>2.3</b> Ändra och skapa nya kolumner med <code>mutate</code></a></li>
+<li class="chapter" data-level="2.4" data-path="Rmd/Datorövning-2.html"><a href="#sammanfattande-l%C3%A4gesm%C3%A5tt"><i class="fa fa-check"></i><b>2.4</b> Sammanfattande lägesmått</a></li>
+<li class="chapter" data-level="2.5" data-path="Rmd/Datorövning-2.html"><a href="#sammanfattande-spridningsm%C3%A5tt"><i class="fa fa-check"></i><b>2.5</b> Sammanfattande spridningsmått</a></li>
 <li class="chapter" data-level="2.6" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ordna-upp-beskrivande-statistik-och-exportera"><i class="fa fa-check"></i><b>2.6</b> Ordna upp beskrivande statistik och exportera</a></li>
-<li class="chapter" data-level="2.7" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#kumulativt-medelvärde"><i class="fa fa-check"></i><b>2.7</b> Kumulativt medelvärde</a></li>
+<li class="chapter" data-level="2.7" data-path="Rmd/Datorövning-2.html"><a href="#kumulativt-medelv%C3%A4rde"><i class="fa fa-check"></i><b>2.7</b> Kumulativt medelvärde</a></li>
 <li class="chapter" data-level="2.8" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#tredimensionella-grafer-med-plotly"><i class="fa fa-check"></i><b>2.8</b> Tredimensionella grafer med <code>plotly</code></a></li>
 <li class="chapter" data-level="2.9" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html#ai-uppgift-ii"><i class="fa fa-check"></i><b>2.9</b> AI-uppgift II</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html"><i class="fa fa-check"></i><b>3</b> Ett stickprov av normalfördelad data</a>
+<li class="chapter" data-level="3" data-path="tester-vid-ett-eller-flera-stickprov.html"><a href="tester-vid-ett-eller-flera-stickprov.html"><i class="fa fa-check"></i><b>3</b> Tester vid ett eller flera stickprov</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#repetition-från-datorövning-2"><i class="fa fa-check"></i><b>3.1</b> Repetition från datorövning 2</a></li>
-<li class="chapter" data-level="3.2" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#test-av-medelvärde-för-normalfördelad-data"><i class="fa fa-check"></i><b>3.2</b> Test av medelvärde för normalfördelad data</a></li>
-<li class="chapter" data-level="3.3" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#konfidensintervall-för-normalfördelad-data"><i class="fa fa-check"></i><b>3.3</b> Konfidensintervall för normalfördelad data</a></li>
-<li class="chapter" data-level="3.4" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#normalfördelad-data"><i class="fa fa-check"></i><b>3.4</b> Normalfördelad data</a></li>
-<li class="chapter" data-level="3.5" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#centrala-gränsvärdesatsen"><i class="fa fa-check"></i><b>3.5</b> Centrala gränsvärdesatsen</a></li>
-<li class="chapter" data-level="3.6" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#ai-uppgift-iii"><i class="fa fa-check"></i><b>3.6</b> AI-uppgift III</a></li>
-<li class="chapter" data-level="3.7" data-path="ett-stickprov-av-normalfördelad-data.html"><a href="ett-stickprov-av-normalfördelad-data.html#bonus.-simuleringar-för-t-test"><i class="fa fa-check"></i><b>3.7</b> Bonus. Simuleringar för t-test</a></li>
+<li class="chapter" data-level="3.1" data-path="Rmd/Datorövning-2.html"><a href="#repetition-fr%C3%A5n-dator%C3%B6vning-2"><i class="fa fa-check"></i><b>3.1</b> Repetition från datorövning 2</a></li>
+<li class="chapter" data-level="3.2" data-path="tester-vid-ett-eller-flera-stickprov.html"><a href="tester-vid-ett-eller-flera-stickprov.html#ett-stickprov"><i class="fa fa-check"></i><b>3.2</b> Ett stickprov</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Rmd/Datorövning-2.html"><a href="#test-av-medelv%C3%A4rde-f%C3%B6r-normalf%C3%B6rdelad-data"><i class="fa fa-check"></i><b>3.2.1</b> Test av medelvärde för normalfördelad data</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Rmd/Datorövning-2.html"><a href="#konfidensintervall-f%C3%B6r-normalf%C3%B6rdelad-data"><i class="fa fa-check"></i><b>3.2.2</b> Konfidensintervall för normalfördelad data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Rmd/Datorövning-2.html"><a href="#ett-stickprov-av-bin%C3%A4r-data"><i class="fa fa-check"></i><b>3.2.3</b> Ett stickprov av binär data</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Rmd/Datorövning-2.html"><a href="#konfidensintervall-f%C3%B6r-proportioner"><i class="fa fa-check"></i><b>3.2.4</b> Konfidensintervall för proportioner</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Rmd/Datorövning-2.html"><a href="#chi-tv%C3%A5-test-f%C3%B6r-goodness-of-fit"><i class="fa fa-check"></i><b>3.2.5</b> Chi-två-test för goodness-of-fit</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html"><i class="fa fa-check"></i><b>4</b> Ett stickprov av icke-normalfördelad data</a>
+<li class="chapter" data-level="3.3" data-path="Rmd/Datorövning-2.html"><a href="#tv%C3%A5-stickprov"><i class="fa fa-check"></i><b>3.3</b> Två stickprov</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#repetition-av-datorövning-3"><i class="fa fa-check"></i><b>4.1</b> Repetition av datorövning 3</a></li>
-<li class="chapter" data-level="4.2" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#proportioner-från-binär-data"><i class="fa fa-check"></i><b>4.2</b> Proportioner från binär data</a></li>
-<li class="chapter" data-level="4.3" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#konfidensintervall-för-proportioner"><i class="fa fa-check"></i><b>4.3</b> Konfidensintervall för proportioner</a></li>
-<li class="chapter" data-level="4.4" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#chi-två-test-för-goodness-of-fit"><i class="fa fa-check"></i><b>4.4</b> Chi-två-test för goodness-of-fit</a></li>
-<li class="chapter" data-level="4.5" data-path="ett-stickprov-av-icke-normalfördelad-data.html"><a href="ett-stickprov-av-icke-normalfördelad-data.html#bonus.-interaktiva-kartor-med-leaflet"><i class="fa fa-check"></i><b>4.5</b> Bonus. Interaktiva kartor med leaflet</a></li>
+<li class="chapter" data-level="3.3.1" data-path="Rmd/Datorövning-2.html"><a href="#test-av-normalf%C3%B6rdelad-data"><i class="fa fa-check"></i><b>3.3.1</b> Test av normalfördelad data</a></li>
+<li class="chapter" data-level="3.3.2" data-path="Rmd/Datorövning-2.html"><a href="#z-test-och-konfidensintervall-f%C3%B6r-tv%C3%A5-proportioner"><i class="fa fa-check"></i><b>3.3.2</b> z-test och konfidensintervall för två proportioner</a></li>
+<li class="chapter" data-level="3.3.3" data-path="Rmd/Datorövning-2.html"><a href="#chi-tv%C3%A5-test-f%C3%B6r-korstabeller"><i class="fa fa-check"></i><b>3.3.3</b> Chi-två-test för korstabeller</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html"><i class="fa fa-check"></i><b>5</b> Test för två stickprov</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#repetition-av-datorövning-4"><i class="fa fa-check"></i><b>5.1</b> Repetition av datorövning 4</a></li>
-<li class="chapter" data-level="5.2" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#två-stickprov-och-normalfördelad-data"><i class="fa fa-check"></i><b>5.2</b> Två stickprov och normalfördelad data</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#t-test-för-två-matchade-stickprov"><i class="fa fa-check"></i><b>5.2.1</b> t-test för två matchade stickprov</a></li>
-<li class="chapter" data-level="5.2.2" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#t-test-för-två-oberoende-stickprov"><i class="fa fa-check"></i><b>5.2.2</b> t-test för två oberoende stickprov</a></li>
+<li class="chapter" data-level="3.4" data-path="tester-vid-ett-eller-flera-stickprov.html"><a href="tester-vid-ett-eller-flera-stickprov.html#ai-uppgift-iii"><i class="fa fa-check"></i><b>3.4</b> AI-uppgift III</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#z-test-och-konfidensintervall-för-två-proportioner"><i class="fa fa-check"></i><b>5.3</b> z-test och konfidensintervall för två proportioner</a></li>
-<li class="chapter" data-level="5.4" data-path="test-för-två-stickprov.html"><a href="test-för-två-stickprov.html#chi-två-test-för-korstabeller"><i class="fa fa-check"></i><b>5.4</b> Chi-två-test för korstabeller</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="variansanalys.html"><a href="variansanalys.html"><i class="fa fa-check"></i><b>6</b> Variansanalys</a>
+<li class="chapter" data-level="4" data-path="variansanalys.html"><a href="variansanalys.html"><i class="fa fa-check"></i><b>4</b> Variansanalys</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="variansanalys.html"><a href="variansanalys.html#repetition-av-datorövning-5"><i class="fa fa-check"></i><b>6.1</b> Repetition av datorövning 5</a></li>
-<li class="chapter" data-level="6.2" data-path="variansanalys.html"><a href="variansanalys.html#allmänt"><i class="fa fa-check"></i><b>6.2</b> Allmänt</a></li>
-<li class="chapter" data-level="6.3" data-path="variansanalys.html"><a href="variansanalys.html#variansanalys.-en-faktor"><i class="fa fa-check"></i><b>6.3</b> Variansanalys. En faktor</a></li>
-<li class="chapter" data-level="6.4" data-path="variansanalys.html"><a href="variansanalys.html#variansanalys.-en-faktor-med-block"><i class="fa fa-check"></i><b>6.4</b> Variansanalys. En faktor med block</a></li>
-<li class="chapter" data-level="6.5" data-path="variansanalys.html"><a href="variansanalys.html#bonus.-två-faktorer-med-block"><i class="fa fa-check"></i><b>6.5</b> Bonus. Två faktorer med block</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html"><i class="fa fa-check"></i><b>7</b> Regression och korrelation</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#repetition-av-datorövning-6"><i class="fa fa-check"></i><b>7.1</b> Repetition av datorövning 6</a></li>
-<li class="chapter" data-level="7.2" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#regression"><i class="fa fa-check"></i><b>7.2</b> Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="regression-och-korrelation.html"><a href="regression-och-korrelation.html#korrelation"><i class="fa fa-check"></i><b>7.3</b> Korrelation</a></li>
+<li class="chapter" data-level="4.1" data-path="Rmd/Datorövning-2.html"><a href="#allm%C3%A4nt-om-variansanalys"><i class="fa fa-check"></i><b>4.1</b> Allmänt om variansanalys</a></li>
+<li class="chapter" data-level="4.2" data-path="variansanalys.html"><a href="variansanalys.html#variansanalys.-en-faktor"><i class="fa fa-check"></i><b>4.2</b> Variansanalys. En faktor</a></li>
+<li class="chapter" data-level="4.3" data-path="variansanalys.html"><a href="variansanalys.html#variansanalys.-en-faktor-med-block"><i class="fa fa-check"></i><b>4.3</b> Variansanalys. En faktor med block</a></li>
+<li class="chapter" data-level="4.4" data-path="Rmd/Datorövning-2.html"><a href="#bonus.-tv%C3%A5-faktorer-med-block"><i class="fa fa-check"></i><b>4.4</b> Bonus. Två faktorer med block</a></li>
+<li class="chapter" data-level="4.5" data-path="variansanalys.html"><a href="variansanalys.html#regression"><i class="fa fa-check"></i><b>4.5</b> Regression</a></li>
+<li class="chapter" data-level="4.6" data-path="variansanalys.html"><a href="variansanalys.html#korrelation"><i class="fa fa-check"></i><b>4.6</b> Korrelation</a></li>
 </ul></li>
 </ul>
 
@@ -241,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Konstruera grafer som jämför två eller flera gruppers läge och spridning.</li>
 </ul>
 <div id="repetition-från-datorövning-1" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Repetition från datorövning 1<a href="beskrivande-statistik.html#repetition-från-datorövning-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">2.1</span> Repetition från datorövning 1<a href="#repetition-fr%C3%A5n-dator%C3%B6vning-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>När man arbetar i R är det klokt att använda ett avancerat gränssnitt som RStudio och att skriva sin kod i ett separat skript. I RStudio kan man starta ett nytt skript genom <em>Ctrl + Shift + N</em>.</p>
 <p>Mycket funktionalitet i R ligger i tilläggspaket (<em>Packages</em>). Paket måste installeras första gången de används och laddas varje session de används, t.ex.</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="beskrivande-statistik.html#cb63-1" tabindex="-1"></a><span class="co"># install.packages(&quot;tidyverse&quot;) # Installera tidyverse</span></span>
@@ -264,7 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb68-4"><a href="beskrivande-statistik.html#cb68-4" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 </div>
 <div id="import-av-data-från-en-excelfil" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Import av data från en Excelfil<a href="beskrivande-statistik.html#import-av-data-från-en-excelfil" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">2.2</span> Import av data från en Excelfil<a href="#import-av-data-fr%C3%A5n-en-excelfil" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Inom vetenskapen är Excel det vanligaste filformatet för mindre datamängder. Till den här delen ska vi återigen arbeta med data från <em>Gapminder</em>.</p>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-23" class="exercise"><strong>Uppgift 2.1  (Excelfil från Canvas) </strong></span>Hitta excelfilen <em>Gapminder.xlsx</em> på Canvas och ladda ner den. Hitta mappen som filen laddats ned till.</p>
@@ -293,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb73-3"><a href="beskrivande-statistik.html#cb73-3" tabindex="-1"></a>gapminder                      </span></code></pre></div>
 </div>
 <div id="ändra-och-skapa-nya-kolumner-med-mutate" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Ändra och skapa nya kolumner med <code>mutate</code><a href="beskrivande-statistik.html#ändra-och-skapa-nya-kolumner-med-mutate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">2.3</span> Ändra och skapa nya kolumner med <code>mutate</code><a href="#%C3%A4ndra-och-skapa-nya-kolumner-med-mutate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Variabler kan omräknas och nya variabler kan skapas med <code>mutate</code>-funktionen. I gapminder-datan finns bnp per capita. Om man vill ha nationell BNP kan man skapa en ny kolumn och beräkna den som bnp per capita gånger populationen.</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="beskrivande-statistik.html#cb74-1" tabindex="-1"></a>gapminder <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span>             <span class="co"># Ta datan, och sen</span></span>
 <span id="cb74-2"><a href="beskrivande-statistik.html#cb74-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gdp =</span> gdpPercap <span class="sc">*</span> pop)        <span class="co"># Beräkna bnp</span></span></code></pre></div>
@@ -306,7 +292,7 @@ Vi kan skriva ut objektet och se resultatet av beräkningen:</p>
 <span id="cb76-3"><a href="beskrivande-statistik.html#cb76-3" tabindex="-1"></a>gapminder</span></code></pre></div>
 </div>
 <div id="sammanfattande-lägesmått" class="section level2 hasAnchor" number="2.4">
-<h2><span class="header-section-number">2.4</span> Sammanfattande lägesmått<a href="beskrivande-statistik.html#sammanfattande-lägesmått" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">2.4</span> Sammanfattande lägesmått<a href="#sammanfattande-l%C3%A4gesm%C3%A5tt" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Den importerade datan anger medellivslängd, populationsstorlek och bnp per capita per land och år. Vi kan börja med att producera en bubbelgraf över datan - en av de presentationer Gapminder ofta använder. En bubbelgraf är ett spridningsdiagram där punktens storlek beror på en tredje variabel.</p>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="beskrivande-statistik.html#cb77-1" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> gdpPercap, <span class="at">y =</span> lifeExp, </span>
 <span id="cb77-2"><a href="beskrivande-statistik.html#cb77-2" tabindex="-1"></a>                      <span class="at">size =</span> pop, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
@@ -356,7 +342,7 @@ Vi kan skriva ut objektet och se resultatet av beräkningen:</p>
 </div>
 </div>
 <div id="sammanfattande-spridningsmått" class="section level2 hasAnchor" number="2.5">
-<h2><span class="header-section-number">2.5</span> Sammanfattande spridningsmått<a href="beskrivande-statistik.html#sammanfattande-spridningsmått" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">2.5</span> Sammanfattande spridningsmått<a href="#sammanfattande-spridningsm%C3%A5tt" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Under föreläsningarna såg vi några mått på spridning: varians, standardavvikelse och kvartilavstånd (IQR, <em>inter-quartile range</em>). De har alla motsvarande funktioner i R (<code>var()</code>, <code>sd()</code>, och <code>IQR()</code>) som kan användas på samma sätt som funktionerna för lägesmått.</p>
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="beskrivande-statistik.html#cb83-1" tabindex="-1"></a>gapminder<span class="sc">$</span>gdpPercap      <span class="co"># Vektorn med data</span></span>
 <span id="cb83-2"><a href="beskrivande-statistik.html#cb83-2" tabindex="-1"></a></span>
@@ -433,7 +419,7 @@ Vi kan skriva ut objektet och se resultatet av beräkningen:</p>
 <p>Därifrån skulle man kunna öppna filen i något kalkylprogram, snygga till layouten, och sedan klippa in i ett textdokument.</p>
 </div>
 <div id="kumulativt-medelvärde" class="section level2 hasAnchor" number="2.7">
-<h2><span class="header-section-number">2.7</span> Kumulativt medelvärde<a href="beskrivande-statistik.html#kumulativt-medelvärde" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">2.7</span> Kumulativt medelvärde<a href="#kumulativt-medelv%C3%A4rde" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Om man har data som av någon anledning samlas in i sekvens kan det vara intressant att beräkna och illustrera den med ett <em>kumulativt medelvärde</em>. En serie med kumulativa medelvärden beräknas genom att för varje nytt värde ta medelvärden av de värden man hittills samlat in - vid tio värden tar man medelvärdet av de tio, vid elva värden medelvärdet av de elva, och så vidare.</p>
 <p>Med de tärningsvärden vi hade innan kan vi beräkna ett kumulativt medelvärde genom att först beräkna summan med <code>cumsum()</code> och sedan dela på antalet kast. För att förenkla beräkningen av antalen tar vi fram sekvensen med antal kast i ett <code>mutate()</code>-steg.</p>
 <div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="beskrivande-statistik.html#cb93-1" tabindex="-1"></a>dat_dice <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Utfall =</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
@@ -529,7 +515,7 @@ Vi kan skriva ut objektet och se resultatet av beräkningen:</p>
         </div>
       </div>
 <a href="datahantering-och-grafer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ett-stickprov-av-normalfördelad-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tester-vid-ett-eller-flera-stickprov.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -543,42 +529,42 @@ Vi kan skriva ut objektet och se resultatet av beräkningen:</p>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": false
-},
-"fontsettings": {
-"theme": "white",
-"family": "serif",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["R-anvisningar.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": false
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "serif",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["R-anvisningar.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
 });
 });
 </script>

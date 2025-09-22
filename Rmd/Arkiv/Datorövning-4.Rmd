@@ -1,0 +1,370 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Ett stickprov av icke-normalfördelad data
+
+Datorövning 4 handlar om hypotestest och konfidensintervall för ett stickprov av icke-normalfördelad data. Efter övningen ska vi kunna
+
+- genomföra och tolka ett z-test för proportioner,
+
+- genomföra och tolka ett chi-två-test för nominal data
+
+- beräkna och tolka ett konfidensintervall för proportioner.
+
+Om det finns tid för en bonussektion kommer vi också titta på interaktiva kartor med `leaflet`.
+
+## Repetition av datorövning 3
+
+När man startar en ny R-session bör man ladda de paket man vet kommer behövas med `library()`. Om paket inte finns installerade måste man först köra `install.packages()`.
+
+```{r}
+# install.packages("tidyverse")
+library(tidyverse)
+```
+
+I datorövning 3 tittade vi på analys av ett stickprov av normalfördelad data. Det underliggande upplägget är att vi vill säga något om en population genom att titta på ett stickprov. Ett *t-test* kan användas för att testa en given *nollhypotes*. Ett konfidensintervall ringar in populationens medelvärde med en viss konfidensgrad - oftast 95 procent. Ett normalfördelningsantagande kan undersökas med histogram eller QQ-grafer.
+
+Ta som exempel följande data på jord-pH och låt oss anta att det är relevant att testa om populationens medelvärde är 7.
+
+```{r, fig.height=2.5, fig.show='hide'}
+dat_pH <- data.frame(pH = c(6.3, 6.55, 6.75, 6.4, 
+                            7.25, 6.65, 6.8, 7.3, 7.15, 6.7))
+
+ggplot(dat_pH, aes(pH, 0)) +
+  geom_point(size = 4) +
+  geom_vline(xintercept = 7, size = 5, 
+             color = "red", alpha = 0.4) +
+  theme(axis.text.y = element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.ticks = element_blank())
+```
+
+Hypoteser ges av
+
+- $H_0$: $\mu$ lika med 7
+- $H_1$: $\mu$ ej lika med 7
+
+Testet kan genomföras med funktionen `t.test()`.
+
+```{r, results='hide'}
+t.test(dat_pH$pH, mu = 7)
+```
+
+Ett p-värde över 0.05 ger att vi inte förkastar nollhypotesen - den observerade skillnaden mot 7 är inte statistiskt signifikant. Konfidensintervallet ger att populationens medelvärde ligger mellan 6.54 och 7.03 med 95 procents konfidens.
+
+En QQ-graf kan visa om det finns några avvikelser från normalantagandet. Med små datamängder är det oftast svårt att se några tydliga tecken på icke-normalitet.
+
+```{r, fig.height=3, fig.width=3, fig.show='hide'}
+ggplot(dat_pH, aes(sample = pH)) +
+  geom_qq() +
+  geom_qq_line()
+```
+
+## Proportioner från binär data
+
+Binär data är data där en observation har ett av två utfall, vilka kan kodas som noll och ett. Man talar ibland om utfallet ett som ett *positivt* utfall. Binär data kan sammanfattas med en proportion - antalet positiva utfall delat på det totala antalet upprepningar. En proportion kan testas med ett z-test för proportioner (eller *relativ frekvens*). Testet följer stegen för hypotestest (Hypoteser - Testvärde - Testfördelning - P-värde (eller jämförelse med kritiskt värde) - Slutsats). 
+
+Låt oss importera lite exempeldata och beräkna ett exempel. Följande rad importerar matchresultat i fotbollsallsvenskan för damer 2000-2020.
+
+```{r, fig.show='hide'}
+library(tidyverse)
+dat_alls <- read_csv("https://raw.githubusercontent.com/adamflr/ST0060/main/Data/Allsvenskan%2C%20damer%2C%202000-2020.csv")
+
+ggplot(dat_alls, aes(hemmamal, bortamal)) +
+  geom_jitter(size = 0.1)
+```
+
+::: {.exercise name="En interaktiv målgraf"}
+Kör stycket nedan för en interaktiv målgraf. Vilken match gav det högsta antalet gjorda bortamål?
+```{r, eval = F}
+# install.packages("plotly")
+library(plotly)
+g <- ggplot(dat_alls, aes(hemmamal, bortamal, 
+                      text = paste(sasong, hemma, "-", borta))) +
+  geom_jitter(size = 0.1)
+
+ggplotly(g)
+```
+:::
+
+Gammal bollkunskap säger att var tredje match är en bortavinst. Vi kan testa det med ett z-test för proportioner. För att ta fram antalet bortasegrar och totalt antal matcher använder vi `count()` på kolumnen `resultat`. Man kan också använda funktionen `table()` för ett liknande resultat.
+
+```{r, results='hide'}
+dat_alls %>% count(resultat)
+table(dat_alls$resultat)
+```
+
+Datan har 947 bortasegrar av totalt 947 + 1803 matcher. Vår skattade proportion `p` och totala antal `n` är alltså
+
+```{r, results='hide'}
+n <- 947 + 1803
+p_est <- 947 / n
+
+p_est
+n
+```
+
+För att genomföra ett z-test sätter vi upp hypoteser om proportionen bortasegrar.
+
+- Nollhypotes $H_0$: p lika med 0.33
+- Alternativhypotes $H_1$: p ej lika med 0.33
+
+Ett test kan köras i R med `prop.test()`.
+
+```{r}
+prop.test(x = 947, n = 2750, p = 0.33, correct = F)
+```
+
+P-värdet ställs mot en förbestämd signifikansnivå (vanligen 5 procent). I det här fallet leder det höga p-värdet till att nollhypotesen accepteras.
+
+Om vi tar en närmre titt på testets steg börjar vi med att beräkna ett testvärde.
+
+```{r}
+p0 <- 0.33
+z_value <- (p_est - p0) / sqrt(p0 * (1 - p0) / n)
+z_value
+```
+
+Därefter kan p-värdet räknas ut som arean under en standardiserad normalfördelning bortom z-värdet. Eftersom vi har en tvåsidig mothypotes adderas de två svansarna.
+
+```{r, fig.show='hide'}
+ggplot() +
+  geom_function(fun = dnorm) +
+  geom_vline(xintercept = c(-z_value, z_value)) +
+  xlim(-3,3)
+```
+
+Areans yta kan tas fram med normalfördelningens fördelningsfunktion `pnorm()`.
+
+```{r}
+2 * pnorm(-z_value)
+```
+
+Testets p-värde är ungefär 11 procent. Vår observation är alltså inte ett orimligt utfall om den faktiska sannolikheten för bortaseger är 0.33 och vi kan inte förkasta nollhypotesen på femprocentsnivån.
+
+Om man löste uppgiften för hand skulle man istället för att beräkna p-värdet jämföra z-värdet med ett kritisk värde ur en tabell. Det kritiska värdet för femprocentig signifikans är 1.96. Vi kan också ta fram det genom `qnorm(0.975)`.
+
+Vi kan jämföra den beräkning med den direkta R-funktionen.
+
+```{r, results='hide'}
+prop.test(x = 947, n = 2750, p = 0.33, correct = F)
+```
+
+Den stegvisa beräkningen gav samma utfall som funktionen (`p-value = 0.1092`). Funktionen ger inte z-värdet utan ett chi-två-värde (2.5661). Här är det värdet lika med z-värdet i kvadrat.
+
+```{r, results='hide'}
+z_value^2
+```
+
+::: {.exercise name="Test för proportionen oavgjorda"}
+Samma gamla bollkunskap säger att 20 procent av matcher blir oavgjorda. I datan är 518 av 2750 matcher oavgjorda. Ställ upp hypoteser och fyll i koden nedan för att testa om bollkunskapen stämmer. Beräkna också z-värdet för hand.
+
+```{r, eval = F}
+prop.test(x = ___, n = ___, p = ___, correct = F)
+```
+:::
+
+::: {.exercise name="Test för proportionen hemmasegrar"}
+Slutligen är då resten av matcherna, 1285 av 2750, hemmasegrar. Gammal bollkunskap säger: *47 procent av alla matcher är hemmasegrar*. Genomför ett z-test för att testa det påstående.
+
+```{r, eval = F}
+prop.test(x = ___, n = ___, p = ___, correct = F)
+```
+:::
+
+::: {.exercise name="Population och stickprov"}
+Ett hypotestest bygger på en underliggande tanke med en population (med någon för oss okänd proportion positiva utfall) och ett stickprov (i vilket vi kan observera andelen positiva utfall). Det är inte alltid uppenbart vad som egentligen är populationen. I fallet med fotbollsdatan, vad kan ses som populationen? Hur långt skulle man kunna generalisera de slutsatser man kan dra från datan?
+:::
+
+Hypotestestet för proportioner som används här, *z-testet*, bygger på en normalapproximation av en binomialfördelning. Approximation blir bättre när antalet observationer är stort och nollhypotesens värde p0 ligger nära 0.5. En vanlig tumregel för när approximationen är giltig är att n gånger $p_0$ gånger $(1 - p_0)$ ska vara större än 10.
+
+## Konfidensintervall för proportioner
+
+Konstruktionen av ett konfidensintervall för en proportion är ganska lik konstruktionen för ett medelvärde. För en skattad proportion p och antal observationer n kan man beräkna p plus/minus ett z-värde från tabell gånger medelfelet, där medelfelet ges av roten ur $p \cdot (1 - p) / n$. För exemplet med bortasegrar i allsvenskan är $p = 0.344$ och $n = 2750$. Tabellvärdet hämtas från en tabell över kvantiler. För ett 95-procentigt konfidensintervall tar vi kvantilen 0.975 (2.5 procent i respektive svans) vilket ger värdet 1.96. Konfidensintervallet ges av
+
+```{r, results='hide'}
+n <- 947 + 1803
+p <- 947 / n
+
+p - 1.96 * sqrt(p * (1 - p) / n)
+p + 1.96 * sqrt(p * (1 - p) / n)
+```
+
+Notera att 0.33, det värde som var nollhypotesen i det tidigare testet, *ingår* i intervallet. Om man tittar på utskriften från `prop.test()` kan man se ett konfidensintervall. Det intervallet är dock inte beräknat på samma sätt den formel som förekommer på föreläsningarna. För att få matchande utskrift kan vi använda paketet `binom` och funktionen `binom.asymp()`.
+
+```{r, results='hide'}
+#install.packages("binom")
+library(binom)
+binom.asymp(x = 947, n = 2750)
+```
+
+::: {.exercise name="99-procentigt konfidensintervall"}
+Gör lämplig ändring i koden nedan för att beräkna ett 99-procentigt konfidensintervall för andelen bortasegrar.
+
+```{r, eval = F}
+binom.asymp(x = 947, n = 2750, conf.level = 0.95)
+```
+:::
+
+## Chi-två-test för goodness-of-fit
+
+Ett proportionstest kan ses som ett test av en variabel med två möjliga klasser som utfall. Ett *goodness-of-fit*-test utvecklar det till valfritt antal klasser. Testet utförs som ett chi-två-test genom att beräkna ett observerat antal O och ett förväntat antal E för varje klass. Testvärdet ges av att man beräknar $(O - E)^2 / E$ för varje klass och sedan summerar. Testfunktionen är en chi-två-fördelning där antalet frihetsgrader beror på antalet klasser.
+
+Låt oss göra ett exempel baserat på fotbollsdatan. Där hade vi utfallet 947, 518 och 1285 för bortaseger, oavgjort och hemmaseger. Klassisk bollkunskap ger oss sannolikheterna 33, 20 och 47 procent. Testets hypoteser ges av
+
+$H_0$: sannolikheterna för de olika utfallet ges av 33, 20 respektive 47 procent
+
+$H_1$: minst något utfall har en annan sannolikhet än 33, 20 respektive 47 procent
+
+För att få de förväntade värdena E multipliceras nollhypotesens sannolikheter med det totala antalet matcher.
+
+```{r}
+O <- c(947, 518, 1285)
+E <- c(0.33,0.20,0.47) * 2750
+```
+
+::: {.exercise name="Granska E"}
+Skriv ut objektet `E` och jämför med de observerade värdena. Notera att de förväntade värdena inte måste vara heltal, trots att de observerade värdena förstås alltid kommer vara det.
+:::
+
+Testvärdet beräknas genom formeln för varje term följt av summan.
+
+```{r}
+chisq_value <- sum((O - E)^2 / E)
+```
+
+P-värdet beräknas från en chi-två-fördelning. Antalet frihetsgrader ges av antalet klasser minus antalet skattade parametrar minus ett. I det här fallet har inga parametrar skattats från datan så antalet frihetsgrader blir två. Ett chi-två-test beräknas med kvadrater så vi är enbart intresserade av högra svansen.
+
+```{r, fig.show='hide'}
+ggplot() +
+  geom_function(fun = dchisq, args = list(df = 2)) +
+  geom_vline(xintercept = chisq_value) +
+  xlim(0,10)
+```
+
+Man kan också beräkna ytan i svansen med `pchisq()`. Ett minus det resultatet ger den övre delen.
+
+```{r, results='hide'}
+1 - pchisq(chisq_value, df = 2)
+```
+
+P-värdet är alltså 0.16, över den klassiska signifikansnivån på 5 procent, vilket ger att vi inte kan förkasta nollhypotesen. Om man gör ett chi-två-test för hand jämför man det observerade chi-två-värdet med ett tabellvärde över kvantiler. Tabellvärdet kan också hämtas med funktionen `qchisq()`, i det här fallet
+
+```{r, results='hide'}
+qchisq(0.95, df = 2)
+```
+
+Notera att man tar 0.95 eftersom man alltid tittar på den yttre svansen i ett chi-två-test.
+
+R har en inbyggd funktion för chi-två-test. Dess argument ges av observerade antal och sannolikheter.
+
+```{r, results='hide'}
+chisq.test(O, p = c(0.33, 0.2, 0.47))
+```
+
+Testet ger samma chi-två-värde och p-värde som beräknats ovan.
+
+Situationen med flera klasser kan som sagt ses som en generalisering av fallet med två klasser. Det är alltså logiskt att chi-två-test kan användas även när man har två klasser. Följande exempel ger samma test som vi sett tidigare av andelen bortasegrar.
+
+```{r, results='hide'}
+chisq.test(x = c(947, 1803), p = c(0.33, 0.67), correct = F)
+```
+
+Likt `prop.test()` sätter vi `correct` till `FALSE` för att inte göra en korrektion. Notera att `x` här anges som positiva och negativa utfall istället för positiva utfall och totalt antal utfall, vilket var fallet i `prop.test()`.
+
+Chi-två-testet bygger på en underliggande normal-liknande approximation. En vanlig tumregel är att alla förväntade värden ska vara större än 5. R ger en varning om så inte är fallet.
+
+```{r, results='hide'}
+chisq.test(c(6,4), p = c(0.51, 0.49))
+```
+
+::: {.exercise name="Chi-två med lika sannolikheter"}
+En vanlig tillämpning av goodness-of-fit-testet är för att testa om alla klasser är lika sannolika. En jämn fördelning är grundinställning i `chisq.test()` så i det fallet behöver man bara ange de observerade värdena. En datainsamling om M&M-godis gav följande antal.
+
+```{r, fig.show='hide'}
+dat_mnm <- data.frame(Color = c("blue", "brown", "green", 
+                                "orange", "red", "yellow"),
+                      Count = c(180, 80, 88, 160, 134, 166))
+
+ggplot(dat_mnm, aes(Color, Count, fill = Color)) +
+  geom_col() +
+  scale_fill_manual(values = dat_mnm$Color)
+```
+
+Använd de observerade värdena i kolumnen `Count` för att testa om alla godisfärger är lika vanliga.
+:::
+
+## Bonus. Interaktiva kartor med leaflet
+
+Paketet `leaflet` (https://rstudio.github.io/leaflet/) kopplar R till leaflet - ett verktyg för interaktiva kartor som ofta använd för kartor online. 
+
+::: {.exercise name="Installera leaflet"}
+Installera och ladda `leaflet genom att fylla i och köra raden nedan.
+
+```{r, eval = F}
+install.packages("leaflet")
+library(leaflet)
+```
+:::
+
+Som en första kontroll kan vi köra den exempelkod som ges på hemsidan länkad till ovan.
+
+```{r, eval = F}
+m <- leaflet() %>%
+  addTiles() %>%
+  addMarkers(lng = 174.768, lat = -36.852, 
+             popup="The birthplace of R")
+m
+```
+
+På canvassidan finns en excelfil med data tillgänglig på Artportalen - *Artportalen, feromoninventering, 2011-2013.xlsx*. Datan kommer från från ett inventeringsprojekt vid SLU.
+
+::: {.exercise name="Importera datan"}
+Ladda ner excelfilen och läs in datan med `read_excel()` från paketet `readxl`.
+
+```{r, eval = F}
+library(readxl)
+dat_leaf <- read_excel("___")
+```
+:::
+
+Kartans utseende kan ändras genom att ange en källa och karttyp. Tillgängliga alternativ kan skrivas ut med `providers`. 
+
+```{r, eval = F}
+leaflet() %>% 
+  addTiles() %>% 
+  addProviderTiles(providers$Stamen.Toner)
+```
+
+::: {.exercise name="Baskarta"}
+Skriv ut tillgängliga baskartor med `providers`. Välj ett alternativ slumpmässigt och ändra koden ovan för att se hur det ser ut.
+:::
+
+För att lägga till datapunkter kan man använda `addCircleMarkers()`.
+
+```{r, eval = F}
+leaflet() %>% 
+  addTiles() %>% 
+  addCircleMarkers(lng = dat_leaf$lng, 
+                   lat = dat_leaf$lat, radius = 10)
+```
+
+::: {.exercise name="Cirkelstorlek"}
+Ändra storleken på cirklarna från `addCircleMarkers()` genom argumentet `radius`.
+:::
+
+Slutligen kan vi lägga till en etikett för år med argumentet `popup`. Texten kommer upp när man klickar på en punkt.
+
+```{r, eval = F}
+leaflet() %>% 
+  addTiles() %>% 
+  addCircleMarkers(lng = dat_leaf$lng, 
+                   lat = dat_leaf$lat, radius = 10, 
+                   popup = dat_leaf$Rödlistade)
+```
+
+::: {.exercise name="Artnamn"}
+Ändra i koden ovan för att ange artnamn som popup-text istället för rödlistestatus. Funktionen `paste()` kan också vara intressant för att ta med mer information i texten: `paste(dat_leaf$Rödlistade, dat_leaf$Antal)` skulle exempelvis ge både status och antal individer vid den specifika observationen.
+:::

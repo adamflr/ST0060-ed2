@@ -1,0 +1,50 @@
+\babel@toc {swedish}{}\relax 
+\babel@toc {swedish}{}\relax 
+\contentsline {chapter}{Introduktion}{5}{chapter*.2}%
+\contentsline {chapter}{Installation av R och RStudio}{7}{chapter*.3}%
+\contentsline {section}{\numberline {0.1}Inledning}{7}{section.0.1}%
+\contentsline {section}{\numberline {0.2}Installation av R}{7}{section.0.2}%
+\contentsline {section}{\numberline {0.3}Installation av RStudio}{7}{section.0.3}%
+\contentsline {section}{\numberline {0.4}Gränssnittet i RStudio}{8}{section.0.4}%
+\contentsline {section}{\numberline {0.5}Paket i R}{8}{section.0.5}%
+\contentsline {chapter}{\numberline {1}Datahantering och grafer}{9}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Uppstart och orientering}{9}{section.1.1}%
+\contentsline {section}{\numberline {1.2}\emph {Packages} från CRAN}{10}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objekt och funktioner}{11}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Sekvenser av funktioner}{13}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Datainskrivning}{14}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Urval ur en tabell med \texttt {select} och \texttt {filter}}{16}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Grafer med \texttt {ggplot2}}{17}{section.1.7}%
+\contentsline {section}{\numberline {1.8}AI-uppgift I}{19}{section.1.8}%
+\contentsline {chapter}{\numberline {2}Beskrivande statistik}{21}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Repetition från datorövning 1}{21}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Import av data från en Excelfil}{22}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Ändra och skapa nya kolumner med \texttt {mutate}}{23}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Sammanfattande lägesmått}{24}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Sammanfattande spridningsmått}{25}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Ordna upp beskrivande statistik och exportera}{27}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Kumulativt medelvärde}{28}{section.2.7}%
+\contentsline {section}{\numberline {2.8}Tredimensionella grafer med \texttt {plotly}}{29}{section.2.8}%
+\contentsline {section}{\numberline {2.9}AI-uppgift II}{30}{section.2.9}%
+\contentsline {chapter}{\numberline {3}Tester vid ett eller flera stickprov}{33}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Repetition från datorövning 2}{33}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Ett stickprov}{34}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Test av medelvärde för normalfördelad data}{34}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Konfidensintervall för normalfördelad data}{37}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Ett stickprov av binär data}{38}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Konfidensintervall för proportioner}{41}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Chi-två-test för goodness-of-fit}{42}{subsection.3.2.5}%
+\contentsline {section}{\numberline {3.3}Två stickprov}{44}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Test av normalfördelad data}{44}{subsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.1.1}t-test för två matchade stickprov}{44}{subsubsection.3.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.3.1.2}t-test för två oberoende stickprov}{45}{subsubsection.3.3.1.2}%
+\contentsline {subsection}{\numberline {3.3.2}z-test och konfidensintervall för två proportioner}{47}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Chi-två-test för korstabeller}{48}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}AI-uppgift III}{49}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Variansanalys}{51}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Allmänt om variansanalys}{51}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Variansanalys. En faktor}{51}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Variansanalys. En faktor med block}{54}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Bonus. Två faktorer med block}{56}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Regression}{57}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Korrelation}{60}{section.4.6}%

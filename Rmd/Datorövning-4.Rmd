@@ -3,368 +3,434 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
-# Ett stickprov av icke-normalfördelad data
+# Variansanalys
 
-Datorövning 4 handlar om hypotestest och konfidensintervall för ett stickprov av icke-normalfördelad data. Efter övningen ska vi kunna
+Datorövning 4 handlar om variansanalys och regression. Efter övningen ska vi kunna
 
-- genomföra och tolka ett z-test för proportioner,
+- skatta och tolka en anova-modell i R,
+- göra parvisa jämförelser mellan behandlingar,
+- skatta och tolka en regressionsmodell i R,
+- beräkna och tolka korrelationen mellan två variabler.
 
-- genomföra och tolka ett chi-två-test för nominal data
+## Allmänt om variansanalys
 
-- beräkna och tolka ett konfidensintervall för proportioner.
+Variansanalys (eller *anova-modellen*) är en statistisk modell där medelvärdet varierar beroende på en behandling och ett normalfördelat slumpfel. Från en anova-modell kan man beräkna ett F-test, som testar om det finns någon övergripande gruppskillnad, och post-hoc-test, som jämför specifika grupper med varandra.
 
-Om det finns tid för en bonussektion kommer vi också titta på interaktiva kartor med `leaflet`.
+Den specifika modellen beror på försöksupplägget. Här ges exempel på variansanalys med en faktor och en faktor med block.
 
-## Repetition av datorövning 3
+## Variansanalys. En faktor
 
-När man startar en ny R-session bör man ladda de paket man vet kommer behövas med `library()`. Om paket inte finns installerade måste man först köra `install.packages()`.
-
-```{r}
-# install.packages("tidyverse")
-library(tidyverse)
-```
-
-I datorövning 3 tittade vi på analys av ett stickprov av normalfördelad data. Det underliggande upplägget är att vi vill säga något om en population genom att titta på ett stickprov. Ett *t-test* kan användas för att testa en given *nollhypotes*. Ett konfidensintervall ringar in populationens medelvärde med en viss konfidensgrad - oftast 95 procent. Ett normalfördelningsantagande kan undersökas med histogram eller QQ-grafer.
-
-Ta som exempel följande data på jord-pH och låt oss anta att det är relevant att testa om populationens medelvärde är 7.
-
-```{r, fig.height=2.5, fig.show='hide'}
-dat_pH <- data.frame(pH = c(6.3, 6.55, 6.75, 6.4, 
-                            7.25, 6.65, 6.8, 7.3, 7.15, 6.7))
-
-ggplot(dat_pH, aes(pH, 0)) +
-  geom_point(size = 4) +
-  geom_vline(xintercept = 7, size = 5, 
-             color = "red", alpha = 0.4) +
-  theme(axis.text.y = element_blank(), 
-        axis.title.y = element_blank(), 
-        axis.ticks = element_blank())
-```
-
-Hypoteser ges av
-
-- $H_0$: $\mu$ lika med 7
-- $H_1$: $\mu$ ej lika med 7
-
-Testet kan genomföras med funktionen `t.test()`.
+Vid variansanalys med en faktor har man observationer av en kontinuerlig utfallsvariabel från två eller flera behandlingsgrupper. Som exempel används en datamängd på ett odlingsförsök med tre behandlingar (varav en kontroll). Exemplet finns tillgängligt i R som `PlantGrowth`.
 
 ```{r, results='hide'}
-t.test(dat_pH$pH, mu = 7)
+PlantGrowth
 ```
 
-Ett p-värde över 0.05 ger att vi inte förkastar nollhypotesen - den observerade skillnaden mot 7 är inte statistiskt signifikant. Konfidensintervallet ger att populationens medelvärde ligger mellan 6.54 och 7.03 med 95 procents konfidens.
-
-En QQ-graf kan visa om det finns några avvikelser från normalantagandet. Med små datamängder är det oftast svårt att se några tydliga tecken på icke-normalitet.
-
-```{r, fig.height=3, fig.width=3, fig.show='hide'}
-ggplot(dat_pH, aes(sample = pH)) +
-  geom_qq() +
-  geom_qq_line()
-```
-
-## Proportioner från binär data
-
-Binär data är data där en observation har ett av två utfall, vilka kan kodas som noll och ett. Man talar ibland om utfallet ett som ett *positivt* utfall. Binär data kan sammanfattas med en proportion - antalet positiva utfall delat på det totala antalet upprepningar. En proportion kan testas med ett z-test för proportioner (eller *relativ frekvens*). Testet följer stegen för hypotestest (Hypoteser - Testvärde - Testfördelning - P-värde (eller jämförelse med kritiskt värde) - Slutsats). 
-
-Låt oss importera lite exempeldata och beräkna ett exempel. Följande rad importerar matchresultat i fotbollsallsvenskan för damer 2000-2020.
+Datan har 30 observationer av vikt `weight` och varje observation tillhör någon specifik behandling `group`. Datan kan illustreras med ett spridningsdiagram.
 
 ```{r, fig.show='hide'}
-library(tidyverse)
-dat_alls <- read_csv("https://raw.githubusercontent.com/adamflr/ST0060/main/Data/Allsvenskan%2C%20damer%2C%202000-2020.csv")
-
-ggplot(dat_alls, aes(hemmamal, bortamal)) +
-  geom_jitter(size = 0.1)
+ggplot(PlantGrowth, aes(group, weight)) +
+  geom_point()
 ```
 
-::: {.exercise name="En interaktiv målgraf"}
-Kör stycket nedan för en interaktiv målgraf. Vilken match gav det högsta antalet gjorda bortamål?
-```{r, eval = F}
-# install.packages("plotly")
-library(plotly)
-g <- ggplot(dat_alls, aes(hemmamal, bortamal, 
-                      text = paste(sasong, hemma, "-", borta))) +
-  geom_jitter(size = 0.1)
+Behandling 1 verkar vara något lägre än kontrollen medan behandling 2 verkar vara något högre.
 
-ggplotly(g)
-```
-:::
-
-Gammal bollkunskap säger att var tredje match är en bortavinst. Vi kan testa det med ett z-test för proportioner. För att ta fram antalet bortasegrar och totalt antal matcher använder vi `count()` på kolumnen `resultat`. Man kan också använda funktionen `table()` för ett liknande resultat.
-
-```{r, results='hide'}
-dat_alls %>% count(resultat)
-table(dat_alls$resultat)
-```
-
-Datan har 947 bortasegrar av totalt 947 + 1803 matcher. Vår skattade proportion `p` och totala antal `n` är alltså
-
-```{r, results='hide'}
-n <- 947 + 1803
-p_est <- 947 / n
-
-p_est
-n
-```
-
-För att genomföra ett z-test sätter vi upp hypoteser om proportionen bortasegrar.
-
-- Nollhypotes $H_0$: p lika med 0.33
-- Alternativhypotes $H_1$: p ej lika med 0.33
-
-Ett test kan köras i R med `prop.test()`.
+En anova-modell kan i R skattas med funktionen `lm()` (för *linjär modell*). Från modellobjektet kan man sedan plocka fram en anova-tabell (som bland annat anger utfallet av F-testet) och genomföra parvisa jämförelser genom `emmeans`.
 
 ```{r}
-prop.test(x = 947, n = 2750, p = 0.33, correct = F)
+mod <- lm(weight ~ group, data = PlantGrowth)
 ```
 
-P-värdet ställs mot en förbestämd signifikansnivå (vanligen 5 procent). I det här fallet leder det höga p-värdet till att nollhypotesen accepteras.
+Modellen anges som en formel `weight ~ group`, vilket kan utläsas *vikt beroende på behandlingsgrupp*. Därefter anges data med argumentet `data`.
 
-Om vi tar en närmre titt på testets steg börjar vi med att beräkna ett testvärde.
-
-```{r}
-p0 <- 0.33
-z_value <- (p_est - p0) / sqrt(p0 * (1 - p0) / n)
-z_value
-```
-
-Därefter kan p-värdet räknas ut som arean under en standardiserad normalfördelning bortom z-värdet. Eftersom vi har en tvåsidig mothypotes adderas de två svansarna.
-
-```{r, fig.show='hide'}
-ggplot() +
-  geom_function(fun = dnorm) +
-  geom_vline(xintercept = c(-z_value, z_value)) +
-  xlim(-3,3)
-```
-
-Areans yta kan tas fram med normalfördelningens fördelningsfunktion `pnorm()`.
-
-```{r}
-2 * pnorm(-z_value)
-```
-
-Testets p-värde är ungefär 11 procent. Vår observation är alltså inte ett orimligt utfall om den faktiska sannolikheten för bortaseger är 0.33 och vi kan inte förkasta nollhypotesen på femprocentsnivån.
-
-Om man löste uppgiften för hand skulle man istället för att beräkna p-värdet jämföra z-värdet med ett kritisk värde ur en tabell. Det kritiska värdet för femprocentig signifikans är 1.96. Vi kan också ta fram det genom `qnorm(0.975)`.
-
-Vi kan jämföra den beräkning med den direkta R-funktionen.
+För anova-tabellen finns flera alternativ. Här används funktionen `Anova()` från paketet `car`.
 
 ```{r, results='hide'}
-prop.test(x = 947, n = 2750, p = 0.33, correct = F)
+library(car)
+Anova(mod)
 ```
 
-Den stegvisa beräkningen gav samma utfall som funktionen (`p-value = 0.1092`). Funktionen ger inte z-värdet utan ett chi-två-värde (2.5661). Här är det värdet lika med z-värdet i kvadrat.
+Anova-tabellen ger kvadratsummor (`Sum Sq`), frihetsgrader (`Df`) och utfallet av ett F-test. Testets hypoteser ges av
+
+H0: alla behandlingsgrupper har samma medelvärde
+H1: alla behandlingsgrupper har inte samma medelvärde
+
+Det låga p-värdet tyder på att nollhypotesen bör förkastas, vilket alltså pekar på att det finns någon eller några skillnader i medelvärde.
+
+::: {.exercise name="Anova för hand"}
+Anovatabell från `Anova()` ger kvadratsummor och frihetsgrader. Använd den informationen för att, för hand, beräkna medelkvadratsummor och F-värdet.
+:::
+
+::: {.exercise name="Tabellvärde för F-fördelningen"}
+Anova-tabellen ger ett p-värde från vilket vi kan dra en direkt slutsats. Om man istället löser uppgiften för hand ställer man det beräknade F-värdet mot ett kritiskt värde från en tabell över F-fördelningen. Se efter om man kan hitta ett lämpligt tabellvärde för det aktuella testet (med 2 och 27 frihetsgrader). Det är möjligt att det inte finns en rad för 27 i en vanlig F-fördelningstabell, använd isåfall värdet på närmast övre rad (t.ex. 26 eller 25). I R kan kvantiler för F-fördelningen tas fram med `qf()`, t.ex.
 
 ```{r, results='hide'}
-z_value^2
+qf(0.95, 2, 27)
+```
+:::
+
+En naturlig följdfråga är vilka behandlingsgrupper som skiljer sig åt. För att besvara det krävs *parvisa jämförelser* där behandlingarna jämförs två och två. Parvisa jämförelse kan göras med paketet `emmeans` och funktionen med samma namn. Funktionen tar modellobjektet som första argument och en formel för jämförelsetyp som andra argument (här `pairwise ~ group`, en parvis jämförelse mellan nivåer i `group`).
+
+```{r, results='hide'}
+# install.packages("emmeans")
+library(emmeans)
+emmeans(mod, pairwise ~ group)
 ```
 
-::: {.exercise name="Test för proportionen oavgjorda"}
-Samma gamla bollkunskap säger att 20 procent av matcher blir oavgjorda. I datan är 518 av 2750 matcher oavgjorda. Ställ upp hypoteser och fyll i koden nedan för att testa om bollkunskapen stämmer. Beräkna också z-värdet för hand.
+I den nedre tabellen med jämförelser ges alla parvisa jämförelser. Nollhypotesen är att de två grupper som jämförs har samma medelvärde - ett lågt p-värde tyder alltså på att de två grupperna är signifikant skilda. Notera också att p-värden justeras med tukey-metoden, även känt som Tukeys HSD.
+
+Om man istället vill använda Fishers LSD kan man styra justeringen med argumentet `adjust`.
+
+```{r, results='hide'}
+emmeans(mod, pairwise ~ group, adjust = "none")
+```
+
+Parvisa jämförelser presenteras ofta med signifikansbokstäver (en. *compact letter display, cld*). Dessa kan plockas fram med `multcomp`-paketet och funktionen `cld()`.
+
+```{r, results='hide'}
+em <- emmeans(mod, pairwise ~ group)
+
+# install.packages("multcomp")
+# install.packages("multcompView")
+library(multcomp)
+cld(em, Letters = letters)
+```
+
+Tolkning av grupperingen till höger är att grupper som delar en bokstav inte är signifikant skilda. I det här fallet är den lägsta nivån skild från de två högsta. I övrigt finns inga signifikanta skillnader. Jämför gärna med p-värdena från tabellen med parvisa jämförelser. Man bör se att parvisa jämförelser med ett p-värde under fem procent motsvaras av att de behandlingarna inte delar någon bokstav i bokstavstabellen.
+
+::: {.exercise name="Anova med två behandlingar"}
+Följande kod skapar en datamängd med två behandlingar.
+
+```{r, results='hide'}
+dat_two <- PlantGrowth %>% filter(group %in% c("trt1", "trt2"))
+```
+
+Använd den datan för att göra ett t-test för två oberoende stickprov med lika varians, ett t-test för två oberoende stickprov utan antagande om lika varians, och ett F-test (ofullständig exempelkod nedan). Vad kan sägas om p-värdena från de tre testen?
 
 ```{r, eval = F}
-prop.test(x = ___, n = ___, p = ___, correct = F)
+t.test(___ ~ group, data = dat_two, var.equal = T)
+t.test(weight ~ ___, data = dat_two, var.equal = F)
+
+mod <- lm(weight ~ group, data = dat_two)
+Anova(mod)
 ```
 :::
 
-::: {.exercise name="Test för proportionen hemmasegrar"}
-Slutligen är då resten av matcherna, 1285 av 2750, hemmasegrar. Gammal bollkunskap säger: *47 procent av alla matcher är hemmasegrar*. Genomför ett z-test för att testa det påstående.
+::: {.exercise name="Mass-signifikans"}
+Anledning till att vi justerar p-värden är att man vid varje test har en sannolikhet att förkasta. Om man gör ett stort antal tester är man nästan garanterad att få något (falskt) signifikant resultat. Justering höjer p-värdena för att minska den risken. Följande kod simulerar data med 5 grupper och producerar de parvisa jämförelserna.
 
-```{r, eval = F}
-prop.test(x = ___, n = ___, p = ___, correct = F)
+```{r, results='hide'}
+n_groups <- 5
+dat_sim <- expand_grid(obs = 1:10, group = letters[1:n_groups]) %>% 
+  mutate(y = rnorm(n()))
+mod <- lm(y ~ group, dat_sim)
+emmeans(mod, pairwise ~ group, adjust = "none")
 ```
+
+Kör koden tio gånger. Hur många gånger av de tio ger de parvisa jämförelserna *någon* signifikant skillnad (det vill säga något p-värde under 0.05)?
 :::
 
-::: {.exercise name="Population och stickprov"}
-Ett hypotestest bygger på en underliggande tanke med en population (med någon för oss okänd proportion positiva utfall) och ett stickprov (i vilket vi kan observera andelen positiva utfall). Det är inte alltid uppenbart vad som egentligen är populationen. I fallet med fotbollsdatan, vad kan ses som populationen? Hur långt skulle man kunna generalisera de slutsatser man kan dra från datan?
-:::
+::: {.exercise name="Äppelinfektionsimport"}
+En studie har givit ett mått på infektion hos äppelträd. Fyra sorter jämförs med tre replikat per sort. Data finns i fliken *Äppelangrepp* i excelfilen *Uppgiftsdata.xslx* på canvassidan. Fyll i kodstycket nedan för att importera datan.
 
-Hypotestestet för proportioner som används här, *z-testet*, bygger på en normalapproximation av en binomialfördelning. Approximation blir bättre när antalet observationer är stort och nollhypotesens värde p0 ligger nära 0.5. En vanlig tumregel för när approximationen är giltig är att n gånger $p_0$ gånger $(1 - p_0)$ ska vara större än 10.
-
-## Konfidensintervall för proportioner
-
-Konstruktionen av ett konfidensintervall för en proportion är ganska lik konstruktionen för ett medelvärde. För en skattad proportion p och antal observationer n kan man beräkna p plus/minus ett z-värde från tabell gånger medelfelet, där medelfelet ges av roten ur $p \cdot (1 - p) / n$. För exemplet med bortasegrar i allsvenskan är $p = 0.344$ och $n = 2750$. Tabellvärdet hämtas från en tabell över kvantiler. För ett 95-procentigt konfidensintervall tar vi kvantilen 0.975 (2.5 procent i respektive svans) vilket ger värdet 1.96. Konfidensintervallet ges av
-
-```{r, results='hide'}
-n <- 947 + 1803
-p <- 947 / n
-
-p - 1.96 * sqrt(p * (1 - p) / n)
-p + 1.96 * sqrt(p * (1 - p) / n)
-```
-
-Notera att 0.33, det värde som var nollhypotesen i det tidigare testet, *ingår* i intervallet. Om man tittar på utskriften från `prop.test()` kan man se ett konfidensintervall. Det intervallet är dock inte beräknat på samma sätt den formel som förekommer på föreläsningarna. För att få matchande utskrift kan vi använda paketet `binom` och funktionen `binom.asymp()`.
-
-```{r, results='hide'}
-#install.packages("binom")
-library(binom)
-binom.asymp(x = 947, n = 2750)
-```
-
-::: {.exercise name="99-procentigt konfidensintervall"}
-Gör lämplig ändring i koden nedan för att beräkna ett 99-procentigt konfidensintervall för andelen bortasegrar.
-
-```{r, eval = F}
-binom.asymp(x = 947, n = 2750, conf.level = 0.95)
-```
-:::
-
-## Chi-två-test för goodness-of-fit
-
-Ett proportionstest kan ses som ett test av en variabel med två möjliga klasser som utfall. Ett *goodness-of-fit*-test utvecklar det till valfritt antal klasser. Testet utförs som ett chi-två-test genom att beräkna ett observerat antal O och ett förväntat antal E för varje klass. Testvärdet ges av att man beräknar $(O - E)^2 / E$ för varje klass och sedan summerar. Testfunktionen är en chi-två-fördelning där antalet frihetsgrader beror på antalet klasser.
-
-Låt oss göra ett exempel baserat på fotbollsdatan. Där hade vi utfallet 947, 518 och 1285 för bortaseger, oavgjort och hemmaseger. Klassisk bollkunskap ger oss sannolikheterna 33, 20 och 47 procent. Testets hypoteser ges av
-
-$H_0$: sannolikheterna för de olika utfallet ges av 33, 20 respektive 47 procent
-
-$H_1$: minst något utfall har en annan sannolikhet än 33, 20 respektive 47 procent
-
-För att få de förväntade värdena E multipliceras nollhypotesens sannolikheter med det totala antalet matcher.
-
-```{r}
-O <- c(947, 518, 1285)
-E <- c(0.33,0.20,0.47) * 2750
-```
-
-::: {.exercise name="Granska E"}
-Skriv ut objektet `E` och jämför med de observerade värdena. Notera att de förväntade värdena inte måste vara heltal, trots att de observerade värdena förstås alltid kommer vara det.
-:::
-
-Testvärdet beräknas genom formeln för varje term följt av summan.
-
-```{r}
-chisq_value <- sum((O - E)^2 / E)
-```
-
-P-värdet beräknas från en chi-två-fördelning. Antalet frihetsgrader ges av antalet klasser minus antalet skattade parametrar minus ett. I det här fallet har inga parametrar skattats från datan så antalet frihetsgrader blir två. Ett chi-två-test beräknas med kvadrater så vi är enbart intresserade av högra svansen.
-
-```{r, fig.show='hide'}
-ggplot() +
-  geom_function(fun = dchisq, args = list(df = 2)) +
-  geom_vline(xintercept = chisq_value) +
-  xlim(0,10)
-```
-
-Man kan också beräkna ytan i svansen med `pchisq()`. Ett minus det resultatet ger den övre delen.
-
-```{r, results='hide'}
-1 - pchisq(chisq_value, df = 2)
-```
-
-P-värdet är alltså 0.16, över den klassiska signifikansnivån på 5 procent, vilket ger att vi inte kan förkasta nollhypotesen. Om man gör ett chi-två-test för hand jämför man det observerade chi-två-värdet med ett tabellvärde över kvantiler. Tabellvärdet kan också hämtas med funktionen `qchisq()`, i det här fallet
-
-```{r, results='hide'}
-qchisq(0.95, df = 2)
-```
-
-Notera att man tar 0.95 eftersom man alltid tittar på den yttre svansen i ett chi-två-test.
-
-R har en inbyggd funktion för chi-två-test. Dess argument ges av observerade antal och sannolikheter.
-
-```{r, results='hide'}
-chisq.test(O, p = c(0.33, 0.2, 0.47))
-```
-
-Testet ger samma chi-två-värde och p-värde som beräknats ovan.
-
-Situationen med flera klasser kan som sagt ses som en generalisering av fallet med två klasser. Det är alltså logiskt att chi-två-test kan användas även när man har två klasser. Följande exempel ger samma test som vi sett tidigare av andelen bortasegrar.
-
-```{r, results='hide'}
-chisq.test(x = c(947, 1803), p = c(0.33, 0.67), correct = F)
-```
-
-Likt `prop.test()` sätter vi `correct` till `FALSE` för att inte göra en korrektion. Notera att `x` här anges som positiva och negativa utfall istället för positiva utfall och totalt antal utfall, vilket var fallet i `prop.test()`.
-
-Chi-två-testet bygger på en underliggande normal-liknande approximation. En vanlig tumregel är att alla förväntade värden ska vara större än 5. R ger en varning om så inte är fallet.
-
-```{r, results='hide'}
-chisq.test(c(6,4), p = c(0.51, 0.49))
-```
-
-::: {.exercise name="Chi-två med lika sannolikheter"}
-En vanlig tillämpning av goodness-of-fit-testet är för att testa om alla klasser är lika sannolika. En jämn fördelning är grundinställning i `chisq.test()` så i det fallet behöver man bara ange de observerade värdena. En datainsamling om M&M-godis gav följande antal.
-
-```{r, fig.show='hide'}
-dat_mnm <- data.frame(Color = c("blue", "brown", "green", 
-                                "orange", "red", "yellow"),
-                      Count = c(180, 80, 88, 160, 134, 166))
-
-ggplot(dat_mnm, aes(Color, Count, fill = Color)) +
-  geom_col() +
-  scale_fill_manual(values = dat_mnm$Color)
-```
-
-Använd de observerade värdena i kolumnen `Count` för att testa om alla godisfärger är lika vanliga.
-:::
-
-## Bonus. Interaktiva kartor med leaflet
-
-Paketet `leaflet` (https://rstudio.github.io/leaflet/) kopplar R till leaflet - ett verktyg för interaktiva kartor som ofta använd för kartor online. 
-
-::: {.exercise name="Installera leaflet"}
-Installera och ladda `leaflet genom att fylla i och köra raden nedan.
-
-```{r, eval = F}
-install.packages("leaflet")
-library(leaflet)
-```
-:::
-
-Som en första kontroll kan vi köra den exempelkod som ges på hemsidan länkad till ovan.
-
-```{r, eval = F}
-m <- leaflet() %>%
-  addTiles() %>%
-  addMarkers(lng = 174.768, lat = -36.852, 
-             popup="The birthplace of R")
-m
-```
-
-På canvassidan finns en excelfil med data tillgänglig på Artportalen - *Artportalen, feromoninventering, 2011-2013.xlsx*. Datan kommer från från ett inventeringsprojekt vid SLU.
-
-::: {.exercise name="Importera datan"}
-Ladda ner excelfilen och läs in datan med `read_excel()` från paketet `readxl`.
-
-```{r, eval = F}
+```{r, echo = F, eval = F}
 library(readxl)
-dat_leaf <- read_excel("___")
+dat_apple <- read_excel("___", sheet = "Äppelangrepp")
+dat_apple
 ```
 :::
 
-Kartans utseende kan ändras genom att ange en källa och karttyp. Tillgängliga alternativ kan skrivas ut med `providers`. 
+::: {.exercise name="Äppelinfektionsgraf"}
+Fyll i kodstycket nedan för att skapa en graf av äppeldatan.
 
 ```{r, eval = F}
-leaflet() %>% 
-  addTiles() %>% 
-  addProviderTiles(providers$Stamen.Toner)
+ggplot(___, aes(x = ___, y = ___)) +
+  geom_point()
 ```
-
-::: {.exercise name="Baskarta"}
-Skriv ut tillgängliga baskartor med `providers`. Välj ett alternativ slumpmässigt och ändra koden ovan för att se hur det ser ut.
 :::
 
-För att lägga till datapunkter kan man använda `addCircleMarkers()`.
+::: {.exercise name="Äppelinfektionsmodell"}
+Fyll i kodstycket nedan för att skatta en anovamodell och ta fram anovatabellen. Vad är F-testets noll- och alternativhypotes? Vilken slutsats kan man dra från testet?
 
 ```{r, eval = F}
-leaflet() %>% 
-  addTiles() %>% 
-  addCircleMarkers(lng = dat_leaf$lng, 
-                   lat = dat_leaf$lat, radius = 10)
+mod <- lm(___ ~ ___, data = dat_apple)
+Anova(mod)
 ```
-
-::: {.exercise name="Cirkelstorlek"}
-Ändra storleken på cirklarna från `addCircleMarkers()` genom argumentet `radius`.
 :::
 
-Slutligen kan vi lägga till en etikett för år med argumentet `popup`. Texten kommer upp när man klickar på en punkt.
+## Variansanalys. En faktor med block
+
+I en blockdesign delas försöksobjekten (de enheter man ger en behandling och sedan mäter, t.ex. en försöksruta eller en planta) in i grupper av lika objekt (ett *block*). Sedan ger man enheterna inom blocket varsin behandling. Blockförsök är ofta balanserade, så att varje behandling förekommer en gång i varje block.
+
+Som exempel på ett blockförsök kan vi titta på datan `oats` från paketet `MASS`. Datan kommer från ett agrikulturellt försök och blockdesignen sker genom att man delar in ett fält i flera delar (blocken) och sätter varje behandling i varje block. Datan har två faktorer (kväve `N` och sort `V`), men låt oss i den här första delen titta på en specifik sort.
+
+```{r, results='hide'}
+library(MASS)
+oats_marvel <- oats %>% filter(V == "Marvellous")
+oats_marvel
+```
+
+En vanlig illustration av ett blockförsök är ett punktdiagram kombinerat med ett linjediagram.
+
+```{r, fig.show='hide'}
+ggplot(oats_marvel, aes(N, Y, color = B, group = B)) +
+  geom_point(size = 4) +
+  geom_line()
+```
+
+Färg och linje sammanbinder observationer från samma block. Det finns tecken på en blockeffekt: block I är nästan alltid högst och block V är nästan alltid lägst. Det finns också en tydlig behandlingseffekt i att högre kväve ger högre skörd.
+
+Blockeffekten kan enkelt föras in i modellen genom att lägga till variabeln `B` i `lm`-funktionen. Anova-tabellen och parvisa jämförelser kan göras på samma sätt som tidigare. Resultaten påverkas av att modellen har en blockfaktor; man behöver vanligen inte ange det explicit.
+
+```{r, results='hide'}
+mod_bl <- lm(Y ~ N + B, data = oats_marvel)
+Anova(mod_bl)
+```
+
+P-värdet från F-testet på variabeln N är nu klart mindre än tidigare. Detta beror på att en stor del av variationen kan förklaras med blockeffekten, vilket är tydligt i att blockeffekten också har ett litet p-värde i F-testet.
+
+Det kan vara intressant att jämföra med modellen utan block.
+
+```{r, results='hide'}
+mod_wo_block <- lm(Y ~ N, data = oats_marvel)
+Anova(mod_wo_block)
+```
+
+Det som är residualens kvadratsumma i modellen utan block är i blockmodellen uppdelat i en blockeffekt och en residualterm. Eftersom F-testet bygger på en jämförelse mellan behandlingseffekten och residualtermen leder blockdesignen till starkare signifikans i blockmodellen. Å andra sidan kostar blockfaktorn frihetsgrader vilket ger oss ett svagare test. Effekten av att ta med ett block beror alltså på om det finns en verklig skillnad mellan blocken eller ej.
+
+Vi kan gå vidare med att titta på parvisa jämförelser mellan kvävenivåer. Funktionen `emmeans()` och `cld()` fungerar som tidigare.
+
+```{r, results='hide'}
+cld(emmeans(mod_bl, ~ N), Letters = letters)
+```
+
+Signifikansbokstäver anger att den lägsta nivån är skild från övriga och att den näst lägsta är skild från den högsta. Även här kan det vara intressant att jämföra med modellen utan block.
+
+```{r, results='hide'}
+cld(emmeans(mod_wo_block, ~ N), Letters = letters)
+```
+
+Modellen utan block ger samma medelvärden `emmean` men större medelfel `SE` och färre signifikanta skillnader.
+
+::: {.exercise name="Block med två behandlingar. Graf"}
+Det minsta möjliga blocket är det med två behandlingar. Vi filtrerar havredatan för att den situationen.
+
+```{r, results='hide'}
+dat_small_block <- oats %>% 
+  filter(V == "Marvellous", N %in% c("0.6cwt", "0.0cwt"))
+dat_small_block
+```
+
+Fyll i stycket nedan för att skapa en graf med `N` på x-axeln, `Y` på y-axeln och en gruppering som länkar observationer från samma block.
 
 ```{r, eval = F}
-leaflet() %>% 
-  addTiles() %>% 
-  addCircleMarkers(lng = dat_leaf$lng, 
-                   lat = dat_leaf$lat, radius = 10, 
-                   popup = dat_leaf$Rödlistade)
+ggplot(dat_small_block, aes(x = ___, y = ___, group = ___)) +
+  geom_point() +
+  geom_line()
+```
+:::
+
+::: {.exercise name="Block med två behandlingar. Test"}
+Eftersom det är ett försök med en förklarande faktor och block kan man modellera det med den tidigare blockmodellen. Men eftersom man bara har två observationer per block kan man också se det som matchade stickprov, vilket kan lösas med ett t-test. Fyll i stycket nedan för att göra de två testen - utfallsvariabeln är skörd `Y` och den förklarande faktorn är kvävenivån `N`. Jämför resultaten.
+
+```{r, eval = F}
+mod <- lm(___ ~ ___ + B, data = dat_small_block)
+Anova(mod)
+
+t.test(___ ~ ___, data = dat_small_block, paired = ___)
+```
+:::
+
+## Bonus. Två faktorer med block
+
+Exempeldata på havre tar med två förklarande faktorer och ett block. Datan kan illustreras med ett punktdiagram där `facet_wrap` delar grafen efter sort.
+
+```{r, fig.show='hide'}
+ggplot(oats, aes(N, Y, color = B)) +
+  geom_point(size = 4) +
+  facet_wrap(~ V)
 ```
 
-::: {.exercise name="Artnamn"}
-Ändra i koden ovan för att ange artnamn som popup-text istället för rödlistestatus. Funktionen `paste()` kan också vara intressant för att ta med mer information i texten: `paste(dat_leaf$Rödlistade, dat_leaf$Antal)` skulle exempelvis ge både status och antal individer vid den specifika observationen.
+Grafen visar samma kvävesamband som tidigare. Det finns inga tydliga skillnader mellan sorter, möjligen har sorten Victory givit något lägre skörd än övriga. Det finns fortfarande en tydlig blockeffekt, till exempel har block I höga värden och block V låga värden.
+
+Modellen skattas genom att lägga till variabeln för sort (V för variety) i `lm`-formeln. En modell med två faktorer kan antingen vara med eller utan en *interaktion*. Interaktionstermen fångar påverkan mellan faktorerna. Ett exempel hade varit om någon sort svarat starkare på ökad kväve än någon annan. Standardmodellen är att ta med interaktionen, vilket vi anger genom att sätta `N * V` istället för `N + V`. Blocket tas fortfarande med som en adderad faktor
+
+```{r}
+mod_two_fact <- lm(Y ~ N * V + B, data = oats)
+```
+
+Anovatabellen kan plockas fram på samma sätt som tidigare.
+
+```{r, results='hide'}
+Anova(mod_two_fact)
+```
+
+Raden `N:V` gäller interaktionseffekten mellan kväve och sort. I det här fallet är det ingen signifikant interaktion - vilket tyder på att sorterna svarar på kvävebehandling på liknande sätt. Samtliga huvudeffekter (raderna för N, V och B) är signifikanta. Kvadratsummorna och p-värdena tyder på att kväve förklarar mer av variationen än sort, vilket också är i linje med grafen ovan.
+
+Vid flerfaktoriella försök kan man presentera parvisa jämförelser på flera olika sätt. Man kan ange huvudeffekter för en faktor utan att ange den andra faktorn, man kan ange medelvärden för samtliga kombinationer av två faktorer, och man kan ange medelvärden uppdelat efter nivåer i en annan faktor.
+
+```{r, results='hide'}
+emmeans(mod_two_fact, ~ N)
+emmeans(mod_two_fact, ~ N + V)
+emmeans(mod_two_fact, ~ N | V)
+```
+
+Även här kan man göra jämförelser mellan nivåer genom att sätta `pairwise ~ N + V` eller beräkna signifikansbokstäver med `cld`. Följande kod jämför kvävenivåer *inom* sort.
+
+```{r, echo = F, eval = F, results='hide'}
+cld(emmeans(mod_two_fact, ~ N | V), Letters = letters)
+```
+
+::: {.exercise name="Sort uppdelat efter kvävenivå"}
+Gör lämplig ändring i koden ovan för att jämföra sorter *inom* kvävenivå. Finns det några signifikanta skillnader?
 :::
+
+::: {.exercise name="Interaktion med ett block"}
+I modellen ovan är block en *additiv* faktor - den ingår inte i någon interaktionseffekt. Vad händer med testerna om man skattar modellen där samtliga interaktioner tas med? Varför?
+
+```{r, eval = F}
+mod_two_fact <- lm(Y ~ N * V * B, data = oats)
+```
+:::
+
+## Regression
+
+I en regression modelleras en numerisk variabel som en funktion av en annan numerisk variabel. Vid enkel linjär regression finns *en* sådan *förklarande variabel* och förhållandet mellan variablerna antas vara linjärt.
+
+Ta som exempel data på förväntad medellivslängd och bnp per capita. Datan hämtas från `gapminder`-paketet. Paketet `ggrepel` och funktionen `geom_text_repel()` kan användas för att sätta punktetiketter som inte överlappar. För enklare tolkning av modellen transformeras bnp per capita till att vara i tusen dollar, snarare än dollar.
+
+```{r, fig.height=5, fig.show='hide'}
+library(gapminder)
+dat_eu07 <- gapminder %>% 
+  filter(year == 2007, continent == "Europe") %>% 
+  mutate(gdpPercap = gdpPercap / 1000)
+
+library(ggrepel)
+ggplot(dat_eu07, aes(gdpPercap, lifeExp)) +
+  geom_point() +
+  geom_text_repel(aes(label = country), size = 3)
+```
+
+Datan visar ett positivt samband mellan variablerna - högre bnp per capita är kopplat till högre medellivslängd. 
+
+::: {.exercise name="Data för 1957"}
+Vad måste ändras i stycket nedan för att plocka ut data och göra en graf för Europa 1957?
+
+```{r, eval = F, fig.show='hide'}
+dat_eu57 <- gapminder %>% 
+  filter(year == 2007, continent == "Europe") %>% 
+  mutate(gdpPercap = gdpPercap / 1000)
+
+ggplot(dat_eu57, aes(gdpPercap, lifeExp)) +
+  geom_point() +
+  geom_text_repel(aes(label = country), size = 3)
+```
+:::
+
+En regressionmodell kan i R skattas med `lm()`-funktionen. Syntaxen är väldigt lik den för anovamodellen, men istället för en faktor som förklarande variabel används nu en kontinuerlig variabel.
+
+```{r, results='hide'}
+mod <- lm(lifeExp ~ gdpPercap, data = dat_eu07)
+summary(mod)
+```
+
+Funktionen `summary` ger en sammanfattning av modellen. Skattningen av modellens konstanta parameter ges som raden `(Intercept)` och dess tolkning är som förväntat värde i medellivslängd om bnp per capita är noll. Det är ofta lutningsparametern som är mer intressant. Skattningen av lutningsparametern ges på den rad som har samma namn som den förklarande variabeln, här `gdpPercap`. Den skattade parametern är 0.2146. Lutningsparametern har den generella tolkning som ökningen i y-variabeln när x-variabeln ökar med 1. I det här fallet ger 0.2146 att ett lands medellivslängd ökar med ungefär 0.2146 år (eller 78 dagar) när bnp per capita ökar med 1000 dollar.
+
+::: {.exercise name="Modell för 1957"}
+Skatta samma modell som ovan, denna gång med data från 1957. Tolka lutningsparametern i ord. Är effekten av ökad bnp större 2007 än den var 1957?
+:::
+
+Man kan enkelt rita ut regressionlinjen i en graf med `geom_smooth()` och argumentet `method` satt till `lm`.
+
+```{r, fig.show='hide'}
+ggplot(dat_eu07, aes(gdpPercap, lifeExp)) +
+  geom_point() +
+  geom_text_repel(aes(label = country), size = 3) +
+  geom_smooth(method = lm)
+```
+
+Den blå linjen illustrerar regressionlinjen 72.27 + 0.2146x. Det grå bandet kring linjen är ett konfidensintervall för skattningen av y-variabeln.
+
+::: {.exercise name="Graf för 1957"}
+Använd `geom_smooth(method = lm)` för att lägga till en regressionslinje för data för 1957. Hur mycket påverkar de två avvikande länderna?
+:::
+
+Utskriften från `summary` ger också tester av parametrarna (den högra kolumnen `Pr(>|t|)` ger p-värdet för ett test där nollhypotesen är att populationsparametern är noll). I det här fallet är både intercept och lutning skilda från noll. Motsvarande F-test för lutningen kan tas fram med en anova-tabell.
+
+```{r, results='hide'}
+library(car)
+Anova(mod)
+```
+
+Testerna av en regressionsmodell bygger på ett normalfördelningsantagande och ett antagande om *homoskedasticitet* (lika varians i y oavsett position på x-axeln). Antagandena kan undersökas genom att titta på skattningens *residualer* - skillnaden mellan det faktiska y-värdet och modellens värde. Residualerna kan undersökas med ett histogram eller en QQ-plot. En annan vanlig diagnosplot är ett spridningsdiagram med skattade värden på x-axeln och residualerna på y-axeln.
+
+```{r, eval = T, fig.show='hide'}
+dat_eu07 <- dat_eu07 %>% 
+  mutate(Residualer = residuals(mod),
+         Skattade = fitted(mod))
+
+ggplot(dat_eu07, aes(sample = Residualer)) + 
+  geom_qq() + geom_qq_line()
+ggplot(dat_eu07, aes(Skattade, Residualer)) + geom_point()
+```
+
+Om data följer en normalfördelning bör histogrammet visa en ungefärlig normalkurva, QQ-plotten bör visa punkter på den diagonala linjen och spridningsdiagrammet bör visa en slumpmässig spridning av punkter. Graferna pekar i det här fallet inte på några tydliga avvikelser från normalfördelningsantagandet, möjligen pekar QQ-plotten på mindre spridning i svansarna än en teoretisk normalfördelning.
+
+::: {.exercise name="Icke-linjära samband"}
+Låt oss titta på hela gapminder-datan för 2007.
+
+```{r, eval = F, fig.show='hide'}
+dat_2007 <- gapminder %>% filter(year == 2007)
+ggplot(dat_2007, aes(gdpPercap, lifeExp)) + geom_point()
+```
+
+Hur ser sambandet mellan bnp och medellivslängd ut? Vad skulle vara problematiskt med simpel linjär regression i det här fallet? När vi tittade på normalfördelningen sa vi att man ofta kan logaritmera en variabeln och få *bättre* egenskaper. Vad ska ändras i koden ovan för att använda logaritmerad `gdpPercap` istället för den ursprungliga variabeln? Är det sambandet mer linjärt?
+:::
+
+::: {.exercise name="Log-transformerad data"}
+Vad ska ändras i koden nedan för att använda logaritmerad `gdpPercap` istället för den ursprungliga variabeln? Är det sambandet mer linjärt?
+
+```{r, eval = F, fig.show='hide'}
+dat_2007 <- gapminder %>% filter(year == 2007)
+ggplot(dat_2007, aes(gdpPercap, lifeExp)) + geom_point()
+```
+:::
+
+## Korrelation
+
+Korrelation ger ett mått mellan $-1$ och $1$ på hur väl två variabler samvarierar. En korrelation över noll tyder på ett positivt samband mellan variablerna - en observation med ett högt värde i den ena variabeln har också ett högt värde på den andra - medan en korrelation under noll tyder på ett negativt samband. I R kan korrelation beräknas med `cor()` och två variabler som första och andra argument. Funktionen `cor.test()` ger ett test där nollhypotesen är att korrelationen är noll.
+
+```{r, results='hide'}
+cor(dat_eu07$lifeExp, dat_eu07$gdpPercap)
+cor.test(dat_eu07$lifeExp, dat_eu07$gdpPercap)
+```
+
+Medellivslängd och bnp per capita har en stark positiv korrelation på 0.85 och den korrelation är signifikant skild från noll (p < 0.001). Notera att p-värdet är detsamma som för lutningsparametern i regressionen.
+
+::: {.exercise name="Korrelationsmatris"}
+Om man har fler än två variabler sammanfattas korrelationer ofta med en korrelationsmatris.
+
+```{r, results='hide'}
+dat_eu07[, 4:6]
+cor(dat_eu07[, 4:6])
+```
+
+Vad är korrelationen mellan befolkningsstorlek och bnp per capita?
+:::
+
+::: {.exercise name="Anscombes data"}
+Den raka regressionslinjen eller det enkla korrelationsmåttet säger lite om hur data egentligen ser ut. En vanlig illustration av detta är *Anscombes kvartett*, fyra exempel konstruerade av den brittiske statistikern Francis Anscombe 1973. Datan finns tillgänglig i R som datasetet `anscombe`.
+
+```{r, eval = F}
+anscombe
+```
+
+Plotta de fyra graferna (`x1` paras med `y1` och så vidare) i spridningsdiagram och beräkna korrelation för varje par. Ett exempel ges för den första mängden nedan. Kommentera utfallet.
+
+```{r, eval = F}
+ggplot(anscombe, aes(x1, y1)) + geom_point()
+cor(anscombe$x1, anscombe$y1)
+```
+:::
+
+För en modern variant av Anscombes data kan man titta på *The Datasaurus Dozen*. Det är också en serie konstruerade variabler som har liknande egenskaper sett till medelvärden, standardavvikelser och korrelationer, men skiljer sig åt om du ritas i en graf.
