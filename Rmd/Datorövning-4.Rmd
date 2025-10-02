@@ -3,7 +3,7 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
-# Variansanalys
+# Variansanalys och regression
 
 Datorövning 4 handlar om variansanalys och regression. Efter övningen ska vi kunna
 

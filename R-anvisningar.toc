@@ -28,23 +28,24 @@
 \contentsline {section}{\numberline {2.9}AI-uppgift II}{30}{section.2.9}%
 \contentsline {chapter}{\numberline {3}Tester vid ett eller flera stickprov}{33}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Repetition från datorövning 2}{33}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Ett stickprov}{34}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Test av medelvärde för normalfördelad data}{34}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Konfidensintervall för normalfördelad data}{37}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Ett stickprov av binär data}{38}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Konfidensintervall för proportioner}{41}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Chi-två-test för goodness-of-fit}{42}{subsection.3.2.5}%
-\contentsline {section}{\numberline {3.3}Två stickprov}{44}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Test av normalfördelad data}{44}{subsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.1.1}t-test för två matchade stickprov}{44}{subsubsection.3.3.1.1}%
-\contentsline {subsubsection}{\numberline {3.3.1.2}t-test för två oberoende stickprov}{45}{subsubsection.3.3.1.2}%
-\contentsline {subsection}{\numberline {3.3.2}z-test och konfidensintervall för två proportioner}{47}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Chi-två-test för korstabeller}{48}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}AI-uppgift III}{49}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Variansanalys}{51}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Allmänt om variansanalys}{51}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Variansanalys. En faktor}{51}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Variansanalys. En faktor med block}{54}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Bonus. Två faktorer med block}{56}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Regression}{57}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Korrelation}{60}{section.4.6}%
+\contentsline {section}{\numberline {3.2}Allmänt om hypotestester}{34}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Ett stickprov}{36}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Test av medelvärde för normalfördelad data}{36}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Konfidensintervall för normalfördelad data}{38}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Ett stickprov av binär data}{39}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Konfidensintervall för proportioner}{40}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Chi-två-test för goodness-of-fit}{41}{subsection.3.3.5}%
+\contentsline {section}{\numberline {3.4}Två stickprov}{42}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Test av normalfördelad data}{42}{subsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.1.1}t-test för två matchade stickprov}{42}{subsubsection.3.4.1.1}%
+\contentsline {subsubsection}{\numberline {3.4.1.2}t-test för två oberoende stickprov}{44}{subsubsection.3.4.1.2}%
+\contentsline {subsection}{\numberline {3.4.2}z-test och konfidensintervall för två proportioner}{45}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Chi-två-test för korstabeller}{46}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}AI-uppgift III}{47}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Variansanalys och regression}{49}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Allmänt om variansanalys}{49}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Variansanalys. En faktor}{49}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Variansanalys. En faktor med block}{52}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Bonus. Två faktorer med block}{54}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Regression}{55}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Korrelation}{58}{section.4.6}%
