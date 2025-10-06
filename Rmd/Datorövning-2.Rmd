@@ -425,7 +425,7 @@ Vi kan nu konstruera en 3d-graf med datan.
 Vad måste läggas till i funktionen nedan för en 3d-graf med befolkningsmängd (`pop`)  på x-axeln, livslängd (`lifeExp`) på y-axeln, bnp per capita (`gdpPercap`) på z-axeln, och färg efter kontinent (`continent`)? För att kunna identifiera specifika länder kan man också sätta argumentet `text`.
 
 ```{r, eval = F}
-plot_ly(data_2007, x = ~pop, y = ~___, z = ~___, 
+plot_ly(dat_2007, x = ~pop, y = ~___, z = ~___, 
         color = ~continent, text = ~country) %>% 
   add_markers()
 ```
@@ -438,7 +438,7 @@ Grafen i uppgiften ovan präglas mycket av skillnader i bnp och befolkningsstorl
 
 ```{r, eval = F}
 plot_ly(dat_2007, x = ~log10(pop), y = ~log10(___), 
-        z = ~___, color = ~___, text = ~country) %>% 
+        z = ~___, color = ~continent, text = ~country) %>% 
   add_markers()
 ```
 :::

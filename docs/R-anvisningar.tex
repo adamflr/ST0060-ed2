@@ -135,7 +135,7 @@
 
 \title{R-anvisningar till \emph{Grundläggande statistik}}
 \author{}
-\date{\vspace{-2.5em}2025-10-01}
+\date{\vspace{-2.5em}2025-10-06}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Sats}[chapter]
@@ -1445,7 +1445,7 @@ Vad måste läggas till i funktionen nedan för en 3d-graf med befolkningsmängd
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot\_ly}\NormalTok{(data\_2007, }\AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\NormalTok{pop, }\AttributeTok{y =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{z =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }
+\FunctionTok{plot\_ly}\NormalTok{(dat\_2007, }\AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\NormalTok{pop, }\AttributeTok{y =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{z =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }
         \AttributeTok{color =} \SpecialCharTok{\textasciitilde{}}\NormalTok{continent, }\AttributeTok{text =} \SpecialCharTok{\textasciitilde{}}\NormalTok{country) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{add\_markers}\NormalTok{()}
 \end{Highlighting}
@@ -1462,7 +1462,7 @@ Grafen i uppgiften ovan präglas mycket av skillnader i bnp och befolkningsstorl
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{plot\_ly}\NormalTok{(dat\_2007, }\AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(pop), }\AttributeTok{y =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(\_\_\_), }
-        \AttributeTok{z =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{color =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{text =} \SpecialCharTok{\textasciitilde{}}\NormalTok{country) }\SpecialCharTok{\%\textgreater{}\%} 
+        \AttributeTok{z =} \SpecialCharTok{\textasciitilde{}}\NormalTok{\_\_\_, }\AttributeTok{color =} \SpecialCharTok{\textasciitilde{}}\NormalTok{continent, }\AttributeTok{text =} \SpecialCharTok{\textasciitilde{}}\NormalTok{country) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{add\_markers}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}

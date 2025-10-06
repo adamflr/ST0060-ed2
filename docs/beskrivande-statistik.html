@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2025-10-01" />
+<meta name="date" content="2025-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -480,7 +480,7 @@ Vi kan skriva ut objektet och se resultatet av beräkningen:</p>
 <p>Vi kan nu konstruera en 3d-graf med datan.</p>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-38" class="exercise"><strong>Uppgift 2.16  (Gapminder i 3d) </strong></span>Vad måste läggas till i funktionen nedan för en 3d-graf med befolkningsmängd (<code>pop</code>) på x-axeln, livslängd (<code>lifeExp</code>) på y-axeln, bnp per capita (<code>gdpPercap</code>) på z-axeln, och färg efter kontinent (<code>continent</code>)? För att kunna identifiera specifika länder kan man också sätta argumentet <code>text</code>.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="beskrivande-statistik.html#cb100-1" tabindex="-1"></a><span class="fu">plot_ly</span>(data_2007, <span class="at">x =</span> <span class="sc">~</span>pop, <span class="at">y =</span> <span class="sc">~</span>___, <span class="at">z =</span> <span class="sc">~</span>___, </span>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="beskrivande-statistik.html#cb100-1" tabindex="-1"></a><span class="fu">plot_ly</span>(dat_2007, <span class="at">x =</span> <span class="sc">~</span>pop, <span class="at">y =</span> <span class="sc">~</span>___, <span class="at">z =</span> <span class="sc">~</span>___, </span>
 <span id="cb100-2"><a href="beskrivande-statistik.html#cb100-2" tabindex="-1"></a>        <span class="at">color =</span> <span class="sc">~</span>continent, <span class="at">text =</span> <span class="sc">~</span>country) <span class="sc">%&gt;%</span> </span>
 <span id="cb100-3"><a href="beskrivande-statistik.html#cb100-3" tabindex="-1"></a>  <span class="fu">add_markers</span>()</span></code></pre></div>
 </div>
@@ -488,7 +488,7 @@ Vi kan skriva ut objektet och se resultatet av beräkningen:</p>
 <p><span id="exr:unlabeled-div-39" class="exercise"><strong>Uppgift 2.17  (Log-transformationer) </strong></span>Inom statistiken är det vanligt att transformera variabler för att ta bort extremeffekter och visa på specifika dataegenskaper. En vanlig transform är att <em>logaritmera</em> ett värde, vilket innebär att man istället för att använda det ursprungliga värdet använder exponenten i någon bas (ofta basen tio). Ta till exempel värdet 10000, dess tio-logaritm är 4, eftersom 10 upphöjt i 4 är 10000. Logaritmer är vanliga vid data med extremvärden.</p>
 <p>Grafen i uppgiften ovan präglas mycket av skillnader i bnp och befolkningsstorlek. Testa att tio-logaritmera variablerna och se om det blir en mer eller mindre överskådlig graf. Logaritmen kan göras genom att byta den ursprungliga variabeln mot en variabel transformerad med <code>log10()</code>. Fyll i stycket nedan.</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="beskrivande-statistik.html#cb101-1" tabindex="-1"></a><span class="fu">plot_ly</span>(dat_2007, <span class="at">x =</span> <span class="sc">~</span><span class="fu">log10</span>(pop), <span class="at">y =</span> <span class="sc">~</span><span class="fu">log10</span>(___), </span>
-<span id="cb101-2"><a href="beskrivande-statistik.html#cb101-2" tabindex="-1"></a>        <span class="at">z =</span> <span class="sc">~</span>___, <span class="at">color =</span> <span class="sc">~</span>___, <span class="at">text =</span> <span class="sc">~</span>country) <span class="sc">%&gt;%</span> </span>
+<span id="cb101-2"><a href="beskrivande-statistik.html#cb101-2" tabindex="-1"></a>        <span class="at">z =</span> <span class="sc">~</span>___, <span class="at">color =</span> <span class="sc">~</span>continent, <span class="at">text =</span> <span class="sc">~</span>country) <span class="sc">%&gt;%</span> </span>
 <span id="cb101-3"><a href="beskrivande-statistik.html#cb101-3" tabindex="-1"></a>  <span class="fu">add_markers</span>()</span></code></pre></div>
 </div>
 <div class="exercise">
