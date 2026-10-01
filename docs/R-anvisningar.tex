@@ -77,6 +77,7 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -119,7 +120,8 @@
 \usepackage{float}
 \usepackage{colortbl}
 \usepackage{pdflscape}
-\usepackage{tabu}
+\usepackage{tabularx}
+\usepackage{xltabular}
 \usepackage{threeparttable}
 \usepackage{threeparttablex}
 \usepackage[normalem]{ulem}
@@ -128,6 +130,10 @@
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
 \hypersetup{
   pdftitle={R-anvisningar till Grundläggande statistik},
   hidelinks,
@@ -135,7 +141,7 @@
 
 \title{R-anvisningar till \emph{Grundläggande statistik}}
 \author{}
-\date{\vspace{-2.5em}2025-10-06}
+\date{\vspace{-2.5em}2026-10-01}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Sats}[chapter]
@@ -297,10 +303,6 @@ Gränssnittet i RStudio är uppdelat i fyra delar och varje del består av en el
 \item
   \emph{Help} där man ser hjälpsidor för funktioner.
 \end{itemize}
-
-\begin{exercise}[Help-fliken]
-Hitta fliken \emph{Help}, klicka på husikonen under fliken. Finns det en länk med \emph{RStudio Cheat Sheets}? Följ den länken för att hitta guider till R som kan bli nyttiga längre fram. För nu, gå tillbaka till RStudio.
-\end{exercise}
 
 Ofta skriver man inte sin kod direkt i konsollen, utan i ett separat \emph{skript} - en vanlig textfil som innehåller den kod man vill köra. I RStudio kan man öppna ett nytt skript genom att gå till \emph{File \textgreater{} New File \textgreater{} R Script} eller genom att klicka \emph{Ctrl + Shift + N}.
 
@@ -497,7 +499,9 @@ Fyll i och kör följande rad för att beräkna summan av vektorn \texttt{new\_v
 
 Vid konstruktionen av vektorn användes också en grundläggande funktion - funktionen \texttt{c()}, som tar en serie värden och skapar en sammanhängande vektor av värden.
 
-Alla R-funktioner har en tillhörande hjälpfil som kan plockas fram genom att skriva frågetecken följt av funktionsnamnet, t.ex. \texttt{?sum}. Från hjälpfilen får man att \texttt{sum()} tar numeriska vektorer som ingående värde och beräknar summan. Man kan styra funktionens beteende genom att sätta ett argument \texttt{na.rm} (vilket här styr hur funktionen hanterar saknade värden). Som illustration kan man titta på
+Alla R-funktioner har en tillhörande hjälpfil som kan plockas fram genom att skriva frågetecken följt av funktionsnamnet, t.ex. \texttt{?sum}. Från hjälpfilen får man att \texttt{sum()} tar numeriska vektorer som ingående värde och beräknar summan.
+
+Man kan styra funktionens beteende genom att sätta ett argument \texttt{na.rm} (vilket här styr hur funktionen hanterar saknade värden). Som illustration kan man titta på
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -548,6 +552,7 @@ Fyll i och kör följande rader för att ta varje värde i \texttt{new\_vector} 
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\NormalTok{new\_vector }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{10}\NormalTok{)          }\CommentTok{\# Skapa en vektor}
 \NormalTok{new\_vector\_squared }\OtherTok{\textless{}{-}}\NormalTok{ new\_vector}\SpecialCharTok{\^{}}\DecValTok{2} \CommentTok{\# Ta kvadraten av varje värde}
 \NormalTok{new\_vector\_squared\_sum }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(\_\_\_) }\CommentTok{\# Summera kvadraterna}
 \FunctionTok{sqrt}\NormalTok{(\_\_\_)                          }\CommentTok{\# Ta kvadratroten ur summan}
@@ -629,7 +634,7 @@ Radbrytningar och blanksteg är oviktiga i R, och används bara för läsbarhet 
 
 \begin{exercise}[Alea iacta est]
 
-Kasta din tärning tio gånger och skriv in resultatet i en datatabell i R med hjälp av grundkoden nedan. Om du saknar en tärning, fråga lämplig person om du kan få en. Behåll tärningen, den behövs till nästa datorövning (och närhelst man står inför ett avgörande livsbeslut).
+Kasta din tärning tio gånger och skriv in resultatet i en datatabell i R med hjälp av grundkoden nedan. Om du saknar en tärning, fråga lämplig person om du kan få en. Behåll tärningen, den kan behövas till nästa datorövning (och närhelst man står inför ett avgörande livsbeslut).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -721,6 +726,12 @@ Använd datan i objektet \texttt{dat\_dice} och skapa ett diagram med kolumnen k
 
 En vanlig operation på en tabell är att göra ett urval - antingen ett urval av rader (t.ex. ett visst land), vilket kallas \emph{filtrering} eller ett urval av variabler (t.ex. land och befolkning), vilket kallas \emph{selektion}. Här tittar vi på hur det kan göras med funktionerna \texttt{filter()} och \texttt{select()} från paketet \texttt{tidyverse}. Vi använder gapminder-datan som kan laddas med \texttt{library(gapminder)}.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(gapminder)}
+\end{Highlighting}
+\end{Shaded}
+
 För att filtrera på ett givet land kan man använda pipe-funktionen från datan till en filter-funktion, t.ex.
 
 \begin{Shaded}
@@ -805,11 +816,6 @@ Vi kan nu börja titta på grafer. R har en mängd grundläggande funktioner fö
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{gm\_2002 }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2002}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{plot}\NormalTok{(gm\_2002}\SpecialCharTok{$}\NormalTok{lifeExp, gm\_2002}\SpecialCharTok{$}\NormalTok{gdpPercap)}
 \end{Highlighting}
 \end{Shaded}
@@ -863,7 +869,7 @@ Vad ska ändras i stycket nedan för att skapa en graf med år på x-axeln, mede
 \end{exercise}
 
 Andra graftyper kan skapas med andra \texttt{geom\_}-funktioner. Stapeldiagram ges av \texttt{geom\_col} (\texttt{col} för \emph{column}). Man kan också använda \texttt{geom\_bar} om man bara vill räkna antal rader per någon kategori.
-Följande väljer ut en kontinent och år och plottar ländernas befolkning stapeldiagram.
+Följande väljer ut en kontinent och år och plottar ländernas befolkning i ett stapeldiagram.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -913,7 +919,7 @@ Vi kan ändra utseendet på grafen genom argument inom geometrier och med funkti
 Ändra färgvalen i grafen ovan för att skapa fulast möjliga graf. Visa de två graferna för någon annan och se om de kan säga vilken som är vilken.
 \end{exercise}
 
-\section{AI-uppgift I}\label{ai-uppgift-i}
+\section{AI-uppgift. Grafreproduktion}\label{ai-uppgift.-grafreproduktion}
 
 Nedan har vi en graf gjord med \texttt{ggplot2} med flera olika \emph{geom} och ändringar från standardtemat.
 

@@ -34,10 +34,6 @@ Gränssnittet i RStudio är uppdelat i fyra delar och varje del består av en el
 - *Plots* där man ser skapade grafer, och
 - *Help* där man ser hjälpsidor för funktioner.
 
-::: {.exercise name="Help-fliken"}
-Hitta fliken *Help*, klicka på husikonen under fliken. Finns det en länk med *RStudio Cheat Sheets*? Följ den länken för att hitta guider till R som kan bli nyttiga längre fram. För nu, gå tillbaka till RStudio.
-:::
-
 Ofta skriver man inte sin kod direkt i konsollen, utan i ett separat *skript* - en vanlig textfil som innehåller den kod man vill köra. I RStudio kan man öppna ett nytt skript genom att gå till *File > New File > R Script* eller genom att klicka *Ctrl + Shift + N*.
 
 ::: {.exercise name="Ett första skript"}
@@ -172,7 +168,9 @@ sum(___)
 
 Vid konstruktionen av vektorn användes också en grundläggande funktion - funktionen `c()`, som tar en serie värden och skapar en sammanhängande vektor av värden.
 
-Alla R-funktioner har en tillhörande hjälpfil som kan plockas fram genom att skriva frågetecken följt av funktionsnamnet, t.ex. `?sum`. Från hjälpfilen får man att `sum()` tar numeriska vektorer som ingående värde och beräknar summan. Man kan styra funktionens beteende genom att sätta ett argument `na.rm` (vilket här styr hur funktionen hanterar saknade värden). Som illustration kan man titta på
+Alla R-funktioner har en tillhörande hjälpfil som kan plockas fram genom att skriva frågetecken följt av funktionsnamnet, t.ex. `?sum`. Från hjälpfilen får man att `sum()` tar numeriska vektorer som ingående värde och beräknar summan. 
+
+Man kan styra funktionens beteende genom att sätta ett argument `na.rm` (vilket här styr hur funktionen hanterar saknade värden). Som illustration kan man titta på
 
 ```{r}
 b <- c(3, 1, 4, 1, 5, 9, NA)  # Lägger till ett saknat värde
@@ -200,6 +198,7 @@ Notera att det är möjligt att skapa ett objekt med namnet `c` trots att det re
 Fyll i och kör följande rader för att ta varje värde i `new_vector` i kvadrat, *sedan* summera, och sedan ta roten ur.
 
 ```{r, eval = F}
+new_vector <- c(5, 7, 10)          # Skapa en vektor
 new_vector_squared <- new_vector^2 # Ta kvadraten av varje värde
 new_vector_squared_sum <- sum(___) # Summera kvadraterna
 sqrt(___)                          # Ta kvadratroten ur summan
@@ -262,7 +261,7 @@ dat
 Radbrytningar och blanksteg är oviktiga i R, och används bara för läsbarhet här. Saknade värden skrivs in som `NA`  för *not available*. Notera att alla kolumner inte behöver vara av samma datatyp men att värden inom en kolumn måste vara det. Här är *Behandling* text medan övriga kolumner är numeriska.
 
 ::: {.exercise name="Alea iacta est"}
-Kasta din tärning tio gånger och skriv in resultatet i en datatabell i R med hjälp av grundkoden nedan. Om du saknar en tärning, fråga lämplig person om du kan få en. Behåll tärningen, den behövs till nästa datorövning (och närhelst man står inför ett avgörande livsbeslut).
+Kasta din tärning tio gånger och skriv in resultatet i en datatabell i R med hjälp av grundkoden nedan. Om du saknar en tärning, fråga lämplig person om du kan få en. Behåll tärningen, den kan behövas till nästa datorövning (och närhelst man står inför ett avgörande livsbeslut).
 
 ```{r, eval = F}
 dat_dice <- data.frame(Kast = c(1,2,3,4,5,6,7,8,9,10),
@@ -317,6 +316,10 @@ plot(dat_dice$___, dat_dice$___)
 ## Urval ur en tabell med `select` och `filter`
 
 En vanlig operation på en tabell är att göra ett urval - antingen ett urval av rader (t.ex. ett visst land), vilket kallas *filtrering* eller ett urval av variabler (t.ex. land och befolkning), vilket kallas *selektion*. Här tittar vi på hur det kan göras med funktionerna `filter()` och `select()` från paketet `tidyverse`. Vi använder gapminder-datan som kan laddas med `library(gapminder)`.
+
+```{r}
+library(gapminder)
+```
 
 För att filtrera på ett givet land kan man använda pipe-funktionen från datan till en filter-funktion, t.ex.
 
@@ -385,10 +388,6 @@ Vi kan nu börja titta på grafer. R har en mängd grundläggande funktioner fö
 
 ```{r, results='hide', fig.show='hide'}
 gm_2002 <- gapminder %>% filter(year == 2002)
-```
-
-
-```{r, eval=F}
 plot(gm_2002$lifeExp, gm_2002$gdpPercap)
 ```
 
@@ -427,7 +426,7 @@ ggplot(gm_2002, aes(x = ____, y = ____)) +
 :::
 
 Andra graftyper kan skapas med andra `geom_`-funktioner. Stapeldiagram ges av `geom_col` (`col` för *column*). Man kan också använda `geom_bar` om man bara vill räkna antal rader per någon kategori. 
-Följande väljer ut en kontinent och år och plottar ländernas befolkning stapeldiagram.
+Följande väljer ut en kontinent och år och plottar ländernas befolkning i ett stapeldiagram.
 
 ```{r, results='hide', fig.show='hide'}
 dat_small <- gapminder %>% 
@@ -472,7 +471,7 @@ ggplot(dat_small, aes(lifeExp, continent)) +
 Ändra färgvalen i grafen ovan för att skapa fulast möjliga graf. Visa de två graferna för någon annan och se om de kan säga vilken som är vilken.
 :::
 
-## AI-uppgift I
+## AI-uppgift. Grafreproduktion
 
 Nedan har vi en graf gjord med `ggplot2` med flera olika *geom* och ändringar från standardtemat.
 

@@ -11,11 +11,11 @@
 \contentsline {section}{\numberline {1.1}Uppstart och orientering}{9}{section.1.1}%
 \contentsline {section}{\numberline {1.2}\emph {Packages} från CRAN}{10}{section.1.2}%
 \contentsline {section}{\numberline {1.3}Objekt och funktioner}{11}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Sekvenser av funktioner}{13}{section.1.4}%
+\contentsline {section}{\numberline {1.4}Sekvenser av funktioner}{12}{section.1.4}%
 \contentsline {section}{\numberline {1.5}Datainskrivning}{14}{section.1.5}%
-\contentsline {section}{\numberline {1.6}Urval ur en tabell med \texttt {select} och \texttt {filter}}{16}{section.1.6}%
+\contentsline {section}{\numberline {1.6}Urval ur en tabell med \texttt {select} och \texttt {filter}}{15}{section.1.6}%
 \contentsline {section}{\numberline {1.7}Grafer med \texttt {ggplot2}}{17}{section.1.7}%
-\contentsline {section}{\numberline {1.8}AI-uppgift I}{19}{section.1.8}%
+\contentsline {section}{\numberline {1.8}AI-uppgift. Grafreproduktion}{19}{section.1.8}%
 \contentsline {chapter}{\numberline {2}Beskrivande statistik}{21}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Repetition från datorövning 1}{21}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Import av data från en Excelfil}{22}{section.2.2}%
