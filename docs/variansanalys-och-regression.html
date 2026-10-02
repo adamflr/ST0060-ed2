@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2026-10-01" />
+<meta name="date" content="2026-10-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -159,6 +159,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.6" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#urval-ur-en-tabell-med-select-och-filter"><i class="fa fa-check"></i><b>1.6</b> Urval ur en tabell med <code>select</code> och <code>filter</code></a></li>
 <li class="chapter" data-level="1.7" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#grafer-med-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Grafer med <code>ggplot2</code></a></li>
 <li class="chapter" data-level="1.8" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#ai-uppgift.-grafreproduktion"><i class="fa fa-check"></i><b>1.8</b> AI-uppgift. Grafreproduktion</a></li>
+<li class="chapter" data-level="1.9" data-path="datahantering-och-grafer.html"><a href="datahantering-och-grafer.html#ai-uppgift.-interaktiv-karta"><i class="fa fa-check"></i><b>1.9</b> AI-uppgift. (Interaktiv) karta</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="beskrivande-statistik.html"><a href="beskrivande-statistik.html"><i class="fa fa-check"></i><b>2</b> Beskrivande statistik</a>
 <ul>
@@ -251,10 +252,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <p>Det låga p-värdet tyder på att nollhypotesen bör förkastas, vilket alltså pekar på att det finns någon eller några skillnader i medelvärde.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-55" class="exercise"><strong>Uppgift 4.1  (Anova för hand) </strong></span>Anovatabell från <code>Anova()</code> ger kvadratsummor och frihetsgrader. Använd den informationen för att, för hand, beräkna medelkvadratsummor och F-värdet.</p>
+<p><span id="exr:unlabeled-div-57" class="exercise"><strong>Uppgift 4.1  (Anova för hand) </strong></span>Anovatabell från <code>Anova()</code> ger kvadratsummor och frihetsgrader. Använd den informationen för att, för hand, beräkna medelkvadratsummor och F-värdet.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-56" class="exercise"><strong>Uppgift 4.2  (Tabellvärde för F-fördelningen) </strong></span>Anova-tabellen ger ett p-värde från vilket vi kan dra en direkt slutsats. Om man istället löser uppgiften för hand ställer man det beräknade F-värdet mot ett kritiskt värde från en tabell över F-fördelningen. Se efter om man kan hitta ett lämpligt tabellvärde för det aktuella testet (med 2 och 27 frihetsgrader). Det är möjligt att det inte finns en rad för 27 i en vanlig F-fördelningstabell, använd isåfall värdet på närmast övre rad (t.ex. 26 eller 25). I R kan kvantiler för F-fördelningen tas fram med <code>qf()</code>, t.ex.</p>
+<p><span id="exr:unlabeled-div-58" class="exercise"><strong>Uppgift 4.2  (Tabellvärde för F-fördelningen) </strong></span>Anova-tabellen ger ett p-värde från vilket vi kan dra en direkt slutsats. Om man istället löser uppgiften för hand ställer man det beräknade F-värdet mot ett kritiskt värde från en tabell över F-fördelningen. Se efter om man kan hitta ett lämpligt tabellvärde för det aktuella testet (med 2 och 27 frihetsgrader). Det är möjligt att det inte finns en rad för 27 i en vanlig F-fördelningstabell, använd isåfall värdet på närmast övre rad (t.ex. 26 eller 25). I R kan kvantiler för F-fördelningen tas fram med <code>qf()</code>, t.ex.</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="variansanalys-och-regression.html#cb163-1" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="dv">2</span>, <span class="dv">27</span>)</span></code></pre></div>
 </div>
 <p>En naturlig följdfråga är vilka behandlingsgrupper som skiljer sig åt. För att besvara det krävs <em>parvisa jämförelser</em> där behandlingarna jämförs två och två. Parvisa jämförelse kan göras med paketet <code>emmeans</code> och funktionen med samma namn. Funktionen tar modellobjektet som första argument och en formel för jämförelsetyp som andra argument (här <code>pairwise ~ group</code>, en parvis jämförelse mellan nivåer i <code>group</code>).</p>
@@ -273,7 +274,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb166-6"><a href="variansanalys-och-regression.html#cb166-6" tabindex="-1"></a><span class="fu">cld</span>(em, <span class="at">Letters =</span> letters)</span></code></pre></div>
 <p>Tolkning av grupperingen till höger är att grupper som delar en bokstav inte är signifikant skilda. I det här fallet är den lägsta nivån skild från de två högsta. I övrigt finns inga signifikanta skillnader. Jämför gärna med p-värdena från tabellen med parvisa jämförelser. Man bör se att parvisa jämförelser med ett p-värde under fem procent motsvaras av att de behandlingarna inte delar någon bokstav i bokstavstabellen.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-57" class="exercise"><strong>Uppgift 4.3  (Anova med två behandlingar) </strong></span>Följande kod skapar en datamängd med två behandlingar.</p>
+<p><span id="exr:unlabeled-div-59" class="exercise"><strong>Uppgift 4.3  (Anova med två behandlingar) </strong></span>Följande kod skapar en datamängd med två behandlingar.</p>
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="variansanalys-och-regression.html#cb167-1" tabindex="-1"></a>dat_two <span class="ot">&lt;-</span> PlantGrowth <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;trt1&quot;</span>, <span class="st">&quot;trt2&quot;</span>))</span></code></pre></div>
 <p>Använd den datan för att göra ett t-test för två oberoende stickprov med lika varians, ett t-test för två oberoende stickprov utan antagande om lika varians, och ett F-test (ofullständig exempelkod nedan). Vad kan sägas om p-värdena från de tre testen?</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="variansanalys-och-regression.html#cb168-1" tabindex="-1"></a><span class="fu">t.test</span>(___ <span class="sc">~</span> group, <span class="at">data =</span> dat_two, <span class="at">var.equal =</span> T)</span>
@@ -283,7 +284,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb168-5"><a href="variansanalys-och-regression.html#cb168-5" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-58" class="exercise"><strong>Uppgift 4.4  (Mass-signifikans) </strong></span>Anledning till att vi justerar p-värden är att man vid varje test har en sannolikhet att förkasta. Om man gör ett stort antal tester är man nästan garanterad att få något (falskt) signifikant resultat. Justering höjer p-värdena för att minska den risken. Följande kod simulerar data med 5 grupper och producerar de parvisa jämförelserna.</p>
+<p><span id="exr:unlabeled-div-60" class="exercise"><strong>Uppgift 4.4  (Mass-signifikans) </strong></span>Anledning till att vi justerar p-värden är att man vid varje test har en sannolikhet att förkasta. Om man gör ett stort antal tester är man nästan garanterad att få något (falskt) signifikant resultat. Justering höjer p-värdena för att minska den risken. Följande kod simulerar data med 5 grupper och producerar de parvisa jämförelserna.</p>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="variansanalys-och-regression.html#cb169-1" tabindex="-1"></a>n_groups <span class="ot">&lt;-</span> <span class="dv">5</span></span>
 <span id="cb169-2"><a href="variansanalys-och-regression.html#cb169-2" tabindex="-1"></a>dat_sim <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">obs =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">group =</span> letters[<span class="dv">1</span><span class="sc">:</span>n_groups]) <span class="sc">%&gt;%</span> </span>
 <span id="cb169-3"><a href="variansanalys-och-regression.html#cb169-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">rnorm</span>(<span class="fu">n</span>()))</span>
@@ -292,15 +293,15 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <p>Kör koden tio gånger. Hur många gånger av de tio ger de parvisa jämförelserna <em>någon</em> signifikant skillnad (det vill säga något p-värde under 0.05)?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-59" class="exercise"><strong>Uppgift 4.5  (Äppelinfektionsimport) </strong></span>En studie har givit ett mått på infektion hos äppelträd. Fyra sorter jämförs med tre replikat per sort. Data finns i fliken <em>Äppelangrepp</em> i excelfilen <em>Uppgiftsdata.xslx</em> på canvassidan. Fyll i kodstycket nedan för att importera datan.</p>
+<p><span id="exr:unlabeled-div-61" class="exercise"><strong>Uppgift 4.5  (Äppelinfektionsimport) </strong></span>En studie har givit ett mått på infektion hos äppelträd. Fyra sorter jämförs med tre replikat per sort. Data finns i fliken <em>Äppelangrepp</em> i excelfilen <em>Uppgiftsdata.xslx</em> på canvassidan. Fyll i kodstycket nedan för att importera datan.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-60" class="exercise"><strong>Uppgift 4.6  (Äppelinfektionsgraf) </strong></span>Fyll i kodstycket nedan för att skapa en graf av äppeldatan.</p>
+<p><span id="exr:unlabeled-div-62" class="exercise"><strong>Uppgift 4.6  (Äppelinfektionsgraf) </strong></span>Fyll i kodstycket nedan för att skapa en graf av äppeldatan.</p>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="variansanalys-och-regression.html#cb170-1" tabindex="-1"></a><span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___)) <span class="sc">+</span></span>
 <span id="cb170-2"><a href="variansanalys-och-regression.html#cb170-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-61" class="exercise"><strong>Uppgift 4.7  (Äppelinfektionsmodell) </strong></span>Fyll i kodstycket nedan för att skatta en anovamodell och ta fram anovatabellen. Vad är F-testets noll- och alternativhypotes? Vilken slutsats kan man dra från testet?</p>
+<p><span id="exr:unlabeled-div-63" class="exercise"><strong>Uppgift 4.7  (Äppelinfektionsmodell) </strong></span>Fyll i kodstycket nedan för att skatta en anovamodell och ta fram anovatabellen. Vad är F-testets noll- och alternativhypotes? Vilken slutsats kan man dra från testet?</p>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="variansanalys-och-regression.html#cb171-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(___ <span class="sc">~</span> ___, <span class="at">data =</span> dat_apple)</span>
 <span id="cb171-2"><a href="variansanalys-och-regression.html#cb171-2" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 </div>
@@ -331,7 +332,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="variansanalys-och-regression.html#cb177-1" tabindex="-1"></a><span class="fu">cld</span>(<span class="fu">emmeans</span>(mod_wo_block, <span class="sc">~</span> N), <span class="at">Letters =</span> letters)</span></code></pre></div>
 <p>Modellen utan block ger samma medelvärden <code>emmean</code> men större medelfel <code>SE</code> och färre signifikanta skillnader.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-62" class="exercise"><strong>Uppgift 4.8  (Block med två behandlingar. Graf) </strong></span>Det minsta möjliga blocket är det med två behandlingar. Vi filtrerar havredatan för att den situationen.</p>
+<p><span id="exr:unlabeled-div-64" class="exercise"><strong>Uppgift 4.8  (Block med två behandlingar. Graf) </strong></span>Det minsta möjliga blocket är det med två behandlingar. Vi filtrerar havredatan för att den situationen.</p>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="variansanalys-och-regression.html#cb178-1" tabindex="-1"></a>dat_small_block <span class="ot">&lt;-</span> oats <span class="sc">%&gt;%</span> </span>
 <span id="cb178-2"><a href="variansanalys-och-regression.html#cb178-2" tabindex="-1"></a>  <span class="fu">filter</span>(V <span class="sc">==</span> <span class="st">&quot;Marvellous&quot;</span>, N <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;0.6cwt&quot;</span>, <span class="st">&quot;0.0cwt&quot;</span>))</span>
 <span id="cb178-3"><a href="variansanalys-och-regression.html#cb178-3" tabindex="-1"></a>dat_small_block</span></code></pre></div>
@@ -341,7 +342,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb179-3"><a href="variansanalys-och-regression.html#cb179-3" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-63" class="exercise"><strong>Uppgift 4.9  (Block med två behandlingar. Test) </strong></span>Eftersom det är ett försök med en förklarande faktor och block kan man modellera det med den tidigare blockmodellen. Men eftersom man bara har två observationer per block kan man också se det som matchade stickprov, vilket kan lösas med ett t-test. Fyll i stycket nedan för att göra de två testen - utfallsvariabeln är skörd <code>Y</code> och den förklarande faktorn är kvävenivån <code>N</code>. Jämför resultaten.</p>
+<p><span id="exr:unlabeled-div-65" class="exercise"><strong>Uppgift 4.9  (Block med två behandlingar. Test) </strong></span>Eftersom det är ett försök med en förklarande faktor och block kan man modellera det med den tidigare blockmodellen. Men eftersom man bara har två observationer per block kan man också se det som matchade stickprov, vilket kan lösas med ett t-test. Fyll i stycket nedan för att göra de två testen - utfallsvariabeln är skörd <code>Y</code> och den förklarande faktorn är kvävenivån <code>N</code>. Jämför resultaten.</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="variansanalys-och-regression.html#cb180-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(___ <span class="sc">~</span> ___ <span class="sc">+</span> B, <span class="at">data =</span> dat_small_block)</span>
 <span id="cb180-2"><a href="variansanalys-och-regression.html#cb180-2" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span>
 <span id="cb180-3"><a href="variansanalys-och-regression.html#cb180-3" tabindex="-1"></a></span>
@@ -366,10 +367,10 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb184-3"><a href="variansanalys-och-regression.html#cb184-3" tabindex="-1"></a><span class="fu">emmeans</span>(mod_two_fact, <span class="sc">~</span> N <span class="sc">|</span> V)</span></code></pre></div>
 <p>Även här kan man göra jämförelser mellan nivåer genom att sätta <code>pairwise ~ N + V</code> eller beräkna signifikansbokstäver med <code>cld</code>. Följande kod jämför kvävenivåer <em>inom</em> sort.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-64" class="exercise"><strong>Uppgift 4.10  (Sort uppdelat efter kvävenivå) </strong></span>Gör lämplig ändring i koden ovan för att jämföra sorter <em>inom</em> kvävenivå. Finns det några signifikanta skillnader?</p>
+<p><span id="exr:unlabeled-div-66" class="exercise"><strong>Uppgift 4.10  (Sort uppdelat efter kvävenivå) </strong></span>Gör lämplig ändring i koden ovan för att jämföra sorter <em>inom</em> kvävenivå. Finns det några signifikanta skillnader?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-65" class="exercise"><strong>Uppgift 4.11  (Interaktion med ett block) </strong></span>I modellen ovan är block en <em>additiv</em> faktor - den ingår inte i någon interaktionseffekt. Vad händer med testerna om man skattar modellen där samtliga interaktioner tas med? Varför?</p>
+<p><span id="exr:unlabeled-div-67" class="exercise"><strong>Uppgift 4.11  (Interaktion med ett block) </strong></span>I modellen ovan är block en <em>additiv</em> faktor - den ingår inte i någon interaktionseffekt. Vad händer med testerna om man skattar modellen där samtliga interaktioner tas med? Varför?</p>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="variansanalys-och-regression.html#cb185-1" tabindex="-1"></a>mod_two_fact <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N <span class="sc">*</span> V <span class="sc">*</span> B, <span class="at">data =</span> oats)</span></code></pre></div>
 </div>
 </div>
@@ -388,7 +389,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb186-9"><a href="variansanalys-och-regression.html#cb186-9" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> country), <span class="at">size =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p>Datan visar ett positivt samband mellan variablerna - högre bnp per capita är kopplat till högre medellivslängd.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-66" class="exercise"><strong>Uppgift 4.12  (Data för 1957) </strong></span>Vad måste ändras i stycket nedan för att plocka ut data och göra en graf för Europa 1957?</p>
+<p><span id="exr:unlabeled-div-68" class="exercise"><strong>Uppgift 4.12  (Data för 1957) </strong></span>Vad måste ändras i stycket nedan för att plocka ut data och göra en graf för Europa 1957?</p>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="variansanalys-och-regression.html#cb187-1" tabindex="-1"></a>dat_eu57 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb187-2"><a href="variansanalys-och-regression.html#cb187-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>, continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb187-3"><a href="variansanalys-och-regression.html#cb187-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gdpPercap =</span> gdpPercap <span class="sc">/</span> <span class="dv">1000</span>)</span>
@@ -402,7 +403,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb188-2"><a href="variansanalys-och-regression.html#cb188-2" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
 <p>Funktionen <code>summary</code> ger en sammanfattning av modellen. Skattningen av modellens konstanta parameter ges som raden <code>(Intercept)</code> och dess tolkning är som förväntat värde i medellivslängd om bnp per capita är noll. Det är ofta lutningsparametern som är mer intressant. Skattningen av lutningsparametern ges på den rad som har samma namn som den förklarande variabeln, här <code>gdpPercap</code>. Den skattade parametern är 0.2146. Lutningsparametern har den generella tolkning som ökningen i y-variabeln när x-variabeln ökar med 1. I det här fallet ger 0.2146 att ett lands medellivslängd ökar med ungefär 0.2146 år (eller 78 dagar) när bnp per capita ökar med 1000 dollar.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-67" class="exercise"><strong>Uppgift 4.13  (Modell för 1957) </strong></span>Skatta samma modell som ovan, denna gång med data från 1957. Tolka lutningsparametern i ord. Är effekten av ökad bnp större 2007 än den var 1957?</p>
+<p><span id="exr:unlabeled-div-69" class="exercise"><strong>Uppgift 4.13  (Modell för 1957) </strong></span>Skatta samma modell som ovan, denna gång med data från 1957. Tolka lutningsparametern i ord. Är effekten av ökad bnp större 2007 än den var 1957?</p>
 </div>
 <p>Man kan enkelt rita ut regressionlinjen i en graf med <code>geom_smooth()</code> och argumentet <code>method</code> satt till <code>lm</code>.</p>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="variansanalys-och-regression.html#cb189-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_eu07, <span class="fu">aes</span>(gdpPercap, lifeExp)) <span class="sc">+</span></span>
@@ -411,7 +412,7 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb189-4"><a href="variansanalys-och-regression.html#cb189-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span></code></pre></div>
 <p>Den blå linjen illustrerar regressionlinjen 72.27 + 0.2146x. Det grå bandet kring linjen är ett konfidensintervall för skattningen av y-variabeln.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-68" class="exercise"><strong>Uppgift 4.14  (Graf för 1957) </strong></span>Använd <code>geom_smooth(method = lm)</code> för att lägga till en regressionslinje för data för 1957. Hur mycket påverkar de två avvikande länderna?</p>
+<p><span id="exr:unlabeled-div-70" class="exercise"><strong>Uppgift 4.14  (Graf för 1957) </strong></span>Använd <code>geom_smooth(method = lm)</code> för att lägga till en regressionslinje för data för 1957. Hur mycket påverkar de två avvikande länderna?</p>
 </div>
 <p>Utskriften från <code>summary</code> ger också tester av parametrarna (den högra kolumnen <code>Pr(&gt;|t|)</code> ger p-värdet för ett test där nollhypotesen är att populationsparametern är noll). I det här fallet är både intercept och lutning skilda från noll. Motsvarande F-test för lutningen kan tas fram med en anova-tabell.</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="variansanalys-och-regression.html#cb190-1" tabindex="-1"></a><span class="fu">library</span>(car)</span>
@@ -426,13 +427,13 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="variansanalys-och-regression.html#cb192-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_eu07, <span class="fu">aes</span>(Skattade, Residualer)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
 <p>Om data följer en normalfördelning bör histogrammet visa en ungefärlig normalkurva, QQ-plotten bör visa punkter på den diagonala linjen och spridningsdiagrammet bör visa en slumpmässig spridning av punkter. Graferna pekar i det här fallet inte på några tydliga avvikelser från normalfördelningsantagandet, möjligen pekar QQ-plotten på mindre spridning i svansarna än en teoretisk normalfördelning.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-69" class="exercise"><strong>Uppgift 4.15  (Icke-linjära samband) </strong></span>Låt oss titta på hela gapminder-datan för 2007.</p>
+<p><span id="exr:unlabeled-div-71" class="exercise"><strong>Uppgift 4.15  (Icke-linjära samband) </strong></span>Låt oss titta på hela gapminder-datan för 2007.</p>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="variansanalys-och-regression.html#cb193-1" tabindex="-1"></a>dat_2007 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>)</span>
 <span id="cb193-2"><a href="variansanalys-och-regression.html#cb193-2" tabindex="-1"></a><span class="fu">ggplot</span>(dat_2007, <span class="fu">aes</span>(gdpPercap, lifeExp)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
 <p>Hur ser sambandet mellan bnp och medellivslängd ut? Vad skulle vara problematiskt med simpel linjär regression i det här fallet? När vi tittade på normalfördelningen sa vi att man ofta kan logaritmera en variabeln och få <em>bättre</em> egenskaper. Vad ska ändras i koden ovan för att använda logaritmerad <code>gdpPercap</code> istället för den ursprungliga variabeln? Är det sambandet mer linjärt?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-70" class="exercise"><strong>Uppgift 4.16  (Log-transformerad data) </strong></span>Vad ska ändras i koden nedan för att använda logaritmerad <code>gdpPercap</code> istället för den ursprungliga variabeln? Är det sambandet mer linjärt?</p>
+<p><span id="exr:unlabeled-div-72" class="exercise"><strong>Uppgift 4.16  (Log-transformerad data) </strong></span>Vad ska ändras i koden nedan för att använda logaritmerad <code>gdpPercap</code> istället för den ursprungliga variabeln? Är det sambandet mer linjärt?</p>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="variansanalys-och-regression.html#cb194-1" tabindex="-1"></a>dat_2007 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>)</span>
 <span id="cb194-2"><a href="variansanalys-och-regression.html#cb194-2" tabindex="-1"></a><span class="fu">ggplot</span>(dat_2007, <span class="fu">aes</span>(gdpPercap, lifeExp)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
 </div>
@@ -444,13 +445,13 @@ H1: alla behandlingsgrupper har inte samma medelvärde</p>
 <span id="cb195-2"><a href="variansanalys-och-regression.html#cb195-2" tabindex="-1"></a><span class="fu">cor.test</span>(dat_eu07<span class="sc">$</span>lifeExp, dat_eu07<span class="sc">$</span>gdpPercap)</span></code></pre></div>
 <p>Medellivslängd och bnp per capita har en stark positiv korrelation på 0.85 och den korrelation är signifikant skild från noll (p &lt; 0.001). Notera att p-värdet är detsamma som för lutningsparametern i regressionen.</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-71" class="exercise"><strong>Uppgift 4.17  (Korrelationsmatris) </strong></span>Om man har fler än två variabler sammanfattas korrelationer ofta med en korrelationsmatris.</p>
+<p><span id="exr:unlabeled-div-73" class="exercise"><strong>Uppgift 4.17  (Korrelationsmatris) </strong></span>Om man har fler än två variabler sammanfattas korrelationer ofta med en korrelationsmatris.</p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="variansanalys-och-regression.html#cb196-1" tabindex="-1"></a>dat_eu07[, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>]</span>
 <span id="cb196-2"><a href="variansanalys-och-regression.html#cb196-2" tabindex="-1"></a><span class="fu">cor</span>(dat_eu07[, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>])</span></code></pre></div>
 <p>Vad är korrelationen mellan befolkningsstorlek och bnp per capita?</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-72" class="exercise"><strong>Uppgift 4.18  (Anscombes data) </strong></span>Den raka regressionslinjen eller det enkla korrelationsmåttet säger lite om hur data egentligen ser ut. En vanlig illustration av detta är <em>Anscombes kvartett</em>, fyra exempel konstruerade av den brittiske statistikern Francis Anscombe 1973. Datan finns tillgänglig i R som datasetet <code>anscombe</code>.</p>
+<p><span id="exr:unlabeled-div-74" class="exercise"><strong>Uppgift 4.18  (Anscombes data) </strong></span>Den raka regressionslinjen eller det enkla korrelationsmåttet säger lite om hur data egentligen ser ut. En vanlig illustration av detta är <em>Anscombes kvartett</em>, fyra exempel konstruerade av den brittiske statistikern Francis Anscombe 1973. Datan finns tillgänglig i R som datasetet <code>anscombe</code>.</p>
 <div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="variansanalys-och-regression.html#cb197-1" tabindex="-1"></a>anscombe</span></code></pre></div>
 <p>Plotta de fyra graferna (<code>x1</code> paras med <code>y1</code> och så vidare) i spridningsdiagram och beräkna korrelation för varje par. Ett exempel ges för den första mängden nedan. Kommentera utfallet.</p>
 <div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="variansanalys-och-regression.html#cb198-1" tabindex="-1"></a><span class="fu">ggplot</span>(anscombe, <span class="fu">aes</span>(x1, y1)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>

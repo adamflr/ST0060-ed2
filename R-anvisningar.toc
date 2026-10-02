@@ -16,6 +16,7 @@
 \contentsline {section}{\numberline {1.6}Urval ur en tabell med \texttt {select} och \texttt {filter}}{15}{section.1.6}%
 \contentsline {section}{\numberline {1.7}Grafer med \texttt {ggplot2}}{17}{section.1.7}%
 \contentsline {section}{\numberline {1.8}AI-uppgift. Grafreproduktion}{19}{section.1.8}%
+\contentsline {section}{\numberline {1.9}AI-uppgift. (Interaktiv) karta}{20}{section.1.9}%
 \contentsline {chapter}{\numberline {2}Beskrivande statistik}{21}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Repetition från datorövning 1}{21}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Import av data från en Excelfil}{22}{section.2.2}%

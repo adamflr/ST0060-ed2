@@ -505,3 +505,15 @@ Använd en chatbot (såsom Microsofts co-pilot eller OpenAIs ChatGPT) för att r
 ::: {.exercise name="Steg i Excel"}
 Hur skulle man gå tillväga för att skapa samma graf i Excel? Be en chatbot om en stegvis instruktion.
 :::
+
+## AI-uppgift. (Interaktiv) karta
+
+R och dess paket innehåller funktioner för konstruktion av kartor och annat GIS-arbete.
+
+::: {.exercise name="Världskarta"}
+Be en chatbot om R-kod för att konstruera en graf med en världskarta. Försök därefter att koppla den kartdata som används till Gapminder-datan och färglägg länderna efter befolkningsmängd för året 2002.
+:::
+
+::: {.exercise name="Världskarta"}
+Grafer kan också göras interaktiva, till exempel med hjälp av paketet `plotly`. Förök att producera en interaktiv version av kartan från den tidigare uppgiften. När man håller över ett land ska man se en text med landet och någon numerisk variabel såsom befolkningsmängd.
+:::
